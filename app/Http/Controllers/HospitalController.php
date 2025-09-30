@@ -80,7 +80,8 @@ class HospitalController extends Controller
     {
         $hospital = Hospital::findOrFail($id);
         $idprov = $hospital->province_id;
-        $province = DB::table('provincesregions')->where('id', $idprov)->first();
+        $city = DB::table('cities')->where('id', $idprov)->first();
+        $province = DB::table('provincesregions')->where('id', $city->province_id)->first();
 
         $latitude = $hospital->latitude;
         $longitude = $hospital->longitude;
@@ -105,7 +106,7 @@ class HospitalController extends Controller
         ->orderBy('distance')
         ->get();
 
-        return view('pages.hospital.showdetail', compact('hospital','province','nearbyHospitals','nearbyAirports','radius_km'));
+        return view('pages.hospital.showdetail', compact('hospital','city','province','nearbyHospitals','nearbyAirports','radius_km'));
     }
 
     public function showdetailclinic($id)
@@ -147,8 +148,8 @@ class HospitalController extends Controller
     public function filter(Request $request)
     {
         $query = Hospital::query();
-        $query->join('provincesregions', 'hospitals.province_id', '=', 'provincesregions.id');
-        $query->select('hospitals.*', 'provincesregions.provinces_region');
+        $query->join('cities', 'hospitals.province_id', '=', 'cities.id');
+        $query->select('hospitals.*', 'cities.city');
 
         $query->where('hospital_status', true);
 

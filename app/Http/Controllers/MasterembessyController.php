@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Embassiees;
 use App\Models\Provincesregion;
+use App\Models\City;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -74,6 +75,7 @@ class MasterembessyController extends Controller
          }
 
         $embassy->province_id = $request->input('province_id');
+        $embassy->city_id = $request->input('city');
         $embassy->name_embassiees = $request->input('embassy_name');
         $embassy->location = $request->input('location');
         $embassy->telephone = $request->input('telephone');
@@ -102,9 +104,11 @@ class MasterembessyController extends Controller
     {
         $embassy = Embassiees::findOrFail($id);
         $provinces = Provincesregion::all();
+        $cities = City::all();
         return view('pages.master.editembassy', [
             'embassy' => $embassy,
-            'provinces' => $provinces
+            'provinces' => $provinces,
+            'cities' => $cities
         ]);
     }
 
@@ -119,6 +123,7 @@ class MasterembessyController extends Controller
          // Update data
         $data = [
             'province_id' => $request->input('province_id'),
+            'city_id' => $request->input('city'),
             'name_embassiees' => $request->input('embassy_name'),
             'location' => $request->input('location'),
             'telephone' => $request->input('telephone'),
@@ -175,5 +180,11 @@ class MasterembessyController extends Controller
             'success' => true,
             'status' => $embassy->embassy_status
         ]);
+    }
+
+    public function getCities($province_id)
+    {
+        $cities = City::where('province_id', $province_id)->get();
+        return response()->json($cities);
     }
 }

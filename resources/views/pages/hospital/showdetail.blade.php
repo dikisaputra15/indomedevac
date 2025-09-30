@@ -181,7 +181,8 @@
                     <p>
                         <strong>Address:</strong>
                         {{ $hospital->address }},
-                        {{ $province->provinces_region }}, Papua New Guinea
+                        {{ $city->city }},
+                        {{ $province->provinces_region }}, Indonesia
                     </p>
                     <p>
                         <strong>Latitude:</strong> {{ $hospital->latitude }}

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Airport;
 use App\Models\Hospital;
 use App\Models\Provincesregion;
+use App\Models\City;
 use Illuminate\Support\Facades\DB;
 use Exception; // Import Exception for better error handling
 
@@ -179,9 +180,10 @@ class AirportsController extends Controller
     public function showdetail($id)
     {
         $airport = Airport::findOrFail($id);
-        $province = Provincesregion::findOrFail($airport->province_id);
+        $city = City::findOrFail($airport->province_id);
+        $province = Provincesregion::findOrFail($city->province_id);
 
-        return view('pages.airports.showdetail', compact('airport', 'province'));
+        return view('pages.airports.showdetail', compact('airport', 'city', 'province'));
     }
 
     public function showdetailemergency($id)

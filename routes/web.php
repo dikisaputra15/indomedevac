@@ -38,7 +38,7 @@ Route::get('/', function (Request $request) {
             $decoded = JWT::decode($token, new Key($secret, 'HS256'));
 
             // Validasi token
-            if ($decoded->iss !== 'https://pg.concordreview.com') {
+            if ($decoded->iss !== 'https://id.concordreview.com') {
                 return response('Issuer tidak valid', 403);
             }
 
@@ -105,6 +105,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/embassydata/{id}/toggle-status', [MasterembessyController::class, 'toggleStatus'])->name('embassydata.toggleStatus');
 
     Route::get('/administrator', [App\Http\Controllers\HomeController::class, 'administrator']);
+
+    Route::get('/get-cities/{province_id}', [App\Http\Controllers\MasterembessyController::class, 'getCities']);
+
 
 });
 

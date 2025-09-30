@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Hospital;
 use App\Models\Provincesregion;
+use App\Models\City;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -75,6 +76,7 @@ class MasterhospitalController extends Controller
 
 
         $hospital->province_id = $request->input('province_id');
+        $hospital->city_id = $request->input('city');
         $hospital->name = $request->input('name');
         $hospital->latitude = $request->input('latitude');
         $hospital->longitude = $request->input('longitude');
@@ -108,6 +110,7 @@ class MasterhospitalController extends Controller
         $hospital->pharmacy = $request->input('pharmacy');
         $hospital->medical_imaging = $request->input('medical_imaging');
         $hospital->medical_student_training = $request->input('medical_student_training');
+        $hospital->medical_personel_disclaimer = $request->input('medical_personel_disclaimer');
         $hospital->doctors = $request->input('doctors');
         $hospital->nurses = $request->input('nurses');
         $hospital->dental_therapist = $request->input('dental_therapist');
@@ -143,9 +146,11 @@ class MasterhospitalController extends Controller
     {
         $hospital = Hospital::findOrFail($id);
         $provinces = Provincesregion::all();
+        $cities = City::all();
         return view('pages.master.edithospital', [
             'hospital' => $hospital,
-            'provinces' => $provinces
+            'provinces' => $provinces,
+            'cities' => $cities
         ]);
     }
 
@@ -160,6 +165,7 @@ class MasterhospitalController extends Controller
         // Update data
         $data = [
             'province_id' => $request->input('province_id'),
+            'city_id' => $request->input('city'),
             'name' => $request->input('name'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
@@ -193,6 +199,7 @@ class MasterhospitalController extends Controller
             'pharmacy' => $request->input('pharmacy'),
             'medical_imaging' => $request->input('medical_imaging'),
             'medical_student_training' => $request->input('medical_student_training'),
+            'medical_personel_disclaimer' => $request->input('medical_personel_disclaimer'),
             'doctors' => $request->input('doctors'),
             'nurses' => $request->input('nurses'),
             'dental_therapist' => $request->input('dental_therapist'),

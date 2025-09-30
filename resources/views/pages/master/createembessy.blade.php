@@ -22,11 +22,20 @@
          <div class="col-md-12">
             <div class="form-group">
                 <label>Provinces, Region</label>
-                <select class="form-control" name="province_id">
+                <select class="form-control" name="province_id" id="province">
                         <option value="0">-Choosse Provinces Region-</option>
                     @foreach($provinces as $prov)
                         <option value="{{$prov->id}}">{{$prov->provinces_region}}</option>
                     @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="city">City/Regency</label>
+                <select name="city" id="city" class="form-control">
+                    <option value="">-Choosse City/Regency-</option>
                 </select>
             </div>
         </div>
@@ -147,5 +156,27 @@
     $('#summernote4').summernote()
 
   })
+</script>
+
+<script>
+    $('#province').on('change', function () {
+        var provinceId = $(this).val();
+        if (provinceId) {
+            $.ajax({
+                url: '/get-cities/' + provinceId,
+                type: 'GET',
+                success: function (data) {
+                    $('#city').empty();
+                    $('#city').append('<option value="">-- Choosse City/Regency --</option>');
+                    $.each(data, function (key, city) {
+                        $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#city').empty();
+            $('#city').append('<option value="">-- Choosse City/Regency  --</option>');
+        }
+    });
 </script>
 @endpush

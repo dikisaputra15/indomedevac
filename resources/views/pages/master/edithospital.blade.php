@@ -49,6 +49,28 @@
             </div>
         </div>
 
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit City / Regency</label>
+                <select class="form-control" name="city" id="city">
+                    <?php
+                        foreach ($cities as $city) {
+
+                            if ($city->id==$hospital->city_id) {
+                                $select="selected";
+                            }else{
+                                $select="";
+                            }
+
+                        ?>
+                            <option <?php echo $select; ?> value="<?php echo $city->id;?>"><?php echo $city->city; ?></option>
+
+                    <?php } ?>
+
+                </select>
+            </div>
+        </div>
+
          <div class="col-md-12">
             <div class="form-group">
                 <label>Edit Latitude</label>
@@ -66,23 +88,20 @@
             <div class="form-group">
                 <label>Edit Facility Level</label>
                 <select class="form-control" name="facility_level">
-                    <option value="1 - Village Health Post (VHP)" {{ old('facility_level', $hospital->facility_level ?? '') == '1 - Village Health Post (VHP)' ? 'selected' : '' }}>
-                        1 - Village Health Post (VHP)
+                    <option value="Class A" {{ old('facility_level', $hospital->facility_level ?? '') == 'Class A' ? 'selected' : '' }}>
+                        Class A
                     </option>
-                    <option value="2 - Community Health Post (CHP)" {{ old('facility_level', $hospital->facility_level ?? '') == '2 - Community Health Post (CHP)' ? 'selected' : '' }}>
-                        2 - Community Health Post (CHP)
+                    <option value="Class B" {{ old('facility_level', $hospital->facility_level ?? '') == 'Class B' ? 'selected' : '' }}>
+                        Class B
                     </option>
-                    <option value="3 - Health Center / Urban Clinic (HC-UC)" {{ old('facility_level', $hospital->facility_level ?? '') == '3 - Health Center / Urban Clinic (HC-UC)' ? 'selected' : '' }}>
-                        3 - Health Center / Urban Clinic (HC-UC)
+                    <option value="Class C" {{ old('facility_level', $hospital->facility_level ?? '') == 'Class C' ? 'selected' : '' }}>
+                        Class C
                     </option>
-                    <option value="4 - District Hospital - Rural Health Services (DH)" {{ old('facility_level', $hospital->facility_level ?? '') == '4 - District Hospital - Rural Health Services (DH)' ? 'selected' : '' }}>
-                        4 - District Hospital - Rural Health Services (DH)
+                    <option value="Class D" {{ old('facility_level', $hospital->facility_level ?? '') == 'Class D' ? 'selected' : '' }}>
+                        Class D
                     </option>
-                    <option value="5 - Provincial Hospital, Health Services and Public Health Programs (PHA)" {{ old('facility_level', $hospital->facility_level ?? '') == '5 - Provincial Hospital, Health Services and Public Health Programs (PHA)' ? 'selected' : '' }}>
-                        5 - Provincial Hospital, Health Services and Public Health Programs (PHA)
-                    </option>
-                    <option value="6 - National Referral Specialist - Tertiary Teaching Hospital - Health Services (NHA)" {{ old('facility_level', $hospital->facility_level ?? '') == '6 - National Referral Specialist - Tertiary Teaching Hospital - Health Services (NHA)' ? 'selected' : '' }}>
-                        6 - National Referral Specialist - Tertiary Teaching Hospital - Health Services (NHA)
+                    <option value="Public Health Center (PUSKESMAS)" {{ old('facility_level', $hospital->facility_level ?? '') == 'Public Health Center (PUSKESMAS)' ? 'selected' : '' }}>
+                        Public Health Center (PUSKESMAS)
                     </option>
                 </select>
             </div>
@@ -94,12 +113,11 @@
 
                 @php
                     $icons = [
-                        ['url' => 'https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png', 'label' => 'Level 1'],
-                        ['url' => 'https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png', 'label' => 'Level 2'],
-                        ['url' => 'https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png', 'label' => 'Level 3'],
-                        ['url' => 'https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png', 'label' => 'Level 4'],
-                        ['url' => 'https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png', 'label' => 'Level 5'],
-                        ['url' => 'https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png', 'label' => 'Level 6'],
+                        ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png', 'label' => 'Class A'],
+                        ['url' => ' https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png', 'label' => 'Class B'],
+                        ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png', 'label' => 'Class C'],
+                        ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-green.png', 'label' => 'Class D'],
+                        ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-tosca.png', 'label' => 'Public Health Center (PUSKESMAS)'],
                     ];
                 @endphp
 
@@ -406,6 +424,25 @@
         </div>
 
          <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Edit Medical Personel Disclimer
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote14" name="medical_personel_disclaimer">
+                    <?php echo $hospital->medical_personel_disclaimer; ?>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+         <div class="col-md-12">
             <div class="form-group">
                 <label>Edit Doctors</label>
                 <input type="text" class="form-control" name="doctors" value="{{ $hospital->doctors; }}">
@@ -601,7 +638,30 @@
     $('#summernote11').summernote()
     $('#summernote12').summernote()
     $('#summernote13').summernote()
+    $('#summernote14').summernote()
 
   })
+</script>
+
+<script>
+    $('#province').on('change', function () {
+        var provinceId = $(this).val();
+        if (provinceId) {
+            $.ajax({
+                url: '/get-cities/' + provinceId,
+                type: 'GET',
+                success: function (data) {
+                    $('#city').empty();
+                    $('#city').append('<option value="">-- Choosse City/Regency --</option>');
+                    $.each(data, function (key, city) {
+                        $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#city').empty();
+            $('#city').append('<option value="">-- Choosse City/Regency  --</option>');
+        }
+    });
 </script>
 @endpush

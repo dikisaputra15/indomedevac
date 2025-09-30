@@ -23,7 +23,7 @@
          <div class="col-md-12">
             <div class="form-group">
                 <label>Edit Provinces, Region</label>
-                <select class="form-control" name="province_id">
+                <select class="form-control" name="province_id" id="province">
                     <?php
                         foreach ($provinces as $prov) {
 
@@ -35,6 +35,28 @@
 
                         ?>
                             <option <?php echo $select; ?> value="<?php echo $prov->id;?>"><?php echo $prov->provinces_region; ?></option>
+
+                    <?php } ?>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit City / Regency</label>
+                <select class="form-control" name="city" id="city">
+                    <?php
+                        foreach ($cities as $city) {
+
+                            if ($city->id==$embassy->city_id) {
+                                $select="selected";
+                            }else{
+                                $select="";
+                            }
+
+                        ?>
+                            <option <?php echo $select; ?> value="<?php echo $city->id;?>"><?php echo $city->city; ?></option>
 
                     <?php } ?>
 
@@ -162,5 +184,27 @@
     $('#summernote4').summernote()
 
   })
+</script>
+
+<script>
+    $('#province').on('change', function () {
+        var provinceId = $(this).val();
+        if (provinceId) {
+            $.ajax({
+                url: '/get-cities/' + provinceId,
+                type: 'GET',
+                success: function (data) {
+                    $('#city').empty();
+                    $('#city').append('<option value="">-- Choosse City/Regency --</option>');
+                    $.each(data, function (key, city) {
+                        $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#city').empty();
+            $('#city').append('<option value="">-- Choosse City/Regency  --</option>');
+        }
+    });
 </script>
 @endpush

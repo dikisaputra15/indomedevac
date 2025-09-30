@@ -67,6 +67,10 @@
     .mb-4{
         margin-bottom: 0.5rem !important;
     }
+
+    .clinical-service-table td{
+        padding: 6px;
+    }
 </style>
 
 @endpush
@@ -192,7 +196,7 @@
                             <td>{{ $hospital->optical }}</td>
                         </tr>
                         <tr>
-                            <td>Integraed Outreach Clinic (IOC)</td>
+                            <td>Integrated Outreach Clinic (IOC)</td>
                             <td>{{ $hospital->ioc }}</td>
                         </tr>
                         <tr>

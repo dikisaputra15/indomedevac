@@ -23,11 +23,20 @@
          <div class="col-md-12">
             <div class="form-group">
                 <label>Provinces, Region</label>
-                <select class="form-control" name="province_id">
+                <select class="form-control" name="province_id" id="province">
                         <option value="0">-Choosse Provinces Region-</option>
                     @foreach($provinces as $prov)
                         <option value="{{$prov->id}}">{{$prov->provinces_region}}</option>
                     @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="city">City/Regency</label>
+                <select name="city" id="city" class="form-control">
+                    <option value="">-Choosse City/Regency-</option>
                 </select>
             </div>
         </div>
@@ -56,23 +65,20 @@
             <div class="form-group">
                 <label>Facility Level</label>
                 <select class="form-control" name="facility_level">
-                    <option value="1 - Village Health Post (VHP)">
-                        1 - Village Health Post (VHP)
+                    <option value="Class A">
+                        Class A
                     </option>
-                    <option value="2 - Community Health Post (CHP)">
-                        2 - Community Health Post (CHP)
+                    <option value="Class B">
+                        Class B
                     </option>
-                    <option value="3 - Health Center / Urban Clinic (HC-UC)">
-                        3 - Health Center / Urban Clinic (HC-UC)
+                    <option value="Class C">
+                        Class C
                     </option>
-                    <option value="4 - District Hospital - Rural Health Services (DH)">
-                        4 - District Hospital - Rural Health Services (DH)
+                    <option value="Class D">
+                        Class D
                     </option>
-                    <option value="5 - Provincial Hospital, Health Services and Public Health Programs (PHA)">
-                        5 - Provincial Hospital, Health Services and Public Health Programs (PHA)
-                    </option>
-                    <option value="6 - National Referral Specialist - Tertiary Teaching Hospital - Health Services (NHA)">
-                        6 - National Referral Specialist - Tertiary Teaching Hospital - Health Services (NHA)
+                    <option value="Public Health Center (PUSKESMAS)">
+                        Public Health Center (PUSKESMAS)
                     </option>
                 </select>
             </div>
@@ -81,12 +87,11 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label>Icon</label>
-                <input type="radio" name="icon" value="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png"><img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24; height:24;"> Level 1
-                <input type="radio" name="icon" value="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png"><img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png" style="width:24; height:24;"> Level 2
-                <input type="radio" name="icon" value="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png"><img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24; height:24;"> Level 3
-                <input type="radio" name="icon" value="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png"><img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24; height:24;"> Level 4
-                <input type="radio" name="icon" value="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png"><img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24; height:24;"> Level 5
-                <input type="radio" name="icon" value="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png"><img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24; height:24;"> Level 6
+                <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png" style="width:24; height:24;"> Class A
+                <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png" style="width:24; height:24;"> Class B
+                <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png" style="width:24; height:24;"> Class C
+                <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-green.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-green.png" style="width:24; height:24;"> Class D
+                <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-tosca.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-tosca.png" style="width:24; height:24;"> Public Health Center (PUSKESMAS)
             </div>
         </div>
 
@@ -377,6 +382,24 @@
         </div>
 
          <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Medical Personel Disclaimer
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote14" name="medical_personel_disclaimer">
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+         <div class="col-md-12">
             <div class="form-group">
                 <label>Doctors</label>
                 <input type="text" class="form-control" name="doctors">
@@ -567,7 +590,30 @@
     $('#summernote11').summernote()
     $('#summernote12').summernote()
     $('#summernote13').summernote()
+    $('#summernote14').summernote()
 
   })
+</script>
+
+<script>
+    $('#province').on('change', function () {
+        var provinceId = $(this).val();
+        if (provinceId) {
+            $.ajax({
+                url: '/get-cities/' + provinceId,
+                type: 'GET',
+                success: function (data) {
+                    $('#city').empty();
+                    $('#city').append('<option value="">-- Choosse City/Regency --</option>');
+                    $.each(data, function (key, city) {
+                        $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#city').empty();
+            $('#city').append('<option value="">-- Choosse City/Regency  --</option>');
+        }
+    });
 </script>
 @endpush
