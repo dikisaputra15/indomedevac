@@ -469,8 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
         longitude: {{ $hospital->longitude }},
         image: '{{ $hospital->image ?? '' }}',
         address: '{{ $hospital->address ?? '' }}',
-        telephone: '{{ $hospital->telephone ?? '' }}',
-        website: '{{ $hospital->website ?? '' }}',
+        telephone: {!! json_encode($hospital->telephone ?? '') !!},
+        website: {!! json_encode($hospital->website ?? '') !!},
         icon: '{{ $hospital->icon ?? '' }}'
     };
     const nearbyHospitals = @json($nearbyHospitals);
