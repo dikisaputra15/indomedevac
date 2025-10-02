@@ -180,8 +180,8 @@ class AirportsController extends Controller
     public function showdetail($id)
     {
         $airport = Airport::findOrFail($id);
-        $city = City::findOrFail($airport->province_id);
-        $province = Provincesregion::findOrFail($city->province_id);
+        $city = City::findOrFail($airport->city_id);
+        $province = Provincesregion::findOrFail($airport->province_id);
 
         return view('pages.airports.showdetail', compact('airport', 'city', 'province'));
     }
