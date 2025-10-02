@@ -368,17 +368,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        const airportData = {
-            id: {{ $airport->id }},
-            name: '{{ $airport->airport_name }}',
-            latitude: {{ $airport->latitude }},
-            longitude: {{ $airport->longitude }},
-            icon: '{{ $airport->icon ?? '' }}',
-            image: '{{ $airport->image ?? '' }}',
-            address: '{{ $airport->address ?? '' }}',
-            telephone: '{{ $airport->telephone ?? '' }}',
-            website: '{{ $airport->website ?? '' }}'
-        };
+        const airportData = {!! json_encode([
+            'id'        => $airport->id,
+            'name'      => $airport->airport_name,
+            'latitude'  => $airport->latitude,
+            'longitude' => $airport->longitude,
+            'icon'      => $airport->icon ?? '',
+            'image'     => $airport->image ?? '',
+            'address'   => $airport->address ?? '',
+            'telephone' => $airport->telephone ?? '',
+            'website'   => $airport->website ?? '',
+        ]) !!};
 
         // Data bandara terdekat (dari controller)
         const nearbyAirports = @json($nearbyAirports);

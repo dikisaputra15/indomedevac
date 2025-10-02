@@ -461,18 +461,17 @@
 <script>
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Data dari Laravel ---
-    const hospitalData = {
-        id: {{ $hospital->id }},
-        name: '{{ $hospital->name }}',
-        latitude: {{ $hospital->latitude }},
-        longitude: {{ $hospital->longitude }},
-        image: '{{ $hospital->image ?? '' }}',
-        address: '{{ $hospital->address ?? '' }}',
-        telephone: {!! json_encode($hospital->telephone ?? '') !!},
-        website: {!! json_encode($hospital->website ?? '') !!},
-        icon: '{{ $hospital->icon ?? '' }}'
-    };
+    const hospitalData = {!! json_encode([
+        'id'        => $hospital->id,
+        'name'      => $hospital->name,
+        'latitude'  => $hospital->latitude,
+        'longitude' => $hospital->longitude,
+        'image'     => $hospital->image ?? '',
+        'address'   => $hospital->address ?? '',
+        'telephone' => $hospital->telephone ?? '',
+        'website'   => $hospital->website ?? '',
+        'icon'      => $hospital->icon ?? '',
+    ]) !!};
     const nearbyHospitals = @json($nearbyHospitals);
     const nearbyAirports = @json($nearbyAirports);
     const radiusKm = {{ $radius_km }};

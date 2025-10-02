@@ -331,7 +331,7 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Edit Comments
+                Edit Note
               </h3>
             </div>
             <!-- /.card-header -->
