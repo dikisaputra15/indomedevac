@@ -16,8 +16,12 @@
                 <small>Incident Dashboard</small>
             </a>
 
+            <li class="nav-item mr-3">
+                <div id="google_translate_element"></div>
+            </li>
+
             @role('admin')
-            <li class="nav-item me-3">
+            <li class="nav-item mr-3">
                 <a class="btn btn-primary" href="/administrator" target="_blank">
                     Admin
                 </a>
@@ -32,6 +36,7 @@
             </li>
         </ul>
     </div>
+
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
     </form>
