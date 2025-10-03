@@ -153,7 +153,7 @@
                             <p><strong>IATA Code:</strong> {{ $airport->iata_code }} </p>
                             <p><strong>ICAO Code:</strong> {{ $airport->icao_code }} </p>
                             <p><strong>Hrs of Operation:</strong> {{ $airport->hrs_of_operation }} </p>
-                            <p><strong>Distance from:</strong><br>
+                            <p><strong>Distance To:</strong><br>
                                 <?php echo $airport->distance_from; ?>
                             </p>
                             <p><strong>Elevation:</strong> {{ $airport->elevation }} </p>
