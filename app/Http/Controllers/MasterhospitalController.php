@@ -20,7 +20,7 @@ class MasterhospitalController extends Controller
          if(request()->ajax()) {
             return datatables()->of(Hospital::select(
                 'hospitals.*',
-                'cities.city' // kolom dari tabel city
+                'cities.city as citi' // kolom dari tabel city
             )
             ->join('cities', 'cities.id', '=', 'hospitals.city_id') // join ke tabel city
             ->orderBy('hospitals.id', 'desc'))

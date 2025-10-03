@@ -68,8 +68,8 @@
                         name: 'airport_name'
                     },
                     {
-                        data: 'city',
-                        name: 'city'
+                        data: 'citi',
+                        name: 'cities.city'
                     },
                     {
                         data: 'created_at',

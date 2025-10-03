@@ -16,39 +16,38 @@ class MasterairportController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-         if(request()->ajax()) {
-            return datatables()->of(Airport::select(
+{
+    if (request()->ajax()) {
+        $airports = Airport::select(
                 'airports.*',
-                'cities.city' // kolom dari tabel city
+                'cities.city as citi' // kolom dari tabel city
             )
-            ->join('cities', 'cities.id', '=', 'airports.city_id') // join ke tabel city
-            ->orderBy('airports.id', 'desc'))
+            ->leftJoin('cities', 'cities.id', '=', 'airports.city_id') // join ke tabel city
+            ->orderBy('airports.id', 'desc');
 
+        return datatables()->of($airports)
             ->addColumn('created_at', function ($row) {
-                // Format tanggal jadi dd-mm-yyyy HH:MM
-                return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
+                return \Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
             })
-            ->addColumn('action', function($row){
-                 $updateButton = '<a href="' . route('airportdata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
-                  $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
+            ->addColumn('action', function ($row) {
+                $updateButton = '<a href="' . route('airportdata.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
+                $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '">Delete</button>';
 
-                    if ($row->airport_status) {
-                        // Kalau status = true (publish), tombol jadi Unpublish
-                        $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="'.$row->id.'">Unpublish</button>';
-                    } else {
-                        // Kalau status = false (unpublish), tombol jadi Publish
-                        $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="'.$row->id.'">Publish</button>';
-                    }
+                if ($row->airport_status) {
+                    $statusButton = '<button class="btn btn-sm btn-warning status-btn" data-id="' . $row->id . '">Unpublish</button>';
+                } else {
+                    $statusButton = '<button class="btn btn-sm btn-success status-btn" data-id="' . $row->id . '">Publish</button>';
+                }
 
-                 return $updateButton." ".$deleteButton." ".$statusButton;
+                return $updateButton . " " . $deleteButton . " " . $statusButton;
             })
-            ->rawColumns(['action','created_at'])
+            ->rawColumns(['action', 'created_at'])
             ->addIndexColumn()
             ->make(true);
-        }
-        return view('pages.master.airport');
     }
+
+    return view('pages.master.airport');
+}
 
     /**
      * Show the form for creating a new resource.
