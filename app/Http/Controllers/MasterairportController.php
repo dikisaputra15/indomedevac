@@ -18,7 +18,13 @@ class MasterairportController extends Controller
     public function index()
     {
          if(request()->ajax()) {
-            return datatables()->of(Airport::select('*')->orderBy('id', 'desc'))
+            return datatables()->of(Airport::select(
+                'airports.*',
+                'cities.city' // kolom dari tabel city
+            )
+            ->join('cities', 'cities.id', '=', 'airports.city_id') // join ke tabel city
+            ->orderBy('airports.id', 'desc'))
+
             ->addColumn('created_at', function ($row) {
                 // Format tanggal jadi dd-mm-yyyy HH:MM
                 return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');

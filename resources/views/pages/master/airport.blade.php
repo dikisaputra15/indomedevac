@@ -19,7 +19,9 @@
                   <thead>
                     <tr>
                       <th>No</th>
+                      <th>ID</th>
                       <th>Airport Name</th>
+                      <th>City / Regency</th>
                       <th>Created At</th>
                       <th>Action</th>
                     </tr>
@@ -58,8 +60,16 @@
                         searchable: false
                     },
                     {
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
                         data: 'airport_name',
                         name: 'airport_name'
+                    },
+                    {
+                        data: 'city',
+                        name: 'city'
                     },
                     {
                         data: 'created_at',

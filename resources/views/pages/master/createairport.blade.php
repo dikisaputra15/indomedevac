@@ -540,6 +540,10 @@
                     <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Airport customs/immigration">
                     <label class="form-check-label" for="domestic">Airport customs/immigration</label>
                 </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Waiting area">
+                    <label class="form-check-label" for="domestic">Waiting area</label>
+                </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="public_facilities[]" value="ATM">
                     <label class="form-check-label" for="military">ATM</label>
@@ -601,6 +605,10 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Online transportation">
                     <label class="form-check-label" for="military">Online transportation</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Taxi bike">
+                    <label class="form-check-label" for="military">Taxi bike</label>
                 </div>
                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="public_transportation[]" value="None identified at site">

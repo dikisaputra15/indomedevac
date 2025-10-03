@@ -18,7 +18,13 @@ class MasterhospitalController extends Controller
     public function index()
     {
          if(request()->ajax()) {
-            return datatables()->of(Hospital::select('*')->orderBy('id', 'desc'))
+            return datatables()->of(Hospital::select(
+                'hospitals.*',
+                'cities.city' // kolom dari tabel city
+            )
+            ->join('cities', 'cities.id', '=', 'hospitals.city_id') // join ke tabel city
+            ->orderBy('hospitals.id', 'desc'))
+
             ->addColumn('created_at', function ($row) {
                 // Format tanggal jadi dd-mm-yyyy HH:MM
                 return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');

@@ -617,6 +617,10 @@
                     <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Airport customs/immigration" {{ in_array('Airport customs/immigration', $public_facilities) ? 'checked' : '' }}>
                     <label class="form-check-label">Airport customs/immigration</label>
                 </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Waiting area" {{ in_array('Waiting area', $public_facilities) ? 'checked' : '' }}>
+                    <label class="form-check-label">Waiting area</label>
+                </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="public_facilities[]" value="ATM" {{ in_array('ATM', $public_facilities) ? 'checked' : '' }}>
                     <label class="form-check-label">ATM</label>
@@ -698,6 +702,10 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Online transportation" {{ in_array('Online transportation', $public_transportation) ? 'checked' : '' }}>
                     <label class="form-check-label">Online transportation</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Taxi bike" {{ in_array('Taxi bike', $public_transportation) ? 'checked' : '' }}>
+                    <label class="form-check-label">Taxi bike</label>
                 </div>
                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="public_transportation[]" value="None identified at site" {{ in_array('None identified at site', $public_transportation) ? 'checked' : '' }}>
