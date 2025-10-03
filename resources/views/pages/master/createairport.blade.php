@@ -175,13 +175,6 @@
             </div>
         </div>
 
-         <div class="col-md-12" hidden>
-            <div class="form-group">
-                <label>Operator</label>
-                <input type="text" class="form-control" name="operator">
-            </div>
-        </div>
-
         <div class="col-md-12">
             <div class="form-group">
                 <label>Magnetic Variation</label>
@@ -235,11 +228,62 @@
           </div>
         </div>
 
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Operator</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="State-Owned Enterprise">
+                    <label class="form-check-label" for="beaconYes">State-Owned Enterprise</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Local-Level Government">
+                    <label class="form-check-label" for="beaconNo">Local-Level Government</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Mission / Community / Organization">
+                    <label class="form-check-label" for="beaconUnknown">Mission / Community / Organization</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Private">
+                    <label class="form-check-label" for="beaconUnknown">Private</label>
+                </div>
+
+                 <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Military (Army)">
+                    <label class="form-check-label" for="beaconUnknown">Military (Army)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Military (Navy)">
+                    <label class="form-check-label" for="beaconUnknown">Military (Navy)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Military (Air Force)">
+                    <label class="form-check-label" for="beaconUnknown">Military (Air Force)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Police">
+                    <label class="form-check-label" for="beaconUnknown">Police</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="operator" value="Customs">
+                    <label class="form-check-label" for="beaconUnknown">Customs</label>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Operator
+                Link
               </h3>
             </div>
             <!-- /.card-header -->
@@ -481,40 +525,88 @@
           </div>
         </div>
 
-        <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                Public Facilities
-              </h3>
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Public Facilities</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Terminal building">
+                    <label class="form-check-label" for="international">Terminal building</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Check-in counter">
+                    <label class="form-check-label" for="domestic">Check-in counter</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Airport customs/immigration">
+                    <label class="form-check-label" for="domestic">Airport customs/immigration</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="ATM">
+                    <label class="form-check-label" for="military">ATM</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Money changer">
+                    <label class="form-check-label" for="military">Money changer</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Retail stores and restaurant">
+                    <label class="form-check-label" for="military">Retail stores and restaurant</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Prayer room/Mushola">
+                    <label class="form-check-label" for="military">Prayer room/Mushola</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Restrooms">
+                    <label class="form-check-label" for="military">Restrooms</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Parking">
+                    <label class="form-check-label" for="military">Parking</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_facilities[]" value="Limited facilities available or no facilities available">
+                    <label class="form-check-label" for="military">Limited facilities available or no facilities available</label>
+                </div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-
-                <textarea id="summernote9" name="public_facilities">
-                </textarea>
-
-            </div>
-
-          </div>
         </div>
 
         <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                Public Transportation
-              </h3>
+            <div class="form-group">
+                <label>Public Transportation</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Airport shuttle">
+                    <label class="form-check-label" for="international">Airport shuttle</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name=public_transportation[]" value="Airport bus">
+                    <label class="form-check-label" for="domestic">Airport bus</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Airport train">
+                    <label class="form-check-label" for="domestic">Airport train</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Airport Taxi">
+                    <label class="form-check-label" for="military">Airport Taxi</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Car rental">
+                    <label class="form-check-label" for="military">Car rental</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Travel vehicle">
+                    <label class="form-check-label" for="military">Travel vehicle</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="Online transportation">
+                    <label class="form-check-label" for="military">Online transportation</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="public_transportation[]" value="None identified at site">
+                    <label class="form-check-label" for="military">None identified at site</label>
+                </div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-
-                <textarea id="summernote10" name="public_transportation">
-                </textarea>
-
-            </div>
-
-          </div>
         </div>
 
         <div class="col-md-12">

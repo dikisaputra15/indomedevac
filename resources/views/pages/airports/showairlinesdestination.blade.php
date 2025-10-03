@@ -188,8 +188,13 @@
         <div class="card">
             <div class="card-header fw-bold"><img src="{{ asset('images/suport-service-icon.png') }}" style="width: 30px; height: 30px;"> Information Support</div>
             <div class="card-body overflow-auto">
+                <h5>Specific Flight Information</h5>
                 <?php echo $airport->other_flight_information; ?>
+
+                <h5>General Flight Information</h5>
                 <?php echo $airport->general_flight_information; ?>
+
+                <h5>Aircraft Information</h5>
                 <?php echo $airport->aircraft_information; ?>
             </div>
         </div>
