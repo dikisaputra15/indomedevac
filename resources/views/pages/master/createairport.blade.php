@@ -89,6 +89,45 @@
 
          <div class="col-md-12">
             <div class="form-group">
+                <label>Military Branch</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Army">
+                    <label class="form-check-label">Army</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Navy">
+                    <label class="form-check-label">Navy</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Air Force">
+                    <label class="form-check-label">Air Force</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Note
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote11" name="note">
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
                 <label>Icon</label><br>
 
                 @php
@@ -147,7 +186,7 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Distance From
+                Distance To
               </h3>
             </div>
             <!-- /.card-header -->
@@ -308,24 +347,6 @@
             <div class="card-body">
 
                 <textarea id="summernote14" name="other_reference_website">
-                </textarea>
-
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                Note
-              </h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-
-                <textarea id="summernote11" name="note">
                 </textarea>
 
             </div>

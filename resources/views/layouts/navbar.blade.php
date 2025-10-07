@@ -16,9 +16,9 @@
                 <small>Incident Dashboard</small>
             </a>
 
-            <li class="nav-item mr-3">
+            <!-- <li class="nav-item mr-3">
                 <div id="google_translate_element"></div>
-            </li>
+            </li> -->
 
             @role('admin')
             <li class="nav-item mr-3">

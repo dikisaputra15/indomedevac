@@ -162,7 +162,8 @@
                             <p><strong>Beacon:</strong> {{ $airport->beacon }}</p>
                             <p><strong>Max Aircraft Capability:</strong> {{ $airport->max_aircraft_capability }} </p>
                             <p><strong>Directorate General of Civil Aviation:</strong> {!! $airport->dgoca !!}  </p>
-                            <p><strong>Operator:</strong> {!! $airport->soao !!}  </p>
+                            <p><strong>Operator:</strong> {!! $airport->operator !!}  </p>
+                            <p><strong>Link:</strong> {!! $airport->soao !!}  </p>
                             <p><strong>Other Airport Info:</strong> {!! $airport->other_reference_website !!}  </p>
                             @if(!empty($airport->note))
                                 <p><strong>Note:</strong> {!! $airport->note !!} </p>

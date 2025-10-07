@@ -94,6 +94,7 @@ class MasterairportController extends Controller
         $airport->email = $request->input('email');
         $airport->website = $request->input('website');
         $airport->category = $category;
+        $airport->military_branch = $request->input('military_branch');
         $airport->iata_code = $request->input('iata_code');
         $airport->icao_code = $request->input('icao_code');
         $airport->hrs_of_operation = $request->input('hrs_of_operation');
@@ -190,6 +191,7 @@ class MasterairportController extends Controller
             'email' => $request->input('email'),
             'website' => $request->input('website'),
             'category' => $category,
+            'military_branch' => $request->input('military_branch'),
             'iata_code' => $request->input('iata_code'),
             'icao_code' => $request->input('icao_code'),
             'hrs_of_operation' => $request->input('hrs_of_operation'),

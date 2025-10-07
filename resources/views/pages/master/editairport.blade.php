@@ -116,6 +116,30 @@
             </div>
         </div>
 
+          <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Military Branch</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Army"
+                        {{ old('Army', $airport->military_branch ?? '') == 'Army' ? 'checked' : '' }}>
+                    <label class="form-check-label">Army</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Navy"
+                        {{ old('Navy', $airport->military_branch ?? '') == 'Navy' ? 'checked' : '' }}>
+                    <label class="form-check-label">Navy</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Air Force"
+                        {{ old('Air Force', $airport->military_branch ?? '') == 'Air Force' ? 'checked' : '' }}>
+                    <label class="form-check-label">Air Force</label>
+                </div>
+            </div>
+        </div>
+
          <div class="col-md-12">
             <div class="form-group">
                 <label>Icon</label><br>
@@ -178,7 +202,7 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Edit Distance From
+                Edit Distance To
               </h3>
             </div>
             <!-- /.card-header -->
