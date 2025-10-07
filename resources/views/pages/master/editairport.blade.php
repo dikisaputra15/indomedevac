@@ -144,14 +144,14 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Edit Note
+                Edit Unit
               </h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
 
-                <textarea id="summernote11" name="note">
-                    <?php echo $airport->note; ?>
+                <textarea id="summernote28" name="unit">
+                    <?php echo $airport->unit; ?>
                 </textarea>
 
             </div>
@@ -409,6 +409,25 @@
 
                 <textarea id="summernote14" name="other_reference_website">
                     <?php echo $airport->other_reference_website; ?>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Edit Note
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote11" name="note">
+                    <?php echo $airport->note; ?>
                 </textarea>
 
             </div>
@@ -1097,6 +1116,7 @@
     $('#summernote25').summernote()
     $('#summernote26').summernote()
     $('#summernote27').summernote()
+    $('#summernote28').summernote()
 
   })
 </script>
