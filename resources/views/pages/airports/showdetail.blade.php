@@ -153,9 +153,6 @@
                             @if(!empty($airport->military_branch))
                                 <p><strong>Military Branch:</strong> {{ $airport->military_branch }} </p>
                             @endif
-                            @if(!empty($airport->note))
-                                <p><strong>Note:</strong> {!! $airport->note !!} </p>
-                            @endif
                             <p><strong>IATA Code:</strong> {{ $airport->iata_code }} </p>
                             <p><strong>ICAO Code:</strong> {{ $airport->icao_code }} </p>
                             <p><strong>Hrs of Operation:</strong> {{ $airport->hrs_of_operation }} </p>
@@ -171,6 +168,9 @@
                             <p><strong>Operator:</strong> {!! $airport->operator !!}  </p>
                             <p><strong>Link:</strong> {!! $airport->soao !!}  </p>
                             <p><strong>Other Airport Info:</strong> {!! $airport->other_reference_website !!}  </p>
+                            @if(!empty($airport->note))
+                                <p><strong>Note:</strong> {!! $airport->note !!} </p>
+                            @endif
                         </div>
                 </div>
         </div>
