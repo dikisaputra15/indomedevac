@@ -140,6 +140,25 @@
             </div>
         </div>
 
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Edit Note
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote11" name="note">
+                    <?php echo $airport->note; ?>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
          <div class="col-md-12">
             <div class="form-group">
                 <label>Icon</label><br>
@@ -390,25 +409,6 @@
 
                 <textarea id="summernote14" name="other_reference_website">
                     <?php echo $airport->other_reference_website; ?>
-                </textarea>
-
-            </div>
-
-          </div>
-        </div>
-
-         <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                Edit Note
-              </h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-
-                <textarea id="summernote11" name="note">
-                    <?php echo $airport->note; ?>
                 </textarea>
 
             </div>
