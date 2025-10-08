@@ -133,7 +133,7 @@
         <div class="col-md-6">
             <div class="d-flex p-3">
                 <div class="d-flex gap-2">
-                   
+
                 </div>
             </div>
         </div>
@@ -278,32 +278,32 @@
 
                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level66Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24px; height:24px;">
-                                <small>Level 6</small>
+                                <small>Class A</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
-                                <small>Level 5</small>
+                                <small>Class B</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
-                                <small>Level 4</small>
+                                <small>Class C</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level33Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
-                                <small>Level 3</small>
+                                <small>Class D</small>
                             </button>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level22Modal">
+                            <!-- <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level22Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png" style="width:24px; height:24px;">
                                 <small>Level 2</small>
-                            </button>
+                            </button> -->
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
-                                <small>Level 1</small>
+                                <small>PUSKESMAS</small>
                             </button>
                         </div>
 

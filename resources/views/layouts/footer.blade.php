@@ -65,22 +65,21 @@
     });
 </script>
 
-<!-- <script type="text/javascript">
+<script>
     function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-            {
-                pageLanguage: 'en', // default language
-                includedLanguages: 'en,id,fr', // hanya bahasa ini yang muncul
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            },
-            'google_translate_element'
-        );
+        const userLang = navigator.language || navigator.userLanguage;
+        const defaultLang = userLang.startsWith('id') ? 'en' : 'en'; // paksa tetap 'en'
+
+        new google.translate.TranslateElement({
+            pageLanguage: defaultLang,
+            autoDisplay: false
+        }, 'google_translate_element');
     }
 </script>
 
 <script type="text/javascript"
         src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script> -->
+</script>
 
 @stack('service')
 </body>
