@@ -104,7 +104,7 @@
             margin-bottom: 0.5rem !important;
         }
 
-         /* Classification */
+        /* Classification */
         .advanced{
             border-bottom: 3px solid #397fff;
         }
@@ -117,7 +117,7 @@
             border-bottom: 3px solid #b4a911ff;
         }
 
-         /* Boder */
+        /* Boder */
         .bl{
             border-left: 2px solid #DDDDDD;
         }
@@ -125,6 +125,7 @@
         .br{
             border-right: 2px solid #DDDDDD;
         }
+
 </style>
 @endpush
 
@@ -239,40 +240,36 @@
                 <span class="fw-bold pb-2 d-inline-block">Classification:</span>
             </div>
             <!-- Classification -->
-            <div class="text-end">
-                <div class="row mb-1">
-                    <div class="col-4 text-center fw-bold advanced br">Advanced</div>
+            <div class="text-end" style="min-width: 700px;">
+                <div class="row">
+                    <div class="col-3 text-center fw-bold advanced br">Advanced</div>
                     <div class="col-4 text-center fw-bold intermediete br">Intermediate</div>
-                    <div class="col-4 text-center fw-bold basic">Basic</div>
+                    <div class="col-5 text-center fw-bold basic">Basic</div>
                 </div>
 
                 <div class="row text-center">
                 <!-- Advanced -->
-                    <div class="col-2 text-danger">
+                    <div class="col-3 text-danger br">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
                             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:30px; height:30px;">
                             <small>Class A</small>
                         </button>
                     </div>
-                    <div class="col-2 text-primary br">
+                    
+                    <!-- Intermediete -->
+                     <div class="col-2 text-primary">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
                             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:30px; height:30px;">
                             <small>Class B</small>
                         </button>
                     </div>
-                    <!-- Intermediete -->
-                    <div class="col-2 text-purple">
+                    <div class="col-2 text-purple br">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
                             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:30px; height:30px;">
                             <small>Class C</small>
                         </button>
                     </div>
-                    <div class="col-2 text-success br">
-                        <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
-                            <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:30px; height:30px;">
-                            <small>Class D</small>
-                        </button>
-                    </div>
+                    
                     <!-- Basic -->
                     <!-- <div class="col-2 text-warning">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
@@ -280,7 +277,14 @@
                             <small>Class </small>
                         </button>
                     </div> -->
-                    <div class="col-2 text-info">
+                    <div class="col-2 text-success">
+                        <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                            <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:30px; height:30px;">
+                            <small>Class D</small>
+                        </button>
+                    </div>
+
+                    <div class="col-3 text-info">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
                             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:30px; height:30px;">
                             <small>PUSKESMAS</small>
