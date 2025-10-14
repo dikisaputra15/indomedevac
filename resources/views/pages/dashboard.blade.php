@@ -252,7 +252,7 @@
                         <div class="d-flex align-items-center gap-3">
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
+                                <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:18px; height:18px;">
                                 <small>International</small>
                             </button>
 
@@ -269,6 +269,11 @@
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
                                 <small>Combined (Civil-Military)</small>
+                            </button>
+
+                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level7Modal">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
+                                <small>Military</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
@@ -433,13 +438,30 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:30px; height:30px;">
+            <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:30px; height:30px;">
             <h5 class="modal-title" id="disclaimerLabel">International Airfield</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <p class="p-modal">Meet standards set by the International Air Transport Association (IATA) and the International Civil Aviation Organization (ICAO), facilitate transnational travel managing flights between countries, have customs and border control facilities to manage passengers and cargo, and may have dedicated terminals for domestic and international flights. International airports have longer runways to accommodate larger, heavier aircraft, are often a main hub for air traffic, and can serve as a base for larger airlines. Features can include aircraft maintenance, air traffic control, communications, emergency response, and fuel storage</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="level7Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+            <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:30px; height:30px;">
+            <h5 class="modal-title" id="disclaimerLabel">Military Airfield</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal">Facilities where military aircraft operate, also known as a military airport, airbase, or air station. Features include aircraft maintenance, air traffic control, communications, emergency response, fuel and weapon storage, defensive systems, aircraft shelters, and personnel facilities.</p>
       </div>
     </div>
   </div>
