@@ -193,14 +193,14 @@ class AirportsController extends Controller
 
           // --- Ambil Bandara Terdekat ---
         $nearbyAirports = Airport::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$airport->latitude, $airport->longitude, $airport->latitude])
-            ->having('distance', '<', 100) // Filter dalam radius 100 km (sesuaikan)
+            ->having('distance', '<=', 100) // Filter dalam radius 100 km (sesuaikan)
             ->where('id', '!=', $airport->id) // Jangan sertakan bandara utama itu sendiri
             ->orderBy('distance')
             ->get();
 
         // --- Ambil Rumah Sakit Terdekat ---
         $nearbyHospitals = Hospital::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$airport->latitude, $airport->longitude, $airport->latitude])
-            ->having('distance', '<', 100) // Filter dalam radius 100 km (sesuaikan)
+            ->having('distance', '<=', 100) // Filter dalam radius 100 km (sesuaikan)
             ->orderBy('distance')
             ->get();
 
@@ -221,7 +221,7 @@ class AirportsController extends Controller
 
            // --- Ambil Bandara Terdekat ---
         $nearbyAirports = Airport::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$airport->latitude, $airport->longitude, $airport->latitude])
-            ->having('distance', '<', 100) // Filter dalam radius 100 km (sesuaikan)
+            ->having('distance', '<=', 500) // Filter dalam radius 500 km (sesuaikan)
             ->where('id', '!=', $airport->id) // Jangan sertakan bandara utama itu sendiri
             ->orderBy('distance')
             ->get();

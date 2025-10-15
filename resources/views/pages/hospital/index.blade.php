@@ -199,7 +199,7 @@
 
               <div class="col-md-10 mt-2">
                     <label class="form-label d-flex align-items-center" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#provinceCollapse" aria-expanded="false" aria-controls="provinceCollapse">
-                        <span class="me-1">Provinces Region</span>
+                        <span class="me-1">Province</span>
                         <i class="bi bi-chevron-down" id="provinceToggleIcon"></i>
                     </label>
 
@@ -255,7 +255,7 @@
                             <small>Class A</small>
                         </button>
                     </div>
-                    
+
                     <!-- Intermediete -->
                      <div class="col-2 text-primary">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
@@ -269,7 +269,7 @@
                             <small>Class C</small>
                         </button>
                     </div>
-                    
+
                     <!-- Basic -->
                     <!-- <div class="col-2 text-warning">
                         <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">

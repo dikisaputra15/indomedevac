@@ -178,7 +178,7 @@
 
                  <div class="col-md-10 mt-2">
                     <label class="form-label d-flex align-items-center" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#provinceCollapse" aria-expanded="false" aria-controls="provinceCollapse">
-                        <span class="me-1">Provinces Region</span>
+                        <span class="me-1">Province</span>
                         <i class="bi bi-chevron-down" id="provinceToggleIcon"></i>
                     </label>
 

@@ -86,8 +86,9 @@
 <div class="card">
 
 <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
-        <div class="d-flex gap-2 align-items-center">
-            <h2 class="fw-bold">{{ $airport->airport_name }}</h2>
+       <div class="d-flex flex-column gap-1">
+            <h2 class="fw-bold mb-0">{{ $airport->airport_name }}</h2>
+            <span class="fw-bold">{{ $airport->category }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -228,9 +229,9 @@
 
         <div class="col-sm-4 d-flex flex-column gap-3">
             <div class="card">
-                <div class="card-header fw-bold"><img src="{{ asset('images/icon-police.png') }}" style="width: 24px; height: 24px;"> Nearest Police Station</div>
+                <div class="card-header fw-bold"><img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;"> Nearest Medical Facility</div>
                 <div class="card-body overflow-auto">
-                    <?php echo $airport->nearest_police_station; ?>
+                    <?php echo $airport->nearest_medical_facility; ?>
                 </div>
             </div>
 
@@ -238,6 +239,13 @@
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-medical-support-website.png') }}" style="width: 24px; height: 24px;"> Emergency Medical Support</div>
                 <div class="card-body overflow-auto">
                         <?php echo $hospital->medical_support_website; ?>
+                </div>
+            </div>
+
+             <div class="card">
+                <div class="card-header fw-bold"><img src="{{ asset('images/icon-police.png') }}" style="width: 24px; height: 24px;"> Nearest Police Station</div>
+                <div class="card-body overflow-auto">
+                    <?php echo $airport->nearest_police_station; ?>
                 </div>
             </div>
         </div>
@@ -538,7 +546,7 @@
             radiusCircle = L.circle([airportData.latitude, airportData.longitude], {
                 color: 'red',
                 fillColor: '#f03',
-                fillOpacity: 0.2,
+                fillOpacity: 0.1,
                 radius: radiusKm * 1000
             }).addTo(map);
         }

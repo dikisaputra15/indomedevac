@@ -29,7 +29,7 @@
 
         <div class="col-md-12">
             <div class="form-group">
-                <label>Provinces, Region</label>
+                <label>Province</label>
                 <select class="form-control" name="province_id">
                     <?php
                         foreach ($provinces as $prov) {
@@ -184,8 +184,49 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Ownership</label>
-                <input type="text" class="form-control" name="ownership" value="{{ $hospital->ownership; }}">
+                <label>Edit Ownership</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Government"
+                        {{ old('Government', $hospital->ownership ?? '') == 'Government' ? 'checked' : '' }}>
+                    <label class="form-check-label">Government</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Private"
+                        {{ old('Private', $hospital->ownership ?? '') == 'Private' ? 'checked' : '' }}>
+                    <label class="form-check-label">Private</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Community"
+                        {{ old('Community', $hospital->ownership ?? '') == 'Community' ? 'checked' : '' }}>
+                    <label class="form-check-label">Community</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Army"
+                        {{ old('Army', $hospital->ownership ?? '') == 'Army' ? 'checked' : '' }}>
+                    <label class="form-check-label">Army</label>
+                </div>
+
+                 <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Navy"
+                        {{ old('Navy', $hospital->ownership ?? '') == 'Navy' ? 'checked' : '' }}>
+                    <label class="form-check-label">Navy</label>
+                </div>
+
+                 <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Air Force"
+                        {{ old('Air Force', $hospital->ownership ?? '') == 'Air Force' ? 'checked' : '' }}>
+                    <label class="form-check-label">Air Force</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Police"
+                        {{ old('Police', $hospital->ownership ?? '') == 'Police' ? 'checked' : '' }}>
+                    <label class="form-check-label">Police</label>
+                </div>
             </div>
         </div>
 
@@ -322,38 +363,128 @@
           </div>
         </div>
 
-         <div class="col-md-12">
+        <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Inpatient Services</label>
-                <input type="text" class="form-control" name="inpatient_services" value="{{ $hospital->inpatient_services; }}">
+                <label>Edit Inpatient Services</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inpatient_services" value="Yes"
+                        {{ old('Yes', $hospital->inpatient_services ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inpatient_services" value="No"
+                        {{ old('No', $hospital->inpatient_services ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inpatient_services" value="Data not identified"
+                        {{ old('Data not identified', $hospital->inpatient_services ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Outpatient Services</label>
-                <input type="text" class="form-control" name="outpatient_services" value="{{ $hospital->outpatient_services; }}">
+                <label>Edit Outpatient Services</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="outpatient_services" value="Yes"
+                        {{ old('Yes', $hospital->outpatient_services ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="outpatient_services" value="No"
+                        {{ old('No', $hospital->outpatient_services ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="outpatient_services" value="Data not identified"
+                        {{ old('Data not identified', $hospital->outpatient_services ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Hour Emergency Services</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="hour_emergency_services" value="Yes"
+                        {{ old('Yes', $hospital->hour_emergency_services ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="hour_emergency_services" value="No"
+                        {{ old('No', $hospital->hour_emergency_services ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="hour_emergency_services" value="Data not identified"
+                        {{ old('Data not identified', $hospital->hour_emergency_services ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Hour Emergency Services</label>
-                <input type="text" class="form-control" name="hour_emergency_services" value="{{ $hospital->hour_emergency_services; }}">
-            </div>
-        </div>
+                <label>Edit Ambulance</label><br>
 
-        <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Ambulance</label>
-                <input type="text" class="form-control" name="ambulance" value="{{ $hospital->ambulance; }}">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ambulance" value="Yes"
+                        {{ old('Yes', $hospital->ambulance ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ambulance" value="No"
+                        {{ old('No', $hospital->ambulance ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ambulance" value="Data not identified"
+                        {{ old('Data not identified', $hospital->ambulance ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Helipad</label>
-                <input type="text" class="form-control" name="helipad" value="{{ $hospital->helipad; }}">
+                <label>Edit Helipad</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="helipad" value="Yes"
+                        {{ old('Yes', $hospital->helipad ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="helipad" value="No"
+                        {{ old('No', $hospital->helipad ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="helipad" value="Data not identified"
+                        {{ old('Data not identified', $hospital->helipad ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
@@ -376,66 +507,228 @@
           </div>
         </div>
 
-         <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit ICU</label>
-                <input type="text" class="form-control" name="icu" value="{{ $hospital->icu; }}">
-            </div>
-        </div>
-
-         <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Medical</label>
-                <input type="text" class="form-control" name="medical" value="{{ $hospital->medical; }}">
-            </div>
-        </div>
-
-         <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Pediatric</label>
-                <input type="text" class="form-control" name="pediatric" value="{{ $hospital->pediatric; }}">
-            </div>
-        </div>
-
-         <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Maternal</label>
-                <input type="text" class="form-control" name="maternal" value="{{ $hospital->maternal; }}">
-            </div>
-        </div>
-
-         <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Dental</label>
-                <input type="text" class="form-control" name="dental" value="{{ $hospital->dental; }}">
-            </div>
-        </div>
-
           <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Optical</label>
-                <input type="text" class="form-control" name="optical" value="{{ $hospital->optical; }}">
+                <label>Edit ICU</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="icu" value="Yes"
+                        {{ old('Yes', $hospital->icu ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="icu" value="No"
+                        {{ old('No', $hospital->icu ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="icu" value="Data not identified"
+                        {{ old('Data not identified', $hospital->icu ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Medical</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical" value="Yes"
+                        {{ old('Yes', $hospital->medical ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical" value="No"
+                        {{ old('No', $hospital->medical ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical" value="Data not identified"
+                        {{ old('Data not identified', $hospital->medical ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
-                <label>Edit IOC</label>
-                <input type="text" class="form-control" name="ioc" value="{{ $hospital->ioc; }}">
-            </div>
-        </div>
+                <label>Edit Pediatric</label><br>
 
-          <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Laboratory</label>
-                <input type="text" class="form-control" name="laboratory" value="{{ $hospital->laboratory; }}">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pediatric" value="Yes"
+                        {{ old('Yes', $hospital->pediatric ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pediatric" value="No"
+                        {{ old('No', $hospital->pediatric ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pediatric" value="Data not identified"
+                        {{ old('Data not identified', $hospital->pediatric ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Pharmacy</label>
-                <input type="text" class="form-control" name="pharmacy" value="{{ $hospital->pharmacy; }}">
+                <label>Edit Maternal</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="maternal" value="Yes"
+                        {{ old('Yes', $hospital->maternal ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="maternal" value="No"
+                        {{ old('No', $hospital->maternal ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="maternal" value="Data not identified"
+                        {{ old('Data not identified', $hospital->maternal ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Dental</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="dental" value="Yes"
+                        {{ old('Yes', $hospital->dental ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="dental" value="No"
+                        {{ old('No', $hospital->dental ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="dental" value="Data not identified"
+                        {{ old('Data not identified', $hospital->dental ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Optical</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="optical" value="Yes"
+                        {{ old('Yes', $hospital->optical ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="optical" value="No"
+                        {{ old('No', $hospital->optical ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="optical" value="Data not identified"
+                        {{ old('Data not identified', $hospital->optical ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit IOC</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ioc" value="Yes"
+                        {{ old('Yes', $hospital->ioc ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ioc" value="No"
+                        {{ old('No', $hospital->ioc ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ioc" value="Data not identified"
+                        {{ old('Data not identified', $hospital->ioc ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Laboratory</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="laboratory" value="Yes"
+                        {{ old('Yes', $hospital->laboratory ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="laboratory" value="No"
+                        {{ old('No', $hospital->laboratory ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="laboratory" value="Data not identified"
+                        {{ old('Data not identified', $hospital->laboratory ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
+            </div>
+        </div>
+
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Pharmacy</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pharmacy" value="Yes"
+                        {{ old('Yes', $hospital->pharmacy ?? '') == 'Yes' ? 'checked' : '' }}>
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pharmacy" value="No"
+                        {{ old('No', $hospital->pharmacy ?? '') == 'No' ? 'checked' : '' }}>
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pharmacy" value="Data not identified"
+                        {{ old('Data not identified', $hospital->pharmacy ?? '') == 'Data not identified' ? 'checked' : '' }}>
+                    <label class="form-check-label">Data not identified</label>
+                </div>
+
             </div>
         </div>
 
