@@ -84,9 +84,35 @@
             </div>
         </div>
 
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Hospital Classification Group</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Advanced">
+                    <label class="form-check-label">Advanced</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Intermediete">
+                    <label class="form-check-label">Intermediete</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Basic">
+                    <label class="form-check-label">Basic</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Specialized">
+                    <label class="form-check-label">Specialized</label>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-12">
             <div class="form-group">
-                <label>Icon</label>
+                <label>Icon</label><br>
                 <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png" style="width:24; height:24;"> Class A
                 <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png" style="width:24; height:24;"> Class B
                 <input type="radio" name="icon" value="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png"><img src="https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png" style="width:24; height:24;"> Class C

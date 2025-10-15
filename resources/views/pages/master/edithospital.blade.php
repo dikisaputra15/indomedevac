@@ -109,6 +109,36 @@
 
         <div class="col-md-12">
             <div class="form-group">
+                <label>Edit Hospital Classification Group</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Advanced"
+                        {{ old('Advanced', $hospital->facility_category ?? '') == 'Advanced' ? 'checked' : '' }}>
+                    <label class="form-check-label">Advanced</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Intermediete"
+                        {{ old('Intermediete', $hospital->facility_category ?? '') == 'Intermediete' ? 'checked' : '' }}>
+                    <label class="form-check-label">Intermediete</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Basic"
+                        {{ old('Basic', $hospital->facility_category ?? '') == 'Basic' ? 'checked' : '' }}>
+                    <label class="form-check-label">Basic</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="facility_category" value="Specialized"
+                        {{ old('Specialized', $hospital->facility_category ?? '') == 'Specialized' ? 'checked' : '' }}>
+                    <label class="form-check-label">Specialized</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
                 <label>Icon</label><br>
 
                 @php
