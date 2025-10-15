@@ -86,8 +86,10 @@
 <div class="card">
 
     <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
-        <div class="d-flex gap-2 align-items-center">
-            <h2 class="fw-bold">{{ $hospital->name }}</h2>
+
+        <div class="d-flex flex-column gap-1">
+            <h2 class="fw-bold mb-0">{{ $hospital->name }}</h2>
+            <span class="fw-bold">{{ $hospital->facility_level }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -558,14 +560,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = L.marker([item.latitude, item.longitude], { icon: itemIcon });
 
             const name = item.name || item.airport_name || 'N/A';
+            const level = item.facility_level || item.classification || 'N/A';
             const distance = item.distance ? `<br><strong>Distance:</strong> ${item.distance.toFixed(2)} km` : '';
 
             let detailUrl = (type === 'Airport')
                     ? `/airports/${item.id}/detail`
                     : `/hospitals/${item.id}`;
 
+            let group = (type === 'Airport')
+                    ? ``
+                    : `${item.facility_category} -`;
+
             marker.bindPopup(`
-                <b><a href="${detailUrl}">${name}</a></b> (${type})<br>
+                <b><a href="${detailUrl}">${name}</a></b><br>${group} ${level}<br>
                 ${distance}
                 <br><button class="btn btn-sm btn-primary mt-2" onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">Get Direction</button>
             `);

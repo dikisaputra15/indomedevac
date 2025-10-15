@@ -125,7 +125,7 @@ class HospitalController extends Controller
 
         // Fetch nearby hospitals (excluding the current one)
         $nearbyHospitals = Hospital::selectRaw("
-            id, name, icon, latitude, longitude,
+            id, name, icon, latitude, longitude, facility_level, facility_category,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
         ->having('distance', '<=', $radius_km)
@@ -135,7 +135,7 @@ class HospitalController extends Controller
 
          // Fetch nearby airports
         $nearbyAirports = Airport::selectRaw("
-            id, airport_name AS name, icon, latitude, longitude,
+            id, airport_name AS name, icon, latitude, longitude, classification,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
         ->having('distance', '<=', $radius_km)

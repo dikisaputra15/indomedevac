@@ -80,8 +80,9 @@
 <div class="card">
 
      <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
-        <div class="d-flex gap-2 align-items-center">
-            <h2 class="fw-bold">{{ $hospital->name }}</h2>
+        <div class="d-flex flex-column gap-1">
+            <h2 class="fw-bold mb-0">{{ $hospital->name }}</h2>
+            <span class="fw-bold">{{ $hospital->facility_level }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
