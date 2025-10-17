@@ -623,17 +623,45 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+         <div class="col-md-12">
             <div class="form-group">
-                <label>Medical Imaging</label>
-                <input type="text" class="form-control" name="medical_imaging">
+                <label>Medical Imaging</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical_imaging" value="Yes">
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical_imaging" value="No">
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical_imaging" value="Data not identified">
+                    <label class="form-check-label">Data not identified</label>
+                </div>
             </div>
         </div>
 
-          <div class="col-md-12">
+        <div class="col-md-12">
             <div class="form-group">
-                <label>Medical Student Training</label>
-                <input type="text" class="form-control" name="medical_student_training">
+                <label>Medical Student Training</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical_student_training" value="Yes">
+                    <label class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical_student_training" value="No">
+                    <label class="form-check-label">No</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medical_student_training" value="Data not identified">
+                    <label class="form-check-label">Data not identified</label>
+                </div>
             </div>
         </div>
 
