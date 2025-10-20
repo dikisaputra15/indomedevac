@@ -320,13 +320,12 @@
       <div class="modal-header">
          <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 1</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Public Health Center (PUSKESMAS)</h5>
          </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>Village Health Post – Aid Post (VHP)</b></p>
-        <p class="p-modal">Basic level primary health care including health promotion, health improvement, and health protection.</p>
+        <p class="p-modal">A basic healthcare facility focusing on preventive, promotive, and basic curative services. Located at the sub-district and village level, offers maternal and child health, immunization, and community health programs.</p>
       </div>
     </div>
   </div>
@@ -356,13 +355,12 @@
       <div class="modal-header">
          <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 3</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class D — Sub-district Hospital</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>Health Center - Rural / Urban Clinic – Urban Centers (HC-UC)</b></p>
-        <p class="p-modal">Primary health and ambulatory care in urban and rural settings, inpatient, maternity, and newborn care in major provincial urban communities.</p>
+        <p class="p-modal">Provides basic inpatient and emergency care with general practitioners and limited specialist support. Mainly located in sub-districts serving as the first referral point before higher-level hospitals.</p>
       </div>
     </div>
   </div>
@@ -374,13 +372,12 @@
       <div class="modal-header">
          <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 4</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class C — District-Level Hospital</h5>
          </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>District Hospital - Rural Health Services (DH)</b></p>
-        <p class="p-modal">Primary and secondary level clinical services and district wide public health programs.</p>
+        <p class="p-modal">Provides core specialist care in internal medicine, surgery, obstetrics, and pediatrics. Manages common medical conditions, refers complex cases to higher-level hospitals.</p>
       </div>
     </div>
   </div>
@@ -392,13 +389,12 @@
       <div class="modal-header">
         <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 5</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class B — Provincial Referral Hospital</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>Provincial Hospital, Health Services and Public Health Programs (PHA)</b></p>
-        <p class="p-modal">Secondary level & specialist clinical care services, supporting primary health care, integrating public health programs, and patient referral.</p>
+        <p class="p-modal">Provides broad specialist and limited subspecialist services, functions as regional referral centers, includes ICUs, operating theaters, and diagnostic facilities. </p>
       </div>
     </div>
   </div>
@@ -410,13 +406,12 @@
       <div class="modal-header">
         <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 6</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class A — National Referral Hospital</h5>
         </div>
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>National Referral Specialist Tertiary and Teaching Hospital - Health Services (NHA)</b></p>
-        <p class="p-modal">Complex tertiary level clinical services, supporting primary health care, public health programs, and a formalized patient referral arrangement.</p>
+        <p class="p-modal">Highest-level hospital providing, extensive specialist and subspecialist services supported by advanced technology and large bed capacity. Class A hospitals also often serve as teaching and research centers. </p>
       </div>
     </div>
   </div>

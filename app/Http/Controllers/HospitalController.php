@@ -79,9 +79,8 @@ class HospitalController extends Controller
     public function showdetail($id)
     {
         $hospital = Hospital::findOrFail($id);
-        $idprov = $hospital->province_id;
-        $city = DB::table('cities')->where('id', $idprov)->first();
-        $province = DB::table('provincesregions')->where('id', $city->province_id)->first();
+        $city = DB::table('cities')->where('id', $hospital->city_id)->first();
+        $province = DB::table('provincesregions')->where('id', $hospital->province_id)->first();
 
         $latitude = $hospital->latitude;
         $longitude = $hospital->longitude;
