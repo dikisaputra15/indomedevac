@@ -206,6 +206,25 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
+                Note
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote15" name="others">
+
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+         <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
                 Other Medical Info
               </h3>
             </div>
@@ -719,13 +738,6 @@
             </div>
         </div>
 
-          <div class="col-md-12">
-            <div class="form-group">
-                <label>Others</label>
-                <input type="text" class="form-control" name="others">
-            </div>
-        </div>
-
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header">
@@ -847,6 +859,7 @@
     $('#summernote12').summernote()
     $('#summernote13').summernote()
     $('#summernote14').summernote()
+    $('#summernote15').summernote()
 
   })
 </script>

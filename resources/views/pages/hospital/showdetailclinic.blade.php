@@ -279,6 +279,16 @@
                 </div>
             </div>
             </div>
+
+             <div class="card">
+                <div class="card-body overflow-auto">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>Note : {!! $hospital->medical_personel_disclaimer; !!}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

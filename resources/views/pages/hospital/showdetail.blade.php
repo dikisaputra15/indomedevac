@@ -170,6 +170,10 @@
                         <?php echo $hospital->hrs_of_operation; ?>
                     </p>
                     <p>
+                        <strong>Note:</strong>
+                        <?php echo $hospital->others; ?>
+                    </p>
+                    <p>
                         <strong>Other Medical Services Info:</strong> <?php echo $hospital->other_medical_info; ?>
                     </p>
                 </div>

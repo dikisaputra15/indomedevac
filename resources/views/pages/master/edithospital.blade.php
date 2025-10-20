@@ -144,7 +144,7 @@
                 @php
                     $icons = [
                         ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital-pin-red.png', 'label' => 'Class A'],
-                        ['url' => ' https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png', 'label' => 'Class B'],
+                        ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-blue.png', 'label' => 'Class B'],
                         ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-purple.png', 'label' => 'Class C'],
                         ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-green.png', 'label' => 'Class D'],
                         ['url' => 'https://id.concordreview.com/wp-content/plugins/w2gm/resources/images/map_icons/icons/_new/hospital_pin-tosca.png', 'label' => 'Public Health Center (PUSKESMAS)'],
@@ -242,6 +242,25 @@
 
                 <textarea id="summernote4" name="hrs_of_operation">
                     <?php echo $hospital->hrs_of_operation; ?>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Edit Note
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote15" name="others">
+                    <?php echo $hospital->others; ?>
                 </textarea>
 
             </div>
@@ -829,13 +848,6 @@
             </div>
         </div>
 
-          <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Others</label>
-                <input type="text" class="form-control" name="others" value="{{ $hospital->others; }}">
-            </div>
-        </div>
-
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header">
@@ -962,6 +974,7 @@
     $('#summernote12').summernote()
     $('#summernote13').summernote()
     $('#summernote14').summernote()
+    $('#summernote15').summernote()
 
   })
 </script>
