@@ -172,7 +172,7 @@ class HospitalController extends Controller
             // Ensure province IDs are an array and valid integers
             $provinceIds = array_filter((array) $request->input('provinces'), 'is_numeric');
             if (!empty($provinceIds)) {
-                $q->whereIn('province_id', $provinceIds);
+                $q->whereIn('hospitals.province_id', $provinceIds);
             }
         });
 
