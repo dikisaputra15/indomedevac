@@ -178,16 +178,6 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select id="airport_category" class="form-select select22-search" name="airport_category">
-                        <option value="">🔍 Airport Category</option>
-                        @foreach($airportCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-
                 {{-- Filter for Hospitals --}}
                 <div class="col-md-2">
                     <select id="hospital_name" class="form-select select23-search" name="hospital_name">
@@ -198,21 +188,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select id="hospital_category" class="form-select select24-search" name="hospital_category">
-                        <option value="">🔍 Medical Facility Category</option>
-                        @foreach($hospitalCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-4 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Apply Filter</button>
-                    <button type="button" id="resetFilter" class="btn btn-secondary">Reset Filter</button>
-                </div>
-
-                <div class="col-md-2">
+                 <div class="col-md-2">
                     <label for="radiusRange" class="form-label">Search in radius <span id="radiusValue">0</span> kilometers</label>
                     <input type="range" id="radiusRange" name="radius" class="form-control" min="0" max="400" value="0">
                 </div>
@@ -236,6 +212,11 @@
                             @endforeach
                         </div>
                     </div>
+                </div>
+
+                <div class="col-md-4 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mr-1">Apply Filter</button>
+                    <button type="button" id="resetFilter" class="btn btn-secondary">Reset Filter</button>
                 </div>
 
             </div>
@@ -698,21 +679,6 @@
         applyFilters();
     });
 
-    // --- Custom Controls ---
-    // const totalControl = L.control({ position: 'topright' });
-    // totalControl.onAdd = function (map) {
-    //     const div = L.DomUtil.create('div', 'total-info');
-    //     div.innerHTML = 'Loading counts...';
-    //     return div;
-    // };
-    // totalControl.addTo(map);
-
-    // function updateCounters(airportCount, hospitalCount) {
-    //     document.getElementById('totalAirportsDisplay').innerText = airportCount;
-    //     document.getElementById('totalHospitalsDisplay').innerText = hospitalCount;
-    //     totalControl.getContainer().innerHTML = `Total Airports: ${airportCount}<br>Total Hospitals: ${hospitalCount}`;
-    // }
-
     // --- Radius Search Functionality ---
     function updateRadiusCircleAndPin() {
         if (radiusCircle) {
@@ -859,10 +825,10 @@
     // --- Main Filter Application Logic ---
     async function applyFilters() {
         const airportName = document.getElementById('airport_name').value;
-        const airportCategory = document.getElementById('airport_category').value;
+        // const airportCategory = document.getElementById('airport_category').value;
 
         const hospitalName = document.getElementById('hospital_name').value;
-        const hospitalCategory = document.getElementById('hospital_category').value;
+        // const hospitalCategory = document.getElementById('hospital_category').value;
 
         const radius = parseInt(document.getElementById('radiusRange').value);
         const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
@@ -880,7 +846,7 @@
 
         const airportFilters = {
             name: airportName,
-            category: airportCategory,
+            // category: airportCategory,
             ...commonFilters
         };
         const airports = await fetchData('/api/airports', airportFilters);
@@ -888,7 +854,7 @@
 
         const hospitalFilters = {
             name: hospitalName,
-            category: hospitalCategory,
+            // category: hospitalCategory,
             ...commonFilters
         };
         const hospitals = await fetchData('/api/hospital', hospitalFilters);
@@ -916,9 +882,9 @@
         // Save filter state to localStorage
         const currentFilters = {
             airport_name: airportName,
-            airport_category: airportCategory,
+            // airport_category: airportCategory,
             hospital_name: hospitalName,
-            hospital_category: hospitalCategory,
+            // hospital_category: hospitalCategory,
             radius: radius,
             provinces: selectedProvinces,
             center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
@@ -929,6 +895,103 @@
         localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
     }
 
+    // === Filter Control di dalam Peta ===
+    map.addControl(new (L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function () {
+            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            container.style.background = 'white';
+            container.style.borderRadius = '8px';
+            container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            container.style.overflow = 'hidden';
+            container.style.zIndex = '9999';
+
+            // Tombol toggle
+            const toggleButton = L.DomUtil.create('button', '', container);
+            toggleButton.innerHTML = 'Filter';
+            toggleButton.style.width = '100%';
+            toggleButton.style.border = 'none';
+            toggleButton.style.background = '#007bff';
+            toggleButton.style.color = 'white';
+            toggleButton.style.padding = '6px';
+            toggleButton.style.cursor = 'pointer';
+            toggleButton.style.fontSize = '13px';
+
+            // Panel filter
+            const panel = L.DomUtil.create('div', '', container);
+            panel.style.display = 'none';
+            panel.style.padding = '10px';
+            panel.style.maxWidth = '220px';
+            panel.style.maxHeight = '400px';
+            panel.style.overflowY = 'auto';
+            panel.innerHTML = `
+                <h6 style="margin:0 0 5px 0;">Filter</h6>
+
+                <select id="mapFilter" class="form-select form-select-sm mb-2">
+                    <option value="all">Show All</option>
+                    <option value="hospital">Hospitals</option>
+                    <option value="airport">Airports</option>
+                </select>
+
+                <div id="hospitalFilter" style="display:none;">
+                    <strong>Facility Level:</strong><br>
+                    ${['All','Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
+                        <label style="display:block;font-size:13px;">
+                            <input type="radio" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
+                        </label>
+                    `).join('')}
+                </div>
+
+                <div id="airportFilter" style="display:none; margin-top:8px;">
+                    <strong>Category:</strong><br>
+                    ${['International','Domestic','Military','Regional','Private'].map(cls => `
+                        <label style="display:block;font-size:13px;">
+                            <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+
+            L.DomEvent.disableClickPropagation(container);
+
+            // === Toggle Show/Hide ===
+            toggleButton.addEventListener('click', () => {
+                panel.style.display = (panel.style.display === 'none') ? 'block' : 'none';
+            });
+
+            // === Event filter logic ===
+            const filterSelect = panel.querySelector('#mapFilter');
+            const hospitalDiv = panel.querySelector('#hospitalFilter');
+            const airportDiv = panel.querySelector('#airportFilter');
+
+            function refresh() {
+                const selectedType = filterSelect.value;
+                const selectedLevel = panel.querySelector('input[name="hospitalLevel"]:checked')?.value || 'all';
+                const selectedClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+
+                // === panggil applyFilters() dengan parameter baru ===
+                applyFiltersWithMapControl(selectedType, selectedLevel, selectedClasses);
+            }
+
+            filterSelect.addEventListener('change', () => {
+                const val = filterSelect.value;
+                hospitalDiv.style.display = val === 'hospital' ? 'block' : 'none';
+                airportDiv.style.display = val === 'airport' ? 'block' : 'none';
+                refresh();
+            });
+
+            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(radio => {
+                radio.addEventListener('change', refresh);
+            });
+
+            panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
+                chk.addEventListener('change', refresh);
+            });
+
+            return container;
+        }
+    }))());
+
     // --- Load Filters and Apply on Page Load ---
     async function loadFiltersAndApply() {
         // Initialize Select2 first
@@ -938,11 +1001,11 @@
             width: '100%',
         });
 
-        $('.select22-search').select2({
-            placeholder: "🔍 Airport Category",
-            allowClear: true,
-            width: '100%',
-        });
+        // $('.select22-search').select2({
+        //     placeholder: "🔍 Airport Category",
+        //     allowClear: true,
+        //     width: '100%',
+        // });
 
          $('.select23-search').select2({
             placeholder: "🔍 Medical Facility Name",
@@ -950,11 +1013,11 @@
             width: '100%',
         });
 
-        $('.select24-search').select2({
-            placeholder: "🔍 Medical Facility Category",
-            allowClear: true,
-            width: '100%',
-        });
+        // $('.select24-search').select2({
+        //     placeholder: "🔍 Medical Facility Category",
+        //     allowClear: true,
+        //     width: '100%',
+        // });
 
         const savedFilterStateString = localStorage.getItem('mapFilterState');
         const savedPolygonString = localStorage.getItem('mapDrawnPolygon');
@@ -965,9 +1028,9 @@
 
             // Populate form fields
             document.getElementById('airport_name').value = savedFilters.airport_name || '';
-            document.getElementById('airport_category').value = savedFilters.airport_category || '';
+            // document.getElementById('airport_category').value = savedFilters.airport_category || '';
             document.getElementById('hospital_name').value = savedFilters.hospital_name || '';
-            document.getElementById('hospital_category').value = savedFilters.hospital_category || '';
+            // document.getElementById('hospital_category').value = savedFilters.hospital_category || '';
 
             const savedRadius = parseInt(savedFilters.radius) || 0;
             document.getElementById('radiusRange').value = savedRadius;
@@ -981,9 +1044,9 @@
 
             // Trigger Select2 updates
             $('#airport_name').val(savedFilters.airport_name).trigger('change');
-            $('#airport_category').val(savedFilters.airport_category).trigger('change');
+            // $('#airport_category').val(savedFilters.airport_category).trigger('change');
             $('#hospital_name').val(savedFilters.hospital_name).trigger('change');
-            $('#hospital_category').val(savedFilters.hospital_category).trigger('change');
+            // $('#hospital_category').val(savedFilters.hospital_category).trigger('change');
 
             if (savedLocationString && savedLocationString !== 'null') {
                 lastClickedLocation = JSON.parse(savedLocationString);
@@ -1012,6 +1075,35 @@
         await applyFilters();
     }
 
+    async function applyFiltersWithMapControl(selectedType, hospitalLevel, airportClasses) {
+    // Gunakan logika applyFilters() kamu, tapi tambahkan parameter sesuai filter control di peta
+    let commonFilters = {};
+
+    // === Hospital Filter ===
+    if (selectedType === 'hospital' || selectedType === 'all') {
+        const hospitals = await fetchData('/api/hospital', {
+            category: hospitalLevel !== 'all' ? hospitalLevel : '',
+            ...commonFilters
+        });
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    } else {
+        hospitalMarkers.clearLayers();
+    }
+
+    // === Airport Filter ===
+    if (selectedType === 'airport' || selectedType === 'all') {
+        const airports = await fetchData('/api/airports', {
+            category: airportClasses.length ? airportClasses : [],
+            ...commonFilters
+        });
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    } else {
+        airportMarkers.clearLayers();
+    }
+
+}
+
+
     // --- Event Listeners ---
     document.getElementById('filterForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -1027,9 +1119,9 @@
 
         // Reset Select2
         $('#airport_name').val(null).trigger('change');
-        $('#airport_category').val(null).trigger('change');
+        // $('#airport_category').val(null).trigger('change');
         $('#hospital_name').val(null).trigger('change');
-        $('#hospital_category').val(null).trigger('change');
+        // $('#hospital_category').val(null).trigger('change');
 
         if (radiusCircle) {
             map.removeLayer(radiusCircle);

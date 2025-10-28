@@ -10,12 +10,12 @@
                 <div id="google_translate_element"></div>
             </li>
 
-            <a href="https://id.concordreview.com/incident-tracking/" class="btn d-flex flex-column align-items-center" target="_blank">
+            <a href="{{ route('redirect.wp', ['target' => 'incident-tracking']) }}" class="btn d-flex flex-column align-items-center" target="_blank">
                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/07/incident-tracking-icon.png" style="width: 48px; height: 48px;">
                 <small>Incident Tracking</small>
             </a>
 
-            <a href="https://id.concordreview.com/indonesia-dashboard-w900/" class="btn d-flex flex-column align-items-center" target="_blank">
+            <a href="{{ route('redirect.wp', ['target' => 'dashboard']) }}" class="btn d-flex flex-column align-items-center" target="_blank">
                 <img src="https://pg.concordreview.com/wp-content/uploads/2023/12/icon-overview-dashboard.png" style="width: 48px; height: 48px;">
                 <small>Incident Dashboard</small>
             </a>

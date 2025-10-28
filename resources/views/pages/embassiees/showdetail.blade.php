@@ -129,10 +129,10 @@
                 <p>
                     <strong>Fax:</strong> {{ $embassy->fax ?? '-' }}
                 </p>
-                    <strong>Email:</strong> {{ $embassy->email ?? '-' }}
+                    <strong>Email:</strong> {!! $embassy->email ?? '-' !!}
                 </p>
                 <p>
-                    <strong>Website:</strong> <a href="{{ $embassy->website }}" target="_blank">{{ $embassy->website }}</a>
+                    <strong>Website:</strong> <a href="{{ $embassy->website }}" target="_blank">{!! $embassy->website !!}</a>
                 </p>
                 <p>
                     <strong>Latitude:</strong> {{ $embassy->latitude ?? '-' }}
@@ -166,9 +166,9 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.fullscreen/Control.FullScreen.js"></script>
 <script>
-    const latitude = {{ $embassy->latitude }};
-    const longitude = {{ $embassy->longitude }};
-    const embassyName = '{{ $embassy->name_embassiees }}'; // Using the embassy name from your data
+    const latitude = @json($embassy->latitude);
+    const longitude = @json($embassy->longitude);
+    const embassyName = @json($embassy->name_embassiees);
 
     const map = L.map('map', {
         fullscreenControl: true

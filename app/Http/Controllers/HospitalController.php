@@ -84,7 +84,7 @@ class HospitalController extends Controller
 
         $latitude = $hospital->latitude;
         $longitude = $hospital->longitude;
-        $radius_km = 100; // Your desired radius
+        $radius_km = 500; // Your desired radius
 
         // Fetch nearby hospitals (excluding the current one)
         $nearbyHospitals = Hospital::selectRaw("
@@ -120,7 +120,7 @@ class HospitalController extends Controller
 
         $latitude = $hospital->latitude;
         $longitude = $hospital->longitude;
-        $radius_km = 100; // Your desired radius
+        $radius_km = 500; // Your desired radius
 
         // Fetch nearby hospitals (excluding the current one)
         $nearbyHospitals = Hospital::selectRaw("
@@ -134,7 +134,7 @@ class HospitalController extends Controller
 
          // Fetch nearby airports
         $nearbyAirports = Airport::selectRaw("
-            id, airport_name AS name, icon, latitude, longitude, classification,
+            id, airport_name AS name, icon, latitude, longitude, category,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
         ->having('distance', '<=', $radius_km)
@@ -148,7 +148,8 @@ class HospitalController extends Controller
     {
         $query = Hospital::query();
         $query->join('cities', 'hospitals.province_id', '=', 'cities.id');
-        $query->select('hospitals.*', 'cities.city');
+        $query->join('provincesregions', 'hospitals.province_id', '=', 'provincesregions.id');
+        $query->select('hospitals.*', 'cities.city', 'provincesregions.provinces_region');
 
         $query->where('hospital_status', true);
 
