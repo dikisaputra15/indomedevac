@@ -1,4 +1,4 @@
-@extends('layouts.master-admin')
+@extends('layouts.master')
 
 @section('title', 'Dashboard')
 
@@ -129,31 +129,39 @@
 @section('conten')
 
 <div class="card">
+    <div class="row" style="background-color: #dfeaf1;">
+        <div class="col-md-6">
+            <div class="d-flex p-3">
+                <div class="d-flex gap-2">
 
-    <div class="d-flex justify-content-end p-3" style="background-color: #dfeaf1;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end p-3">
+                <div class="d-flex gap-2 mt-2">
 
-        <div class="d-flex gap-2 mt-2">
+                    <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
+                        <i class="bi bi-airplane fs-3"></i>
+                        <small>Airports</small>
+                    </a>
 
-            <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
-                <i class="bi bi-airplane fs-3"></i>
-                <small>Airports</small>
-            </a>
+                    <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
+                    <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
+                        <small>Medical</small>
+                    </a>
 
-            <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
-             <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
-                <small>Medical</small>
-            </a>
+                    <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
+                        <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
+                        <small>Air Charter</small>
+                    </a>
 
-            <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
-                  <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
-                <small>Air Charter</small>
-            </a>
-
-            <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
-                <small>Embassies</small>
-            </a>
-
+                    <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
+                    <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+                        <small>Embassies</small>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -170,16 +178,6 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select id="airport_category" class="form-select select22-search" name="airport_category">
-                        <option value="">🔍 Airport Category</option>
-                        @foreach($airportCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-
                 {{-- Filter for Hospitals --}}
                 <div class="col-md-2">
                     <select id="hospital_name" class="form-select select23-search" name="hospital_name">
@@ -190,21 +188,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select id="hospital_category" class="form-select select24-search" name="hospital_category">
-                        <option value="">🔍 Medical Facility Category</option>
-                        @foreach($hospitalCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-4 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Apply Filter</button>
-                    <button type="button" id="resetFilter" class="btn btn-secondary">Reset Filter</button>
-                </div>
-
-                <div class="col-md-2">
+                 <div class="col-md-2">
                     <label for="radiusRange" class="form-label">Search in radius <span id="radiusValue">0</span> kilometers</label>
                     <input type="range" id="radiusRange" name="radius" class="form-control" min="0" max="400" value="0">
                 </div>
@@ -230,6 +214,11 @@
                     </div>
                 </div>
 
+                <div class="col-md-4 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mr-1">Apply Filter</button>
+                    <button type="button" id="resetFilter" class="btn btn-secondary">Reset Filter</button>
+                </div>
+
             </div>
         </form>
     </div>
@@ -244,7 +233,7 @@
                         <div class="d-flex align-items-center gap-3">
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
+                                <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:18px; height:18px;">
                                 <small>International</small>
                             </button>
 
@@ -263,6 +252,11 @@
                                 <small>Combined (Civil-Military)</small>
                             </button>
 
+                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level7Modal">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
+                                <small>Military</small>
+                            </button>
+
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
                                 <small>Private</small>
@@ -270,32 +264,32 @@
 
                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level66Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24px; height:24px;">
-                                <small>Level 6</small>
+                                <small>Class A</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
-                                <small>Level 5</small>
+                                <small>Class B</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
-                                <small>Level 4</small>
+                                <small>Class C</small>
                             </button>
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level33Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
-                                <small>Level 3</small>
+                                <small>Class D</small>
                             </button>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level22Modal">
+                            <!-- <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level22Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png" style="width:24px; height:24px;">
                                 <small>Level 2</small>
-                            </button>
+                            </button> -->
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
-                                <small>Level 1</small>
+                                <small>PUSKESMAS</small>
                             </button>
                         </div>
 
@@ -425,7 +419,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:30px; height:30px;">
+            <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:30px; height:30px;">
             <h5 class="modal-title" id="disclaimerLabel">International Airfield</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -437,19 +431,35 @@
   </div>
 </div>
 
+<div class="modal fade" id="level7Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+            <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:30px; height:30px;">
+            <h5 class="modal-title" id="disclaimerLabel">Military Airfield</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal">Facilities where military aircraft operate, also known as a military airport, airbase, or air station. Features include aircraft maintenance, air traffic control, communications, emergency response, fuel and weapon storage, defensive systems, aircraft shelters, and personnel facilities.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="level11Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
          <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 1</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Public Health Center (PUSKESMAS)</h5>
          </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>Village Health Post – Aid Post (VHP)</b></p>
-        <p class="p-modal">Basic level primary health care including health promotion, health improvement, and health protection.</p>
+        <p class="p-modal">A basic healthcare facility focusing on preventive, promotive, and basic curative services. Located at the sub-district and village level, offers maternal and child health, immunization, and community health programs. </p>
       </div>
     </div>
   </div>
@@ -479,13 +489,12 @@
       <div class="modal-header">
          <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 3</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class D — Sub-district Hospital</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>Health Center - Rural / Urban Clinic – Urban Centers (HC-UC)</b></p>
-        <p class="p-modal">Primary health and ambulatory care in urban and rural settings, inpatient, maternity, and newborn care in major provincial urban communities.</p>
+        <p class="p-modal">Provides basic inpatient and emergency care with general practitioners and limited specialist support. Mainly located in sub-districts serving as the first referral point before higher-level hospitals.</p>
       </div>
     </div>
   </div>
@@ -497,13 +506,12 @@
       <div class="modal-header">
          <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 4</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class C — District-Level Hospital</h5>
          </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>District Hospital - Rural Health Services (DH)</b></p>
-        <p class="p-modal">Primary and secondary level clinical services and district wide public health programs.</p>
+        <p class="p-modal">Provides core specialist care in internal medicine, surgery, obstetrics, and pediatrics. Manages common medical conditions, refers complex cases to higher-level hospitals. </p>
       </div>
     </div>
   </div>
@@ -515,13 +523,12 @@
       <div class="modal-header">
         <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 5</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class B — Provincial Referral Hospital</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>Provincial Hospital, Health Services and Public Health Programs (PHA)</b></p>
-        <p class="p-modal">Secondary level & specialist clinical care services, supporting primary health care, integrating public health programs, and patient referral.</p>
+        <p class="p-modal">Provides broad specialist and limited subspecialist services, functions as regional referral centers, includes ICUs, operating theaters, and diagnostic facilities. </p>
       </div>
     </div>
   </div>
@@ -533,13 +540,12 @@
       <div class="modal-header">
         <div class="d-flex align-items-center">
             <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:30px; height:30px;">
-            <h5 class="modal-title" id="disclaimerLabel">Class 6</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Class A — National Referral Hospital</h5>
         </div>
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><b>National Referral Specialist Tertiary and Teaching Hospital - Health Services (NHA)</b></p>
-        <p class="p-modal">Complex tertiary level clinical services, supporting primary health care, public health programs, and a formalized patient referral arrangement.</p>
+        <p class="p-modal">Highest-level hospital providing, extensive specialist and subspecialist services supported by advanced technology and large bed capacity. Class A hospitals also often serve as teaching and research centers. </p>
       </div>
     </div>
   </div>
@@ -672,21 +678,6 @@
         drawnPolygonGeoJSON = null;
         applyFilters();
     });
-
-    // --- Custom Controls ---
-    // const totalControl = L.control({ position: 'topright' });
-    // totalControl.onAdd = function (map) {
-    //     const div = L.DomUtil.create('div', 'total-info');
-    //     div.innerHTML = 'Loading counts...';
-    //     return div;
-    // };
-    // totalControl.addTo(map);
-
-    // function updateCounters(airportCount, hospitalCount) {
-    //     document.getElementById('totalAirportsDisplay').innerText = airportCount;
-    //     document.getElementById('totalHospitalsDisplay').innerText = hospitalCount;
-    //     totalControl.getContainer().innerHTML = `Total Airports: ${airportCount}<br>Total Hospitals: ${hospitalCount}`;
-    // }
 
     // --- Radius Search Functionality ---
     function updateRadiusCircleAndPin() {
@@ -833,76 +824,181 @@
 
     // --- Main Filter Application Logic ---
     async function applyFilters() {
-        const airportName = document.getElementById('airport_name').value;
-        const airportCategory = document.getElementById('airport_category').value;
+    const airportName = document.getElementById('airport_name').value;
+    const hospitalName = document.getElementById('hospital_name').value;
+    const radius = parseInt(document.getElementById('radiusRange').value);
+    const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
+                                 .map(checkbox => checkbox.value);
 
-        const hospitalName = document.getElementById('hospital_name').value;
-        const hospitalCategory = document.getElementById('hospital_category').value;
+    let commonFilters = { provinces: selectedProvinces };
 
-        const radius = parseInt(document.getElementById('radiusRange').value);
-        const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
-                                     .map(checkbox => checkbox.value);
-
-        let commonFilters = {
-            provinces: selectedProvinces
-        };
-
-        if (radius > 0 && lastClickedLocation) {
-            commonFilters.radius = radius;
-            commonFilters.center_lat = lastClickedLocation.lat;
-            commonFilters.center_lng = lastClickedLocation.lng;
-        }
-
-        const airportFilters = {
-            name: airportName,
-            category: airportCategory,
-            ...commonFilters
-        };
-        const airports = await fetchData('/api/airports', airportFilters);
-        const airportCount = addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png', '/airports');
-
-        const hospitalFilters = {
-            name: hospitalName,
-            category: hospitalCategory,
-            ...commonFilters
-        };
-        const hospitals = await fetchData('/api/hospital', hospitalFilters);
-        const hospitalCount = addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png', '/hospitals');
-
-        // updateCounters(airportCount, hospitalCount);
-        updateRadiusCircleAndPin(); // Ensure the radius circle and pin are updated after filters are applied
-
-        // Adjust map view to fit all markers and drawn items
-        let combinedBounds = L.featureGroup();
-        if (airportMarkers.getLayers().length > 0) combinedBounds.addLayer(airportMarkers);
-        if (hospitalMarkers.getLayers().length > 0) combinedBounds.addLayer(hospitalMarkers);
-        if (drawnItems.getLayers().length > 0) combinedBounds.addLayer(drawnItems);
-        if (radiusCircle) combinedBounds.addLayer(radiusCircle);
-        if (radiusPinMarker) combinedBounds.addLayer(radiusPinMarker);
-
-        if (combinedBounds.getLayers().length > 0) {
-            map.fitBounds(combinedBounds.getBounds(), { padding: [50, 50] });
-        } else if (lastClickedLocation) {
-            map.setView(lastClickedLocation, 10);
-        } else {
-            map.setView([-6.80188562253168, 144.0733101155011], 6);
-        }
-
-        // Save filter state to localStorage
-        const currentFilters = {
-            airport_name: airportName,
-            airport_category: airportCategory,
-            hospital_name: hospitalName,
-            hospital_category: hospitalCategory,
-            radius: radius,
-            provinces: selectedProvinces,
-            center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
-            center_lng: lastClickedLocation ? lastClickedLocation.lng : null,
-        };
-        localStorage.setItem('mapFilterState', JSON.stringify(currentFilters));
-        localStorage.setItem('mapDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
-        localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
+    if (radius > 0 && lastClickedLocation) {
+        commonFilters.radius = radius;
+        commonFilters.center_lat = lastClickedLocation.lat;
+        commonFilters.center_lng = lastClickedLocation.lng;
     }
+
+    // Kosongkan layer sebelum menambah ulang
+    airportMarkers.clearLayers();
+    hospitalMarkers.clearLayers();
+
+    // --- CASE 1: Filter airport saja ---
+    if (airportName && !hospitalName) {
+        const airportFilters = { name: airportName, ...commonFilters };
+        const airports = await fetchData('/api/airports', airportFilters);
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // --- CASE 2: Filter hospital saja ---
+    else if (hospitalName && !airportName) {
+        const hospitalFilters = { name: hospitalName, ...commonFilters };
+        const hospitals = await fetchData('/api/hospital', hospitalFilters);
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // --- CASE 3: Dua-duanya kosong → tampilkan semua ---
+    else if (!airportName && !hospitalName) {
+        const airports = await fetchData('/api/airports', commonFilters);
+        const hospitals = await fetchData('/api/hospital', commonFilters);
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // --- CASE 4: Dua-duanya diisi (jika user isi dua sekaligus) ---
+    else {
+        const airports = await fetchData('/api/airports', { name: airportName, ...commonFilters });
+        const hospitals = await fetchData('/api/hospital', { name: hospitalName, ...commonFilters });
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // Update radius dan simpan state seperti biasa
+    updateRadiusCircleAndPin();
+    let combinedBounds = L.featureGroup();
+    if (airportMarkers.getLayers().length > 0) combinedBounds.addLayer(airportMarkers);
+    if (hospitalMarkers.getLayers().length > 0) combinedBounds.addLayer(hospitalMarkers);
+    if (drawnItems.getLayers().length > 0) combinedBounds.addLayer(drawnItems);
+    if (radiusCircle) combinedBounds.addLayer(radiusCircle);
+    if (radiusPinMarker) combinedBounds.addLayer(radiusPinMarker);
+
+    if (combinedBounds.getLayers().length > 0) {
+        map.fitBounds(combinedBounds.getBounds(), { padding: [50, 50] });
+    } else if (lastClickedLocation) {
+        map.setView(lastClickedLocation, 10);
+    } else {
+        map.setView([-6.80188562253168, 144.0733101155011], 6);
+    }
+
+    // Simpan filter ke localStorage
+    const currentFilters = {
+        airport_name: airportName,
+        hospital_name: hospitalName,
+        radius: radius,
+        provinces: selectedProvinces,
+        center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
+        center_lng: lastClickedLocation ? lastClickedLocation.lng : null,
+    };
+    localStorage.setItem('mapFilterState', JSON.stringify(currentFilters));
+    localStorage.setItem('mapDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
+    localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
+}
+
+    // === Filter Control di dalam Peta ===
+    map.addControl(new (L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function () {
+            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            container.style.background = 'white';
+            container.style.borderRadius = '8px';
+            container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            container.style.overflow = 'hidden';
+            container.style.zIndex = '9999';
+
+            // Tombol toggle
+            const toggleButton = L.DomUtil.create('button', '', container);
+            toggleButton.innerHTML = 'Filter';
+            toggleButton.style.width = '100%';
+            toggleButton.style.border = 'none';
+            toggleButton.style.background = '#007bff';
+            toggleButton.style.color = 'white';
+            toggleButton.style.padding = '6px';
+            toggleButton.style.cursor = 'pointer';
+            toggleButton.style.fontSize = '13px';
+
+            // Panel filter
+            const panel = L.DomUtil.create('div', '', container);
+            panel.style.display = 'none';
+            panel.style.padding = '10px';
+            panel.style.maxWidth = '220px';
+            panel.style.maxHeight = '400px';
+            panel.style.overflowY = 'auto';
+            panel.innerHTML = `
+                <h6 style="margin:0 0 5px 0;">Filter</h6>
+
+                <select id="mapFilter" class="form-select form-select-sm mb-2">
+                    <option value="all">Show All</option>
+                    <option value="hospital">Hospitals</option>
+                    <option value="airport">Airports</option>
+                </select>
+
+                <div id="hospitalFilter" style="display:none;">
+                    <strong>Facility Level:</strong><br>
+                    ${['All','Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
+                        <label style="display:block;font-size:13px;">
+                            <input type="radio" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
+                        </label>
+                    `).join('')}
+                </div>
+
+                <div id="airportFilter" style="display:none; margin-top:8px;">
+                    <strong>Category:</strong><br>
+                    ${['International','Domestic','Military','Regional','Private'].map(cls => `
+                        <label style="display:block;font-size:13px;">
+                            <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+
+            L.DomEvent.disableClickPropagation(container);
+
+            // === Toggle Show/Hide ===
+            toggleButton.addEventListener('click', () => {
+                panel.style.display = (panel.style.display === 'none') ? 'block' : 'none';
+            });
+
+            // === Event filter logic ===
+            const filterSelect = panel.querySelector('#mapFilter');
+            const hospitalDiv = panel.querySelector('#hospitalFilter');
+            const airportDiv = panel.querySelector('#airportFilter');
+
+            function refresh() {
+                const selectedType = filterSelect.value;
+                const selectedLevel = panel.querySelector('input[name="hospitalLevel"]:checked')?.value || 'all';
+                const selectedClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+
+                // === panggil applyFilters() dengan parameter baru ===
+                applyFiltersWithMapControl(selectedType, selectedLevel, selectedClasses);
+            }
+
+            filterSelect.addEventListener('change', () => {
+                const val = filterSelect.value;
+                hospitalDiv.style.display = val === 'hospital' ? 'block' : 'none';
+                airportDiv.style.display = val === 'airport' ? 'block' : 'none';
+                refresh();
+            });
+
+            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(radio => {
+                radio.addEventListener('change', refresh);
+            });
+
+            panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
+                chk.addEventListener('change', refresh);
+            });
+
+            return container;
+        }
+    }))());
 
     // --- Load Filters and Apply on Page Load ---
     async function loadFiltersAndApply() {
@@ -913,11 +1009,11 @@
             width: '100%',
         });
 
-        $('.select22-search').select2({
-            placeholder: "🔍 Airport Category",
-            allowClear: true,
-            width: '100%',
-        });
+        // $('.select22-search').select2({
+        //     placeholder: "🔍 Airport Category",
+        //     allowClear: true,
+        //     width: '100%',
+        // });
 
          $('.select23-search').select2({
             placeholder: "🔍 Medical Facility Name",
@@ -925,11 +1021,11 @@
             width: '100%',
         });
 
-        $('.select24-search').select2({
-            placeholder: "🔍 Medical Facility Category",
-            allowClear: true,
-            width: '100%',
-        });
+        // $('.select24-search').select2({
+        //     placeholder: "🔍 Medical Facility Category",
+        //     allowClear: true,
+        //     width: '100%',
+        // });
 
         const savedFilterStateString = localStorage.getItem('mapFilterState');
         const savedPolygonString = localStorage.getItem('mapDrawnPolygon');
@@ -940,9 +1036,9 @@
 
             // Populate form fields
             document.getElementById('airport_name').value = savedFilters.airport_name || '';
-            document.getElementById('airport_category').value = savedFilters.airport_category || '';
+            // document.getElementById('airport_category').value = savedFilters.airport_category || '';
             document.getElementById('hospital_name').value = savedFilters.hospital_name || '';
-            document.getElementById('hospital_category').value = savedFilters.hospital_category || '';
+            // document.getElementById('hospital_category').value = savedFilters.hospital_category || '';
 
             const savedRadius = parseInt(savedFilters.radius) || 0;
             document.getElementById('radiusRange').value = savedRadius;
@@ -956,9 +1052,9 @@
 
             // Trigger Select2 updates
             $('#airport_name').val(savedFilters.airport_name).trigger('change');
-            $('#airport_category').val(savedFilters.airport_category).trigger('change');
+            // $('#airport_category').val(savedFilters.airport_category).trigger('change');
             $('#hospital_name').val(savedFilters.hospital_name).trigger('change');
-            $('#hospital_category').val(savedFilters.hospital_category).trigger('change');
+            // $('#hospital_category').val(savedFilters.hospital_category).trigger('change');
 
             if (savedLocationString && savedLocationString !== 'null') {
                 lastClickedLocation = JSON.parse(savedLocationString);
@@ -987,6 +1083,35 @@
         await applyFilters();
     }
 
+    async function applyFiltersWithMapControl(selectedType, hospitalLevel, airportClasses) {
+    // Gunakan logika applyFilters() kamu, tapi tambahkan parameter sesuai filter control di peta
+    let commonFilters = {};
+
+    // === Hospital Filter ===
+    if (selectedType === 'hospital' || selectedType === 'all') {
+        const hospitals = await fetchData('/api/hospital', {
+            category: hospitalLevel !== 'all' ? hospitalLevel : '',
+            ...commonFilters
+        });
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    } else {
+        hospitalMarkers.clearLayers();
+    }
+
+    // === Airport Filter ===
+    if (selectedType === 'airport' || selectedType === 'all') {
+        const airports = await fetchData('/api/airports', {
+            category: airportClasses.length ? airportClasses : [],
+            ...commonFilters
+        });
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    } else {
+        airportMarkers.clearLayers();
+    }
+
+}
+
+
     // --- Event Listeners ---
     document.getElementById('filterForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -1002,9 +1127,9 @@
 
         // Reset Select2
         $('#airport_name').val(null).trigger('change');
-        $('#airport_category').val(null).trigger('change');
+        // $('#airport_category').val(null).trigger('change');
         $('#hospital_name').val(null).trigger('change');
-        $('#hospital_category').val(null).trigger('change');
+        // $('#hospital_category').val(null).trigger('change');
 
         if (radiusCircle) {
             map.removeLayer(radiusCircle);

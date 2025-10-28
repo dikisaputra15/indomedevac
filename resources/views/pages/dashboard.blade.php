@@ -824,76 +824,84 @@
 
     // --- Main Filter Application Logic ---
     async function applyFilters() {
-        const airportName = document.getElementById('airport_name').value;
-        // const airportCategory = document.getElementById('airport_category').value;
+    const airportName = document.getElementById('airport_name').value;
+    const hospitalName = document.getElementById('hospital_name').value;
+    const radius = parseInt(document.getElementById('radiusRange').value);
+    const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
+                                 .map(checkbox => checkbox.value);
 
-        const hospitalName = document.getElementById('hospital_name').value;
-        // const hospitalCategory = document.getElementById('hospital_category').value;
+    let commonFilters = { provinces: selectedProvinces };
 
-        const radius = parseInt(document.getElementById('radiusRange').value);
-        const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
-                                     .map(checkbox => checkbox.value);
-
-        let commonFilters = {
-            provinces: selectedProvinces
-        };
-
-        if (radius > 0 && lastClickedLocation) {
-            commonFilters.radius = radius;
-            commonFilters.center_lat = lastClickedLocation.lat;
-            commonFilters.center_lng = lastClickedLocation.lng;
-        }
-
-        const airportFilters = {
-            name: airportName,
-            // category: airportCategory,
-            ...commonFilters
-        };
-        const airports = await fetchData('/api/airports', airportFilters);
-        const airportCount = addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png', '/airports');
-
-        const hospitalFilters = {
-            name: hospitalName,
-            // category: hospitalCategory,
-            ...commonFilters
-        };
-        const hospitals = await fetchData('/api/hospital', hospitalFilters);
-        const hospitalCount = addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png', '/hospitals');
-
-        // updateCounters(airportCount, hospitalCount);
-        updateRadiusCircleAndPin(); // Ensure the radius circle and pin are updated after filters are applied
-
-        // Adjust map view to fit all markers and drawn items
-        let combinedBounds = L.featureGroup();
-        if (airportMarkers.getLayers().length > 0) combinedBounds.addLayer(airportMarkers);
-        if (hospitalMarkers.getLayers().length > 0) combinedBounds.addLayer(hospitalMarkers);
-        if (drawnItems.getLayers().length > 0) combinedBounds.addLayer(drawnItems);
-        if (radiusCircle) combinedBounds.addLayer(radiusCircle);
-        if (radiusPinMarker) combinedBounds.addLayer(radiusPinMarker);
-
-        if (combinedBounds.getLayers().length > 0) {
-            map.fitBounds(combinedBounds.getBounds(), { padding: [50, 50] });
-        } else if (lastClickedLocation) {
-            map.setView(lastClickedLocation, 10);
-        } else {
-            map.setView([-6.80188562253168, 144.0733101155011], 6);
-        }
-
-        // Save filter state to localStorage
-        const currentFilters = {
-            airport_name: airportName,
-            // airport_category: airportCategory,
-            hospital_name: hospitalName,
-            // hospital_category: hospitalCategory,
-            radius: radius,
-            provinces: selectedProvinces,
-            center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
-            center_lng: lastClickedLocation ? lastClickedLocation.lng : null,
-        };
-        localStorage.setItem('mapFilterState', JSON.stringify(currentFilters));
-        localStorage.setItem('mapDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
-        localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
+    if (radius > 0 && lastClickedLocation) {
+        commonFilters.radius = radius;
+        commonFilters.center_lat = lastClickedLocation.lat;
+        commonFilters.center_lng = lastClickedLocation.lng;
     }
+
+    // Kosongkan layer sebelum menambah ulang
+    airportMarkers.clearLayers();
+    hospitalMarkers.clearLayers();
+
+    // --- CASE 1: Filter airport saja ---
+    if (airportName && !hospitalName) {
+        const airportFilters = { name: airportName, ...commonFilters };
+        const airports = await fetchData('/api/airports', airportFilters);
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // --- CASE 2: Filter hospital saja ---
+    else if (hospitalName && !airportName) {
+        const hospitalFilters = { name: hospitalName, ...commonFilters };
+        const hospitals = await fetchData('/api/hospital', hospitalFilters);
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // --- CASE 3: Dua-duanya kosong → tampilkan semua ---
+    else if (!airportName && !hospitalName) {
+        const airports = await fetchData('/api/airports', commonFilters);
+        const hospitals = await fetchData('/api/hospital', commonFilters);
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // --- CASE 4: Dua-duanya diisi (jika user isi dua sekaligus) ---
+    else {
+        const airports = await fetchData('/api/airports', { name: airportName, ...commonFilters });
+        const hospitals = await fetchData('/api/hospital', { name: hospitalName, ...commonFilters });
+        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+    }
+
+    // Update radius dan simpan state seperti biasa
+    updateRadiusCircleAndPin();
+    let combinedBounds = L.featureGroup();
+    if (airportMarkers.getLayers().length > 0) combinedBounds.addLayer(airportMarkers);
+    if (hospitalMarkers.getLayers().length > 0) combinedBounds.addLayer(hospitalMarkers);
+    if (drawnItems.getLayers().length > 0) combinedBounds.addLayer(drawnItems);
+    if (radiusCircle) combinedBounds.addLayer(radiusCircle);
+    if (radiusPinMarker) combinedBounds.addLayer(radiusPinMarker);
+
+    if (combinedBounds.getLayers().length > 0) {
+        map.fitBounds(combinedBounds.getBounds(), { padding: [50, 50] });
+    } else if (lastClickedLocation) {
+        map.setView(lastClickedLocation, 10);
+    } else {
+        map.setView([-6.80188562253168, 144.0733101155011], 6);
+    }
+
+    // Simpan filter ke localStorage
+    const currentFilters = {
+        airport_name: airportName,
+        hospital_name: hospitalName,
+        radius: radius,
+        provinces: selectedProvinces,
+        center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
+        center_lng: lastClickedLocation ? lastClickedLocation.lng : null,
+    };
+    localStorage.setItem('mapFilterState', JSON.stringify(currentFilters));
+    localStorage.setItem('mapDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
+    localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
+}
 
     // === Filter Control di dalam Peta ===
     map.addControl(new (L.Control.extend({
