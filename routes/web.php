@@ -74,6 +74,10 @@ Route::middleware(['web', 'jwt.login'])->group(function () {
         return view('pages.auth.login');
     });
 
+    Route::get('/airports', [AirportsController::class, 'index'])->name('airports.index.jwt');
+    Route::get('/hospital', [HospitalController::class, 'index'])->name('hospital.index.jwt');
+    Route::get('/embassiees', [EmbassieesController::class, 'index'])->name('embassiees.index.jwt');
+
     // =====================
     // ROUTES DENGAN AUTH WAJIB
     // =====================
