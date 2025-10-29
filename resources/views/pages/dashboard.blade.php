@@ -1100,10 +1100,21 @@
 
     // === Airport Filter ===
     if (selectedType === 'airport' || selectedType === 'all') {
-        const airports = await fetchData('/api/airports', {
+        let airports = await fetchData('/api/airports', {
             category: airportClasses.length ? airportClasses : [],
             ...commonFilters
         });
+
+         if (airportClasses.length > 0) {
+            airports = airports.filter(item => {
+                const airportCategories = (item.category || '')
+                    .split(',')
+                    .map(c => c.trim().toLowerCase());
+                const allowed = airportClasses.map(c => c.toLowerCase());
+                return airportCategories.some(cat => allowed.includes(cat));
+            });
+        }
+
         addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
     } else {
         airportMarkers.clearLayers();
