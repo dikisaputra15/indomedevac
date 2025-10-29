@@ -82,7 +82,7 @@
      <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
         <div class="d-flex flex-column gap-1">
             <h2 class="fw-bold mb-0">{{ $hospital->name }}</h2>
-            <span class="fw-bold">Facility Global Classification: {{ $hospital->facility_category }} | Facility Country Classification: {{ $hospital->facility_level }}</span>
+            <span class="fw-bold"><b>Facility Global Classification:</b> {{ $hospital->facility_category }} | <b>Facility Country Classification:</b> {{ $hospital->facility_level }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
