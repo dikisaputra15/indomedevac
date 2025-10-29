@@ -234,7 +234,7 @@
         <div class="col-md-8">
              <div class="card">
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-emergency-support.png') }}" style="width: 24px; height: 24px;"> Emergency Support Tools</div>
-                
+
                 <!-- Legend container -->
                   <div class="classification">
                     <!-- Airfield Classification -->
@@ -247,7 +247,7 @@
                             <!-- Airport row 1 -->
                             <div class="hospital-item">
                               <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                  <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:18px; height:18px;">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
                                   <small>International</small>
                               </button>
 
@@ -259,7 +259,7 @@
                               <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
                                   <small>Regional</small>
-                              </button>  
+                              </button>
                             </div>
                             <!-- Airport row 2 -->
                             <div class="hospital-item">
@@ -279,11 +279,11 @@
                               </button>
                             </div>
                           </div>
-                    
+
                         </div>
                       </div>
                     </div>
-                  
+
                     <!-- Hospital Classification -->
                     <div class="classification" style="flex-direction: column; width:100%;">
                       <div class="class-header class-medical-classification">Medical Facility Classification</div>

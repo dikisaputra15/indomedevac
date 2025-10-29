@@ -414,7 +414,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:30px; height:30px;">
+            <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:30px; height:30px;">
             <h5 class="modal-title" id="disclaimerLabel">International Airfield</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
