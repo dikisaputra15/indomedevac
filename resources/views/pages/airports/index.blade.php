@@ -151,14 +151,28 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
-                    <label for="category" class="form-label">Category</label>
-                    <select id="category" class="form-select select2-search" name="category">
-                        <option value="">🔍 All Categories</option>
-                        @foreach($airportCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
+                 <div class="col-md-3">
+                    <label><strong>Airport Category:</strong></label>
+
+                    <!-- Tombol Expand/Collapse -->
+                    <button class="btn btn-link p-0"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseCategory"
+                            aria-expanded="false"
+                            aria-controls="collapseCategory"
+                            style="font-size:13px;">
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+
+                    <!-- Isi Checkbox -->
+                    <div class="collapse mt-2" id="collapseCategory">
+                        @foreach(['International','Domestic','Military','Regional','Private'] as $cat)
+                            <label style="display:block;font-size:13px;">
+                                <input type="checkbox" class="airport-category" value="{{ $cat }}"> {{ $cat }}
+                            </label>
                         @endforeach
-                    </select>
+                    </div>
                 </div>
 
                 <div class="col-md-3">
@@ -584,6 +598,14 @@
             return;
         }
 
+        const selectedCategories = Array.from(document.querySelectorAll('.airport-category:checked')).map(cb => cb.value);
+
+        // Filter kategori dengan partial match
+        const filteredAirports = airports.filter(a => {
+            if (selectedCategories.length === 0) return true;
+            return selectedCategories.some(cat => a.category && a.category.includes(cat));
+        });
+
         airports.forEach(airport => {
             const airportIcon = L.icon({
                 iconUrl: airport.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
@@ -628,7 +650,7 @@
 
     function applyFilters() {
         const name = document.getElementById('name').value;
-        const category = document.getElementById('category').value;
+        const selectedCategories = Array.from(document.querySelectorAll('.airport-category:checked')).map(cb => cb.value);
         const location = document.getElementById('location').value;
         const radius = parseInt(document.getElementById('radiusRange').value);
 
@@ -637,7 +659,7 @@
 
         let filters = {
             name: name,
-            category: category,
+            categories: selectedCategories,
             location: location,
             provinces: selectedProvinces
         };
@@ -670,7 +692,6 @@
 
             // Isi kembali form fields
             document.getElementById('name').value = params.get('name') || '';
-            document.getElementById('category').value = params.get('category') || '';
             document.getElementById('location').value = params.get('location') || '';
 
             // Tangani radius
@@ -683,6 +704,9 @@
             document.querySelectorAll('.province-checkbox').forEach(checkbox => {
                 checkbox.checked = savedProvinces.includes(checkbox.value);
             });
+
+            const savedCategories = params.getAll('category[]');
+            document.querySelectorAll('.airport-category').forEach(cb => cb.checked = savedCategories.includes(cb.value));
 
             // Pulihkan pilihan Select2
             $('#name').val(params.get('name')).trigger('change');
@@ -726,9 +750,7 @@
     document.getElementById('resetFilter').addEventListener('click', function() {
         document.getElementById('filterForm').reset();
         document.getElementById('radiusValue').textContent = '0';
-        document.querySelectorAll('.province-checkbox').forEach(checkbox => {
-            checkbox.checked = false;
-        });
+        document.querySelectorAll('.province-checkbox, .airport-category').forEach(cb => cb.checked = false);
 
          // Reset Select2
         $('.select2-search').val(null).trigger('change');

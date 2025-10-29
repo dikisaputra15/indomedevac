@@ -90,7 +90,7 @@
 
         <div class="d-flex flex-column gap-1">
             <h2 class="fw-bold mb-0">{{ $hospital->name }}</h2>
-            <span class="fw-bold">{{ $hospital->facility_level }}</span>
+            <span class="fw-bold">Facility Global Classification {{ $hospital->facility_category }} | Facility Country Classification: {{ $hospital->facility_level }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -150,9 +150,6 @@
             <div class="card">
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-general-info.png') }}" style="width: 24px; height: 24px;"> General Medical Facility Info</div>
                 <div class="card-body overflow-auto">
-                    <p>
-                        <strong>Facility Level:</strong> {{ $hospital->facility_level }}
-                    </p>
                     <p>
                         <strong>Status:</strong> {{ $hospital->status }}
                     </p>

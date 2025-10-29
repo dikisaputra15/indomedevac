@@ -122,7 +122,7 @@ class MasterairportController extends Controller
         $airport->international_flight = $request->input('international_flight');
         $airport->domestic_flights = $request->input('domestic_flights');
         $airport->nearest_medical_facility = $request->input('nearest_medical_facility');
-        $airport->nearest_airport = $request->input('nearest_airport');
+        $airport->nearest_airfield = $request->input('nearest_airport');
         $airport->runway_edge_lights = $request->input('runway_edge_lights');
         $airport->reil = $request->input('reil');
         $airport->runways = $request->input('runways');
@@ -219,7 +219,7 @@ class MasterairportController extends Controller
             'international_flight' => $request->input('international_flight'),
             'domestic_flights' => $request->input('domestic_flights'),
             'nearest_medical_facility' => $request->input('nearest_medical_facility'),
-            'nearest_airport' => $request->input('nearest_airport'),
+            'nearest_airfield' => $request->input('nearest_airport'),
             'runway_edge_lights' => $request->input('runway_edge_lights'),
             'reil' => $request->input('reil'),
             'runways' => $request->input('runways'),

@@ -45,8 +45,15 @@ class AirportsController extends Controller
         });
 
         // 2. Filter by Category (case-insensitive search)
-        $query->when($request->filled('category'), function ($q) use ($request) {
-            $q->where('category', $request->input('category'));
+       $query->when($request->filled('categories'), function ($q) use ($request) {
+            $categories = (array) $request->input('categories');
+
+            $q->where(function ($sub) use ($categories) {
+                foreach ($categories as $cat) {
+                    // Cari kategori yang mengandung kata tersebut (case-insensitive)
+                    $sub->orWhere('category', 'like', "%$cat%");
+                }
+            });
         });
 
         // 3. Filter by Location (Address - case-insensitive search)
