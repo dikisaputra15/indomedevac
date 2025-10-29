@@ -84,7 +84,7 @@
     <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
         <div class="d-flex flex-column gap-1">
             <h2 class="fw-bold mb-0">{{ $airport->airport_name }}</h2>
-            <span class="fw-bold">{{ $airport->category }}</span>
+            <span class="fw-bold"><b>Airfield Category:</b> {{ $airport->category }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -150,7 +150,6 @@
                 <div class="card">
                         <div class="card-header fw-bold"><img src="{{ asset('images/icon-general-info.png') }}" style="width: 24px; height: 24px;"> General Airport Info</div>
                         <div class="card-body overflow-auto">
-                            <p><strong>Category:</strong> {{ $airport->category }} </p>
                             @if(!empty($airport->military_branch))
                                 <p><strong>Military Branch:</strong> {{ $airport->military_branch }} </p>
                             @endif

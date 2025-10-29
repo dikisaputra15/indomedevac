@@ -82,7 +82,7 @@
      <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
         <div class="d-flex flex-column gap-1">
             <h2 class="fw-bold mb-0">{{ $hospital->name }}</h2>
-            <span class="fw-bold">Facility Global Classification: {{ $hospital->facility_category }} | Facility Country Classification: {{ $hospital->facility_level }}</span>
+            <span class="fw-bold"><b>Global Classification:</b> {{ $hospital->facility_category }} | <b>Country Classification:</b> {{ $hospital->facility_level }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -168,10 +168,14 @@
                             <td>Helipad</td>
                             <td>{{ $hospital->helipad }}</td>
                         </tr>
+
+                        @if (!empty($hospital->comments))
                         <tr>
                             <td>Note</td>
                             <td>{{ $hospital->comments }}</td>
                         </tr>
+                        @endif
+
                         <tr>
                             <td>ICU</td>
                             <td>{{ $hospital->icu }}</td>
@@ -260,7 +264,7 @@
                     </tr>
                     <tr>
                         <td>Malaria Control Officers</td>
-                        <td>{{ $hospital->malaria_control_officers }}</td>
+                        <td>{{ $hospital->malaria_control_officers ?? 'N/A' }}</td>
                     </tr>
                     <tr>
                         <td>Health Extension Officers</td>

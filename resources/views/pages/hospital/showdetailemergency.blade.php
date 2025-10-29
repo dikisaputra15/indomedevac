@@ -171,7 +171,7 @@
 
         <div class="d-flex flex-column gap-1">
             <h2 class="fw-bold mb-0">{{ $hospital->name }}</h2>
-            <span class="fw-bold">Facility Global Classification: {{ $hospital->facility_category }} | Facility Country Classification: {{ $hospital->facility_level }}</span>
+            <span class="fw-bold"><b>Global Classification:</b> {{ $hospital->facility_category }} | <b>Country Classification:</b> {{ $hospital->facility_level }}</span>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -353,7 +353,7 @@
 
         <div class="col-md-4">
            <div class="card">
-                <div class="card-header fw-bold"><i class="bi bi-airplane fs-3"></i> Nearest Airfields and Medical Facilities</div>
+                <div class="card-header fw-bold"><img src="https://concord-consulting.com/static/img/cmt/icon/radar-icon.png" style="width: 24px; height: 24px;"> Nearest Airfields and Medical Facilities</div>
                 <div class="card-body overflow-auto">
                     <?php echo $hospital->nearest_airfield; ?>
                 </div>
