@@ -784,7 +784,7 @@
             detailUrl = `/airports/${item.id}/detail`; // URL detail untuk Airport
             popupContent = `
                 <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                <strong>Category:</strong> ${item.category || 'N/A'}<br>
+                <strong>Classification:</strong> ${item.category || 'N/A'}<br>
                 <strong>Address:</strong> ${item.address || 'N/A'}<br>
                 <strong>Telephone:</strong> ${item.telephone || 'N/A'}<br>
                 ${item.website ? `<strong>Website:</strong><a href='${item.website}' target='__blank'> ${item.website} </a><br>` : ''}
@@ -795,7 +795,8 @@
             detailUrl = `/hospitals/${item.id}`; // URL detail untuk Hospital (PASTIKAN ROUTE INI ADA DI LARAVEL)
             popupContent = `
                 <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                <strong>Class:</strong> ${item.facility_level || 'N/A'}<br>
+                <strong>Global Classification:</strong> ${item.facility_category || 'N/A'}<br>
+                <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
                 <strong>Address:</strong> ${item.address || 'N/A'}<br>
                 <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
                 <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>

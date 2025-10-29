@@ -669,10 +669,11 @@
 
                 marker.bindPopup(`
                     <h5 style="border-bottom:1px solid #cccccc;">${hospital.name || 'N/A'}</h5>
+                    <strong>Global Classification:</strong> ${hospital.facility_category || 'N/A'}<br>
+                    <strong>Country Classification:</strong> ${hospital.facility_level || 'N/A'}<br>
                     <strong>Location:</strong> ${hospital.address || 'N/A'}<br>
                     <strong>Coords:</strong> ${hospital.latitude}, ${hospital.longitude}<br>
                     <strong>Province:</strong> ${hospital.provinces_region || 'N/A'}<br>
-                    <strong>Level:</strong> ${hospital.facility_level || 'N/A'}<br>
                     ${hospital.id ? `<a href="/hospitals/${hospital.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
                 `);
             });
