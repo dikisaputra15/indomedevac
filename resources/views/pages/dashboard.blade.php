@@ -233,7 +233,7 @@
                         <div class="d-flex align-items-center gap-3">
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:18px; height:18px;">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
                                 <small>International</small>
                             </button>
 
@@ -281,11 +281,6 @@
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
                                 <small>Class D</small>
                             </button>
-
-                            <!-- <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level22Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png" style="width:24px; height:24px;">
-                                <small>Level 2</small>
-                            </button> -->
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
