@@ -225,15 +225,13 @@
 
 </div>
 
-<div id="map"></div>
- <div class="card">
-                <div class="col-md-12">
+ <div class="col-md-12">
                     <div class="d-flex justify-content-between align-items-center gap-3 my-2">
 
                         <div class="d-flex align-items-center gap-3">
 
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                <img src="https://concord-consulting.com/static/img/cmt/icon/icon-international-airport-orange.png" style="width:18px; height:18px;">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
                                 <small>International</small>
                             </button>
 
@@ -282,11 +280,6 @@
                                 <small>Class D</small>
                             </button>
 
-                            <!-- <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level22Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-orange.png" style="width:24px; height:24px;">
-                                <small>Level 2</small>
-                            </button> -->
-
                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
                                 <small>PUSKESMAS</small>
@@ -295,7 +288,8 @@
 
                     </div>
                 </div>
-            </div>
+
+<div id="map"></div>
 
 <div class="row justify-content-center mt-3">
 
@@ -790,6 +784,7 @@
             detailUrl = `/airports/${item.id}/detail`; // URL detail untuk Airport
             popupContent = `
                 <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
+                <strong>Category:</strong> ${item.category || 'N/A'}<br>
                 <strong>Address:</strong> ${item.address || 'N/A'}<br>
                 <strong>Telephone:</strong> ${item.telephone || 'N/A'}<br>
                 ${item.website ? `<strong>Website:</strong><a href='${item.website}' target='__blank'> ${item.website} </a><br>` : ''}
@@ -800,10 +795,10 @@
             detailUrl = `/hospitals/${item.id}`; // URL detail untuk Hospital (PASTIKAN ROUTE INI ADA DI LARAVEL)
             popupContent = `
                 <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
+                <strong>Class:</strong> ${item.facility_level || 'N/A'}<br>
                 <strong>Address:</strong> ${item.address || 'N/A'}<br>
                 <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
                 <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>
-                <strong>Level:</strong> ${item.facility_level || 'N/A'}<br>
             `;
         } else {
             // Fallback jika tidak teridentifikasi (opsional, tapi baik untuk debugging)

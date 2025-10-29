@@ -225,9 +225,7 @@
 
 </div>
 
-<div id="map"></div>
- <div class="card">
-                <div class="col-md-12">
+<div class="col-md-12">
                     <div class="d-flex justify-content-between align-items-center gap-3 my-2">
 
                         <div class="d-flex align-items-center gap-3">
@@ -290,7 +288,8 @@
 
                     </div>
                 </div>
-            </div>
+
+<div id="map"></div>
 
 <div class="row justify-content-center mt-3">
 
@@ -785,6 +784,7 @@
             detailUrl = `/airports/${item.id}/detail`; // URL detail untuk Airport
             popupContent = `
                 <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
+                <strong>Category:</strong> ${item.category || 'N/A'}<br>
                 <strong>Address:</strong> ${item.address || 'N/A'}<br>
                 <strong>Telephone:</strong> ${item.telephone || 'N/A'}<br>
                 ${item.website ? `<strong>Website:</strong><a href='${item.website}' target='__blank'> ${item.website} </a><br>` : ''}
@@ -795,10 +795,10 @@
             detailUrl = `/hospitals/${item.id}`; // URL detail untuk Hospital (PASTIKAN ROUTE INI ADA DI LARAVEL)
             popupContent = `
                 <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
+                <strong>Class:</strong> ${item.facility_level || 'N/A'}<br>
                 <strong>Address:</strong> ${item.address || 'N/A'}<br>
                 <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
                 <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>
-                <strong>Level:</strong> ${item.facility_level || 'N/A'}<br>
             `;
         } else {
             // Fallback jika tidak teridentifikasi (opsional, tapi baik untuk debugging)

@@ -209,13 +209,9 @@
             <div class="card">
                 <div class="card-header fw-bold"><i class="fas fa-map"></i>Nearby Airfield (Up To 500 KM)</div>
                 <div class="card-body">
-                    <div id="map"></div>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="col-md-12">
-                    <div class="d-flex justify-content-between align-items-center">
+                 <div class="col-md-12">
+                    <div class="d-flex justify-content-end align-items-center">
 
                         <div class="d-flex align-items-center">
 
@@ -252,7 +248,11 @@
 
                     </div>
                 </div>
+
+                    <div id="map"></div>
+                </div>
             </div>
+
         </div>
 
     </div>

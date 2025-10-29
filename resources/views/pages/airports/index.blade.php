@@ -626,6 +626,7 @@
 
             marker.bindPopup(`
                 <h5 style="border-bottom:1px solid #cccccc;">${airport.airport_name || 'N/A'}</h5>
+                <strong>Category:</strong> ${airport.category || 'N/A'}<br>
                 <strong>Address:</strong> ${airport.address || 'N/A'}<br>
                 <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
                 ${airport.website ? `<strong>Website:</strong><a href='${airport.website}' target='__blank'> ${airport.website} </a><br>` : ''}
