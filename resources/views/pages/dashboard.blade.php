@@ -123,8 +123,6 @@
             margin-bottom: 0.5rem !important;
         }
 
-        /* Classification */
-
     /* Classification section */
     .classification {
       display: flex;
