@@ -1069,14 +1069,33 @@
 
         const airports = await fetchData('/api/airports', airportFilters);
 
-        const filteredAirports = airports.filter(a =>
-            airportClasses.length === 0 ||
-            airportClasses.includes((a.category || '').trim())
+        // 🔍 Filter logika kategori (bisa multi kategori, case-insensitive)
+        const filteredAirports = airports.filter(item => {
+            if (airportClasses.length === 0) return true; // jika tidak ada filter, tampilkan semua
+
+            // Pecah kategori di database (misal "International, Domestic")
+            const airportCategories = (item.category || '')
+                .split(',')
+                .map(c => c.trim().toLowerCase());
+
+            // Ubah filter pilihan user ke lowercase juga
+            const allowed = airportClasses.map(c => c.toLowerCase());
+
+            // Cek apakah salah satu kategori di database cocok dengan filter pilihan
+            const hasMatch = airportCategories.some(cat => allowed.includes(cat));
+
+            return hasMatch;
+        });
+
+        addMarkersToMap(
+            filteredAirports,
+            airportMarkers,
+            'https://unpkg.com/leaflet/dist/images/marker-icon.png'
         );
-        addMarkersToMap(filteredAirports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
     } else {
         airportMarkers.clearLayers();
     }
+
 }
 
     // --- Event Listeners ---
