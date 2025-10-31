@@ -1068,7 +1068,11 @@
         }
 
         const airports = await fetchData('/api/airports', airportFilters);
-        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        const filteredAirports = airports.filter(a =>
+            airportClasses.length === 0 ||
+            airportClasses.includes((a.category || '').trim())
+        );
+        addMarkersToMap(filteredAirports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
     } else {
         airportMarkers.clearLayers();
     }
