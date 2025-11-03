@@ -118,7 +118,7 @@
 
           <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Military Branch</label><br>
+                <label>Edit Military / Police</label><br>
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="military_branch" value="Army"

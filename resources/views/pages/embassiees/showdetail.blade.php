@@ -102,6 +102,11 @@
              <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
                 <small>Medical</small>
             </a>
+
+            <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
+            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
+                <small>Embassies</small>
+            </a>
         </div>
     </div>
 

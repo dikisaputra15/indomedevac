@@ -89,7 +89,7 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Military Branch Military / Police</label><br>
+                <label>Military / Police</label><br>
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="military_branch" value="Army">
