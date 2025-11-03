@@ -89,6 +89,7 @@ class MasterhospitalController extends Controller
         $hospital->address = $request->input('address');
         $hospital->facility_level = $request->input('facility_level');
         $hospital->facility_category = $request->input('facility_category');
+        $hospital->military_branch = $request->input('military_branch');
         $hospital->status = $request->input('status');
         $hospital->hrs_of_operation = $request->input('hrs_of_operation');
         $hospital->number_of_beds = $request->input('number_of_beds');
@@ -179,6 +180,7 @@ class MasterhospitalController extends Controller
             'address' => $request->input('address'),
             'facility_level' => $request->input('facility_level'),
             'facility_category' => $request->input('facility_category'),
+            'military_branch' => $request->input('military_branch'),
             'status' => $request->input('status'),
             'hrs_of_operation' => $request->input('hrs_of_operation'),
             'number_of_beds' => $request->input('number_of_beds'),

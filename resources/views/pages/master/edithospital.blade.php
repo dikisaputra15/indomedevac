@@ -137,6 +137,42 @@
             </div>
         </div>
 
+         <div class="col-md-12">
+            <div class="form-group">
+                <label>Edit Military Branch</label><br>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Army"
+                        {{ old('Army', $hospital->military_branch ?? '') == 'Army' ? 'checked' : '' }}>
+                    <label class="form-check-label">Army</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Navy"
+                        {{ old('Navy', $hospital->military_branch ?? '') == 'Navy' ? 'checked' : '' }}>
+                    <label class="form-check-label">Navy</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Air Force"
+                        {{ old('Air Force', $hospital->military_branch ?? '') == 'Air Force' ? 'checked' : '' }}>
+                    <label class="form-check-label">Air Force</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Marine"
+                        {{ old('Marine', $hospital->military_branch ?? '') == 'Marine' ? 'checked' : '' }}>
+                    <label class="form-check-label">Marine</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Police"
+                        {{ old('Police', $hospital->military_branch ?? '') == 'Police' ? 'checked' : '' }}>
+                    <label class="form-check-label">Police</label>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-12">
             <div class="form-group">
                 <label>Icon</label><br>

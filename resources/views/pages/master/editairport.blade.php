@@ -137,6 +137,18 @@
                         {{ old('Air Force', $airport->military_branch ?? '') == 'Air Force' ? 'checked' : '' }}>
                     <label class="form-check-label">Air Force</label>
                 </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Marine"
+                        {{ old('Marine', $airport->military_branch ?? '') == 'Marine' ? 'checked' : '' }}>
+                    <label class="form-check-label">Marine</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Police"
+                        {{ old('Police', $airport->military_branch ?? '') == 'Police' ? 'checked' : '' }}>
+                    <label class="form-check-label">Police</label>
+                </div>
             </div>
         </div>
 
