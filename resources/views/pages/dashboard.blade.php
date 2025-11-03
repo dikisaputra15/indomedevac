@@ -732,10 +732,11 @@
         data.forEach(item => {
             if (!item || !item.latitude || !item.longitude) return;
 
-            const icon = L.icon({
+           const icon = L.icon({
                 iconUrl: item.icon || defaultIconUrl || L.Icon.Default.imagePath + '/marker-icon.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
+                iconSize: [24, 24],
+                iconAnchor: [12, 24],
+                popupAnchor: [0, -20]
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon }).addTo(group);
@@ -837,6 +838,33 @@ async function applyFiltersWithMapControl(
     updateRadiusCircleAndPin(radius);
 }
 
+ // === NEW: Radius Filter Panel (top right corner) ===
+const RadiusPanel = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function () {
+        const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+        div.style.background = 'white';
+        div.style.padding = '10px';
+        div.style.borderRadius = '8px';
+        div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+        div.style.minWidth = '160px';
+        div.style.textAlign = 'center';
+
+        div.innerHTML = `
+            <strong>Radius Filter <span id="radiusValueMap">0</span> km</strong><br>
+            <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
+            <div style="display:flex;gap:5px;">
+                <button id="applyRadiusMap" class="btn btn-sm btn-primary flex-fill">Apply</button>
+                <button id="resetRadiusMap" class="btn btn-sm btn-danger flex-fill">Reset</button>
+            </div>
+        `;
+
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+    }
+});
+map.addControl(new RadiusPanel());
+
     // === In-map Filter Control ===
     map.addControl(new (L.Control.extend({
         options: { position: 'topright' },
@@ -913,9 +941,6 @@ async function applyFiltersWithMapControl(
                 </div>
 
                 <hr>
-                <label style="display:block;margin-top:6px;">Radius: <span id="radiusValueMap">0</span> km</label>
-                <input type="range" id="radiusRangeMap" class="form-range" min="0" max="500" value="0">
-
                 <button id="resetMapFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset</button>
             `;
 
@@ -939,26 +964,31 @@ async function applyFiltersWithMapControl(
             const airportDiv = panel.querySelector('#airportFilter');
             const hospitalDiv = panel.querySelector('#hospitalFilter');
 
-            function triggerAuto() {
+           function triggerAuto() {
                 const type = filterSelect.value;
                 const hospitalLevels = [...panel.querySelectorAll('input[name="hospitalLevel"]:checked')].map(e => e.value);
                 const airportClasses = [...panel.querySelectorAll('input[name="airportClass"]:checked')].map(e => e.value);
                 const provinces = [...panel.querySelectorAll('.province-checkbox:checked')].map(e => e.value);
-                const radius = parseInt(radiusRange.value) || 0;
                 const airportName = $(panel).find('#airport_name_map').val() || '';
                 const hospitalName = $(panel).find('#hospital_name_map').val() || '';
-                applyFiltersWithMapControl(type, hospitalLevels, airportClasses, provinces, radius, airportName, hospitalName);
+                const rEl = document.querySelector('#radiusRangeMap');
+                const radius = rEl ? parseInt(rEl.value || 0) : 0;
+
+                applyFiltersWithMapControl(
+                    type,
+                    hospitalLevels,
+                    airportClasses,
+                    provinces,
+                    radius,
+                    airportName,
+                    hospitalName
+                );
             }
 
             filterSelect.addEventListener('change', () => {
                 const val = filterSelect.value;
                 airportDiv.style.display = val === 'airport' ? 'block' : 'none';
                 hospitalDiv.style.display = val === 'hospital' ? 'block' : 'none';
-                triggerAuto();
-            });
-
-            radiusRange.addEventListener('input', () => {
-                radiusValue.textContent = radiusRange.value;
                 triggerAuto();
             });
 
@@ -970,8 +1000,6 @@ async function applyFiltersWithMapControl(
                 panel.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
                 $(panel).find('.select-search-airport').val(null).trigger('change');
                 $(panel).find('.select-search-hospital').val(null).trigger('change');
-                radiusRange.value = 0;
-                radiusValue.textContent = 0;
 
                 // Hapus radius & polygon dari peta
                 drawnItems.clearLayers();
@@ -988,8 +1016,34 @@ async function applyFiltersWithMapControl(
         }
     }))());
 
+    // --- Event listeners for radius panel ---
+document.addEventListener('input', e => {
+    if (e.target.id === 'radiusRangeMap') {
+        const radius = parseInt(e.target.value || 0);
+        document.getElementById('radiusValueMap').textContent = radius;
+        updateRadiusCircleAndPin(radius); // hanya update tampilan, belum apply
+    }
+});
+
+document.addEventListener('click', e => {
+    if (e.target.id === 'applyRadiusMap') {
+        const radius = parseInt(document.getElementById('radiusRangeMap').value || 0);
+        applyFiltersWithMapControl('all', [], [], [], radius); // apply filter radius baru
+    }
+
+    if (e.target.id === 'resetRadiusMap') {
+        document.getElementById('radiusRangeMap').value = 0;
+        document.getElementById('radiusValueMap').textContent = 0;
+        if (radiusCircle) map.removeLayer(radiusCircle);
+        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+        lastClickedLocation = null;
+        applyFiltersWithMapControl('all');
+    }
+});
+
     // --- Initial Load ---
     applyFiltersWithMapControl('all');
+    updateRadiusCircleAndPin(0);
 </script>
 
 @endpush

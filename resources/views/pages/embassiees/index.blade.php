@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title','Embassiees')
-@section('page-title', 'Papua New Guinea Embassiees')
+@section('page-title', 'Indonesia Embassiees')
 
 @push('styles')
 

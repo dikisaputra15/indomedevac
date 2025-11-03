@@ -160,71 +160,6 @@
         </div>
     </div>
 
-    <div class="filter-container p-3">
-        <form id="filterForm">
-            <div class="row g-3 align-items-end">
-                <div class="col-md-3">
-                    <label for="name" class="form-label">Medical Facility Name</label>
-                    <select id="name" class="form-select select2-search" name="name">
-                        <option value="">🔍 All Medical Facility</option>
-                        @foreach($hospitalNames as $name)
-                            <option value="{{ $name }}">{{ $name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <label for="category" class="form-label">Facility Level</label>
-                    <select id="category" class="form-select select2-search" name="category">
-                        <option value="">🔍 All Facility Level</option>
-                        @foreach($hospitalCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <label for="location" class="form-label">Location</label>
-                    <select id="location" class="form-select select2-search" name="location">
-                        <option value="">🔍 All Locations</option>
-                        @foreach($hospitalLocations as $location)
-                            <option value="{{ $location }}">{{ $location }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="radiusRange" class="form-label">Search in radius <span id="radiusValue">0</span> kilometers</label>
-                    <input type="range" id="radiusRange" name="radius" class="form-control" min="0" max="400" value="0">
-                </div>
-
-              <div class="col-md-10 mt-2">
-                    <label class="form-label d-flex align-items-center" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#provinceCollapse" aria-expanded="false" aria-controls="provinceCollapse">
-                        <span class="me-1">Province</span>
-                        <i class="bi bi-chevron-down" id="provinceToggleIcon"></i>
-                    </label>
-
-                    <div class="collapse" id="provinceCollapse">
-                        <div class="form-check-scrollable" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
-                            @foreach ($provinces as $province)
-                                <div class="form-check">
-                                    <input class="form-check-input province-checkbox" type="checkbox" name="provinces[]" value="{{ $province->id }}" id="province_{{ $province->id }}">
-                                    <label class="form-check-label" for="province_{{ $province->id }}">
-                                        {{ $province->provinces_region }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-2 mt-2">
-                    <button type="submit" class="btn btn-primary">Apply Filter</button>
-                    <button type="button" id="resetFilter" class="btn btn-secondary">Reset Filter</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center gap-3 my-2">
 
@@ -432,410 +367,297 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    const provinceCollapse = document.getElementById('provinceCollapse');
-    const icon = document.getElementById('provinceToggleIcon');
+    // === Inisialisasi Peta ===
+    const map = L.map('map', { fullscreenControl: true })
+        .setView([-6.80188562253168, 144.0733101155011], 6);
 
-    provinceCollapse.addEventListener('show.bs.collapse', () => {
-        icon.classList.remove('bi-chevron-down');
-        icon.classList.add('bi-chevron-up');
-    });
-
-    provinceCollapse.addEventListener('hide.bs.collapse', () => {
-        icon.classList.remove('bi-chevron-up');
-        icon.classList.add('bi-chevron-down');
-    });
-</script>
-
-<script>
-    // Inisialisasi peta Leaflet
-    const map = L.map('map', {
-        fullscreenControl: true
-    }).setView([-6.80188562253168, 144.0733101155011], 6); // Set view ke zoom level yang lebih luas
-
-    // --- Define Tile Layers ---
     const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-    });
+        attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+    }).addTo(map);
 
     const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-        maxZoom: 19,
+        attribution: 'Tiles © Esri', maxZoom: 19
     });
 
-    osmLayer.addTo(map); // Default to Street Map
+    L.control.layers({ "Street Map": osmLayer, "Satellite Map": satelliteLayer }).addTo(map);
 
-    const baseLayers = {
-        "Satelit Map": satelliteLayer,
-        "Street Map": osmLayer
-    };
-
-    L.control.layers(baseLayers).addTo(map);
-
+    // === Global Variables ===
     let hospitalMarkers = L.featureGroup().addTo(map);
-    let centerRadiusCircle = null; // Ganti nama variabel dari centerMarker ke centerRadiusCircle agar lebih jelas
-    let lastClickedMapCenter = null; // Menyimpan koordinat terakhir diklik di peta atau rumah sakit
-    let destinationMarker = null;
-    let destinationCoordinates = null;
-    let drawnPolygonGeoJSON = null; // Menyimpan GeoJSON dari poligon yang digambar
+    let radiusCircle = null;
+    let radiusPinMarker = null;
+    let lastClickedLocation = null;
+    let drawnPolygonGeoJSON = null;
 
-    // FeatureGroup untuk lapisan yang digambar
+    // === Leaflet Draw ===
     const drawnItems = new L.FeatureGroup().addTo(map);
-    map.addLayer(drawnItems);
-
-    // Kontrol Draw untuk menggambar poligon
     const drawControl = new L.Control.Draw({
         draw: {
-            polygon: {
-                allowIntersection: false, // Disallow intersecting polygons
-                shapeOptions: {
-                    color: '#346abb' // Warna garis poligon
-                },
-                showArea: true // Tampilkan luas area
-            },
-            polyline: false,
-            rectangle: false,
-            circle: false,
-            marker: false,
-            circlemarker: false
+            polygon: { allowIntersection: false, shapeOptions: { color: '#346abb', fillColor: '#346abb', fillOpacity: 0.2 } },
+            polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
         },
-        edit: {
-            featureGroup: drawnItems,
-            remove: true
-        }
+        edit: { featureGroup: drawnItems }
     });
     map.addControl(drawControl);
 
-    // Event listener untuk saat poligon selesai digambar
-    map.on(L.Draw.Event.CREATED, function (event) {
-        const layer = event.layer;
-        drawnItems.clearLayers(); // Hapus poligon sebelumnya jika ada
-        drawnItems.addLayer(layer);
-        drawnPolygonGeoJSON = layer.toGeoJSON(); // Simpan GeoJSON poligon yang baru
-        applyFilters(); // Terapkan filter setelah menggambar
-    });
-
-    // Event listener untuk saat poligon diedit
-    map.on(L.Draw.Event.EDITED, function (event) {
-        const layers = event.layers;
-        layers.eachLayer(function (layer) {
-            drawnPolygonGeoJSON = layer.toGeoJSON(); // Perbarui GeoJSON poligon yang diedit
-        });
-        applyFilters(); // Terapkan filter setelah mengedit
-    });
-
-    // Event listener untuk saat poligon dihapus
-    map.on(L.Draw.Event.DELETED, function (event) {
+    // === Event Polygon ===
+    map.on(L.Draw.Event.CREATED, e => {
         drawnItems.clearLayers();
-        drawnPolygonGeoJSON = null; // Hapus GeoJSON poligon
-        applyFilters(); // Terapkan filter setelah menghapus
+        drawnItems.addLayer(e.layer);
+        drawnPolygonGeoJSON = e.layer.toGeoJSON();
+        applyFiltersWithMapControl();
     });
 
-    // Kontrol untuk menampilkan total rumah sakit
-    const totalControl = L.control({ position: 'topright' });
-    totalControl.onAdd = function (map) {
-        const div = L.DomUtil.create('div', 'total-hospital');
-        div.innerHTML = 'Loading Medical Facility count...';
-        return div;
-    };
-    totalControl.addTo(map);
-
-    // Icon untuk destinasi (jika ada)
-    const destinationIcon = L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32]
+    map.on(L.Draw.Event.EDITED, e => {
+        e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
+        applyFiltersWithMapControl();
     });
 
-    function setDestination(lat, lng) {
-        if (destinationMarker) {
-            map.removeLayer(destinationMarker);
-        }
-        destinationCoordinates = [lat, lng];
-        destinationMarker = L.marker(destinationCoordinates, { icon: destinationIcon }).addTo(map);
-        destinationMarker.bindPopup("<b>Destination</b>").openPopup();
+    map.on(L.Draw.Event.DELETED, () => {
+        drawnItems.clearLayers();
+        drawnPolygonGeoJSON = null;
+        applyFiltersWithMapControl();
+    });
 
-        // Sesuaikan tampilan peta untuk mencakup destinasi dan rumah sakit jika ada
-        if (hospitalMarkers.getLayers().length > 0) {
-            const bounds = hospitalMarkers.getBounds().extend(destinationCoordinates);
-            map.fitBounds(bounds, { padding: [50, 50] });
-        } else {
-            map.setView(destinationCoordinates, 10);
-        }
-    }
+    // === Radius Circle Update ===
+    function updateRadiusCircleAndPin(radius = 0) {
+        if (radiusCircle) map.removeLayer(radiusCircle);
+        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+        radiusCircle = radiusPinMarker = null;
 
-    // Fungsi untuk memperbarui lingkaran radius
-    function updateRadiusCircle() {
-        const radius = parseInt(document.getElementById('radiusRange').value);
-        // Tentukan pusat radius: jika ada klik terakhir, gunakan itu. Jika tidak, gunakan pusat peta saat ini.
-        const center = lastClickedMapCenter || map.getCenter();
-
-        if (centerRadiusCircle) {
-            map.removeLayer(centerRadiusCircle);
-            centerRadiusCircle = null;
-        }
-
-        if (radius > 0) {
-            centerRadiusCircle = L.circle(center, {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.3,
-                radius: radius * 1000 // radius dalam meter
+        if (radius > 0 && lastClickedLocation) {
+            radiusCircle = L.circle(lastClickedLocation, {
+                color: 'red', fillColor: '#f03', fillOpacity: 0.3, radius: radius * 1000
             }).addTo(map);
+
+            const redIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+            });
+
+            radiusPinMarker = L.marker(lastClickedLocation, { icon: redIcon }).addTo(map);
         }
     }
 
-    // Event listener untuk perubahan nilai radius
-    document.getElementById('radiusRange').addEventListener('input', function() {
-        document.getElementById('radiusValue').textContent = this.value;
-        updateRadiusCircle(); // Perbarui lingkaran radius secara visual
-        applyFilters(); // Terapkan filter saat radius berubah
+    map.on('click', e => {
+        lastClickedLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
+        const radius = parseInt(document.querySelector('#radiusRangeMap').value || 0);
+        document.querySelector('#radiusValueMap').textContent = radius;
+        updateRadiusCircleAndPin(radius);
+        applyFiltersWithMapControl();
     });
 
-    // Event listener untuk klik peta: menentukan pusat untuk radius jika belum ada
-    map.on('click', function(e) {
-        lastClickedMapCenter = { lat: e.latlng.lat, lng: e.latlng.lng };
-        updateRadiusCircle(); // Perbarui lingkaran radius
-    });
-
-    // Fungsi utama untuk mengambil dan menampilkan data rumah sakit
-    async function fetchAndDisplayHospital(filters = {}) {
-        hospitalMarkers.clearLayers(); // Hapus marker yang ada
-
+    // === Fetch Data ===
+    async function fetchData(url, filters = {}) {
         const params = new URLSearchParams();
-        // Tambahkan filter ke parameter URL
-        Object.keys(filters).forEach(key => {
-            if (Array.isArray(filters[key])) {
-                filters[key].forEach(value => {
-                    params.append(`${key}[]`, value);
-                });
-            } else if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
-                params.append(key, filters[key]);
-            }
+        Object.entries(filters).forEach(([k, v]) => {
+            if (Array.isArray(v)) v.forEach(x => params.append(`${k}[]`, x));
+            else if (v !== '' && v != null) params.append(k, v);
         });
-
-        // Tambahkan data GeoJSON poligon jika ada
-        if (drawnPolygonGeoJSON) {
-            params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
-        }
-
-        // --- Simpan parameter filter ke localStorage untuk persistensi ---
-        localStorage.setItem('hospitalFilterParams', params.toString());
-        if (drawnPolygonGeoJSON) {
-            localStorage.setItem('hospitalDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
-        } else {
-            localStorage.removeItem('hospitalDrawnPolygon');
-        }
-        if (lastClickedMapCenter) {
-            localStorage.setItem('hospitalLastClickedCenter', JSON.stringify(lastClickedMapCenter));
-        } else {
-            localStorage.removeItem('hospitalLastClickedCenter');
-        }
+        if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
 
         try {
-            const response = await fetch(`/api/hospital?${params.toString()}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const hospitalData = await response.json(); // Ubah nama variabel untuk menghindari konflik
-
-            document.querySelector('.total-hospital').innerText = `Medical Facility : ${hospitalData.length}`;
-
-            if (hospitalData.length === 0) {
-                hospitalMarkers.clearLayers();
-                // Opsional: Tampilkan pesan "Tidak ada rumah sakit yang ditemukan" di UI
-                return;
-            }
-
-            hospitalData.forEach(hospital => {
-                const hospitalIcon = L.icon({
-                    iconUrl: hospital.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 24],
-                    popupAnchor: [0, -20]
-                });
-
-                const marker = L.marker([hospital.latitude, hospital.longitude], { icon: hospitalIcon }).addTo(hospitalMarkers);
-
-                // Ketika marker rumah sakit diklik, perbarui pusat radius
-                marker.on('click', () => {
-                    lastClickedMapCenter = {
-                        lat: hospital.latitude,
-                        lng: hospital.longitude
-                    };
-                    updateRadiusCircle(); // Perbarui lingkaran radius
-                });
-
-                marker.bindPopup(`
-                    <h5 style="border-bottom:1px solid #cccccc;">${hospital.name || 'N/A'}</h5>
-                    <strong>Global Classification:</strong> ${hospital.facility_category || 'N/A'}<br>
-                    <strong>Country Classification:</strong> ${hospital.facility_level || 'N/A'}<br>
-                    <strong>Location:</strong> ${hospital.address || 'N/A'}<br>
-                    <strong>Coords:</strong> ${hospital.latitude}, ${hospital.longitude}<br>
-                    <strong>Province:</strong> ${hospital.provinces_region || 'N/A'}<br>
-                    ${hospital.id ? `<a href="/hospitals/${hospital.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
-                `);
-            });
-
-            // Sesuaikan tampilan peta agar sesuai dengan semua marker rumah sakit
-            if (hospitalMarkers.getLayers().length > 0) {
-                let bounds = hospitalMarkers.getBounds();
-                if (destinationCoordinates) {
-                    bounds.extend(destinationCoordinates);
-                }
-                map.fitBounds(bounds, { padding: [50, 50] });
-            } else if (destinationCoordinates) {
-                map.setView(destinationCoordinates, 10);
-            }
-
-        } catch (error) {
-            console.error('Error fetching hospital data:', error);
-            document.querySelector('.total-hospital').innerText = 'Error loading hospitals.';
+            const res = await fetch(`${url}?${params.toString()}`);
+            return res.ok ? await res.json() : [];
+        } catch (e) {
+            console.error(`Error fetching ${url}:`, e);
+            return [];
         }
     }
 
-    // Fungsi untuk mengumpulkan dan menerapkan semua filter
-    function applyFilters() {
-        const name = document.getElementById('name').value;
-        const category = document.getElementById('category').value;
-        const location = document.getElementById('location').value;
-        const radius = parseInt(document.getElementById('radiusRange').value);
+    // === Tambah Marker Rumah Sakit ===
+    function addHospitalMarkers(data) {
+        hospitalMarkers.clearLayers();
+        data.forEach(hospital => {
+            if (!hospital.latitude || !hospital.longitude) return;
 
-        const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
-            .map(checkbox => checkbox.value);
+            const icon = L.icon({
+                iconUrl: hospital.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
+                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
+            });
 
-        let filters = {
-            name: name,
-            category: category,
-            location: location,
-            provinces: selectedProvinces
-        };
+            const marker = L.marker([hospital.latitude, hospital.longitude], { icon }).addTo(hospitalMarkers);
 
-        // Jika radius lebih dari 0, tambahkan parameter radius dan pusatnya
-        if (radius > 0) {
-            // Gunakan lastClickedMapCenter, jika tidak ada, gunakan pusat peta saat ini
-            const center = lastClickedMapCenter || map.getCenter();
+            marker.on('click', () => {
+                lastClickedLocation = { lat: hospital.latitude, lng: hospital.longitude };
+                updateRadiusCircleAndPin(parseInt(document.querySelector('#radiusRangeMap').value || 0));
+            });
+
+            marker.bindPopup(`
+                <h5 style="border-bottom:1px solid #ccc;">${hospital.name || 'N/A'}</h5>
+                <strong>Global Classification:</strong> ${hospital.facility_category || 'N/A'}<br>
+                <strong>Facility Level:</strong> ${hospital.facility_level || 'N/A'}<br>
+                <strong>Address:</strong> ${hospital.address || 'N/A'}<br>
+                <strong>Province:</strong> ${hospital.provinces_region || 'N/A'}<br>
+                <strong>Coords:</strong> ${hospital.latitude}, ${hospital.longitude}<br>
+                ${hospital.id ? `<a href="/hospitals/${hospital.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
+            `);
+        });
+
+        if (hospitalMarkers.getLayers().length > 0)
+            map.fitBounds(hospitalMarkers.getBounds(), { padding: [50, 50] });
+    }
+
+    // === Apply Filter ===
+    async function applyFiltersWithMapControl() {
+        const name = document.querySelector('#hospital_name_map')?.value || '';
+        const facilityLevels = Array.from(document.querySelectorAll('input[name="hospitalLevel"]:checked')).map(cb => cb.value);
+        const provinces = Array.from(document.querySelectorAll('.province-checkbox:checked')).map(cb => cb.value);
+        const radius = parseInt(document.querySelector('#radiusRangeMap')?.value || 0);
+
+        const filters = { name, category: facilityLevels, provinces };
+
+        if (radius > 0 && lastClickedLocation) {
             filters.radius = radius;
-            filters.center_lat = center.lat;
-            filters.center_lng = center.lng;
+            filters.center_lat = lastClickedLocation.lat;
+            filters.center_lng = lastClickedLocation.lng;
         }
 
-        fetchAndDisplayHospital(filters);
+        const hospitals = await fetchData('/api/hospital', filters);
+        document.querySelector('#totalHospitals').textContent = hospitals.length;
+        addHospitalMarkers(hospitals);
+        updateRadiusCircleAndPin(radius);
     }
 
-    // Fungsi untuk memuat filter dari localStorage dan menerapkannya
-    function loadFiltersAndApply() {
-        const savedParamsString = localStorage.getItem('hospitalFilterParams');
-        const savedPolygonString = localStorage.getItem('hospitalDrawnPolygon');
-        const savedCenterString = localStorage.getItem('hospitalLastClickedCenter');
+    // === Radius Panel ===
+    const RadiusPanel = L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function () {
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            div.style.background = 'white';
+            div.style.padding = '10px';
+            div.style.borderRadius = '8px';
+            div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+            div.style.minWidth = '160px';
+            div.style.textAlign = 'center';
 
-        // Pastikan Select2 sudah diinisialisasi sebelum mencoba mengatur nilainya
-        $('.select2-search').select2({
-            placeholder: "🔍 Search...",
-            allowClear: true,
-            width: '100%',
-        });
+            div.innerHTML = `
+                <strong>Radius Filter <span id="radiusValueMap">0</span> km</strong><br>
+                <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
+                <div style="display:flex;gap:5px;">
+                    <button id="applyRadiusMap" class="btn btn-sm btn-primary flex-fill">Apply</button>
+                    <button id="resetRadiusMap" class="btn btn-sm btn-danger flex-fill">Reset</button>
+                </div>
+            `;
 
-        if (savedParamsString) {
-            const params = new URLSearchParams(savedParamsString);
+            L.DomEvent.disableClickPropagation(div);
+            return div;
+        }
+    });
+    map.addControl(new RadiusPanel());
 
-            // Isi kembali form fields
-            document.getElementById('name').value = params.get('name') || '';
-            document.getElementById('category').value = params.get('category') || '';
-            document.getElementById('location').value = params.get('location') || '';
-
-            // Tangani radius
-            const savedRadius = parseInt(params.get('radius')) || 0;
-            document.getElementById('radiusRange').value = savedRadius;
-            document.getElementById('radiusValue').textContent = savedRadius;
-
-            // Tangani checkboxes provinsi
-            const savedProvinces = params.getAll('provinces[]');
-            document.querySelectorAll('.province-checkbox').forEach(checkbox => {
-                checkbox.checked = savedProvinces.includes(checkbox.value);
+    // === Filter Panel ===
+    map.addControl(new (L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function () {
+            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            Object.assign(container.style, {
+                background: 'white', borderRadius: '8px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)', overflow: 'hidden', zIndex: '9999', maxWidth: '280px'
             });
 
-            // Pulihkan pilihan Select2
-            $('#name').val(params.get('name')).trigger('change');
-            $('#category').val(params.get('category')).trigger('change');
-            $('#location').val(params.get('location')).trigger('change');
+            const btn = L.DomUtil.create('button', '', container);
+            btn.textContent = 'Filter';
+            Object.assign(btn.style, {
+                background: '#007bff', color: 'white', border: 'none',
+                width: '100%', padding: '6px', cursor: 'pointer'
+            });
 
-            // Pulihkan lastClickedMapCenter untuk lingkaran radius jika tersedia
-            if (savedCenterString) {
-                lastClickedMapCenter = JSON.parse(savedCenterString);
-            }
+            const panel = L.DomUtil.create('div', '', container);
+            Object.assign(panel.style, { display: 'none', padding: '10px', maxHeight: '440px', overflowY: 'auto' });
 
-            // Pulihkan poligon yang digambar
-            if (savedPolygonString) {
-                drawnPolygonGeoJSON = JSON.parse(savedPolygonString);
-                // Penting: pastikan GeoJSON adalah tipe yang valid sebelum ditambahkan
-                if (drawnPolygonGeoJSON && drawnPolygonGeoJSON.geometry && drawnPolygonGeoJSON.geometry.coordinates) {
-                    const layer = L.geoJSON(drawnPolygonGeoJSON);
-                    drawnItems.clearLayers();
-                    drawnItems.addLayer(layer);
+            panel.innerHTML = `
+                <h6>Filter Hospitals</h6>
+                <label class="form-label">Hospital Name</label>
+                <select id="hospital_name_map" class="form-select form-select-sm mb-2 select-search-hospital">
+                    <option value="">Select Hospital</option>
+                    @foreach($hospitalNames as $n)
+                        <option value="{{ $n }}">{{ $n }}</option>
+                    @endforeach
+                </select>
 
-                    // Sesuaikan peta ke poligon yang digambar
-                    map.fitBounds(layer.getBounds(), { padding: [50, 50] });
-                }
-            }
+                <strong>Facility Level:</strong><br>
+                ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(c => `
+                    <label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="hospitalLevel" value="${c}"> ${c}
+                    </label>`).join('')}
 
-            // Terapkan filter untuk mengambil data
-            applyFilters();
-            updateRadiusCircle(); // Pastikan lingkaran radius diperbarui setelah semua data dimuat
-        } else {
-            // Jika tidak ada filter yang disimpan, ambil data awal (tanpa filter)
-            fetchAndDisplayHospital();
+                <hr>
+                <strong>Province</strong>
+                <div style="max-height:120px;overflow-y:auto;border:1px solid #ccc;padding:5px;border-radius:5px;margin-top:6px;">
+                    @foreach ($provinces as $p)
+                        <div class="form-check">
+                            <input class="form-check-input province-checkbox" type="checkbox" value="{{ $p->id }}">
+                            <label class="form-check-label">{{ $p->provinces_region }}</label>
+                        </div>
+                    @endforeach
+                </div>
+
+                <hr>
+                <button id="resetHospitalFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset Filter</button>
+
+                <p class="mt-2 mb-0 text-center"><strong>Total:</strong> <span id="totalHospitals">0</span> facilities</p>
+            `;
+
+            btn.addEventListener('click', () => {
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            });
+
+            setTimeout(() => $('.select-search-hospital').select2({ width: '100%', placeholder: 'Search Hospital' }), 300);
+
+            panel.querySelector('#resetHospitalFilter').addEventListener('click', () => {
+                panel.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
+                $(panel).find('.select-search-hospital').val(null).trigger('change');
+                drawnItems.clearLayers();
+                drawnPolygonGeoJSON = null;
+                if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
+                if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
+                lastClickedLocation = null;
+                applyFiltersWithMapControl();
+            });
+
+            L.DomEvent.disableClickPropagation(container);
+            return container;
         }
-    }
+    }))());
 
-
-    // Event listener untuk submit form filter
-    document.getElementById('filterForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        applyFilters();
+    // === Event Filter Change ===
+    document.addEventListener('change', e => {
+        if (e.target.id === 'hospital_name_map' || e.target.name === 'hospitalLevel' || e.target.classList.contains('province-checkbox'))
+            applyFiltersWithMapControl();
     });
 
-    // Event listener untuk tombol reset filter
-    document.getElementById('resetFilter').addEventListener('click', function() {
-        document.getElementById('filterForm').reset();
-        document.getElementById('radiusValue').textContent = '0';
-        document.querySelectorAll('.province-checkbox').forEach(checkbox => {
-            checkbox.checked = false;
-        });
-
-        // Reset Select2
-        $('.select2-search').val(null).trigger('change');
-
-        if (centerRadiusCircle) {
-            map.removeLayer(centerRadiusCircle);
-            centerRadiusCircle = null;
+    // --- Event listeners for radius panel ---
+    document.addEventListener('input', e => {
+        if (e.target.id === 'radiusRangeMap') {
+            const radius = parseInt(e.target.value || 0);
+            document.getElementById('radiusValueMap').textContent = radius;
+            updateRadiusCircleAndPin(radius); // hanya update tampilan, belum apply
         }
-        if (destinationMarker) {
-            map.removeLayer(destinationMarker);
-            destinationMarker = null;
-            destinationCoordinates = null;
-        }
-
-        lastClickedMapCenter = null; // Reset pusat klik terakhir
-
-        drawnItems.clearLayers(); // Hapus lapisan yang digambar
-        drawnPolygonGeoJSON = null; // Hapus data GeoJSON poligon
-
-        // Hapus filter yang disimpan dari localStorage
-        localStorage.removeItem('hospitalFilterParams');
-        localStorage.removeItem('hospitalDrawnPolygon');
-        localStorage.removeItem('hospitalLastClickedCenter');
-
-        map.setView([-6.80188562253168, 144.0733101155011], 6); // Set ulang tampilan peta
-        fetchAndDisplayHospital(); // Ambil data tanpa filter
-        updateRadiusCircle(); // Perbarui lingkaran radius (seharusnya hilang)
     });
 
-    // Inisialisasi Select2 dan muat filter saat DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', () => {
-        loadFiltersAndApply();
+    document.addEventListener('click', e => {
+        if (e.target.id === 'applyRadiusMap') {
+            const radius = parseInt(document.getElementById('radiusRangeMap').value || 0);
+            applyFiltersWithMapControl('all', [], [], [], radius); // apply filter radius baru
+        }
+
+        if (e.target.id === 'resetRadiusMap') {
+            document.getElementById('radiusRangeMap').value = 0;
+            document.getElementById('radiusValueMap').textContent = 0;
+            if (radiusCircle) map.removeLayer(radiusCircle);
+            if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+            lastClickedLocation = null;
+            applyFiltersWithMapControl('all');
+        }
     });
+
+    $(document).on('select2:select select2:unselect', '#hospital_name_map', function () {
+        applyFiltersWithMapControl();
+    });
+
+    // === Load Awal ===
+    document.addEventListener('DOMContentLoaded', applyFiltersWithMapControl);
 </script>
 
 @endpush
