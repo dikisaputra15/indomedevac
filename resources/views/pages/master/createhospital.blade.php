@@ -177,9 +177,15 @@
                 </div>
 
                 <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ownership" value="Marine">
+                    <label class="form-check-label">Marine</label>
+                </div>
+
+                <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="ownership" value="Police">
                     <label class="form-check-label">Police</label>
                 </div>
+
             </div>
         </div>
 

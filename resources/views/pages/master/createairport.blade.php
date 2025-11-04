@@ -89,7 +89,7 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Military Branch</label><br>
+                <label>Military / Police</label><br>
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="military_branch" value="Army">
@@ -104,6 +104,16 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="military_branch" value="Air Force">
                     <label class="form-check-label">Air Force</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Marine">
+                    <label class="form-check-label">Marine</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Police">
+                    <label class="form-check-label">Police</label>
                 </div>
             </div>
         </div>

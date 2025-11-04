@@ -118,7 +118,7 @@
 
           <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Military Branch</label><br>
+                <label>Edit Military / Police</label><br>
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="military_branch" value="Army"
@@ -136,6 +136,18 @@
                     <input class="form-check-input" type="radio" name="military_branch" value="Air Force"
                         {{ old('Air Force', $airport->military_branch ?? '') == 'Air Force' ? 'checked' : '' }}>
                     <label class="form-check-label">Air Force</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Marine"
+                        {{ old('Marine', $airport->military_branch ?? '') == 'Marine' ? 'checked' : '' }}>
+                    <label class="form-check-label">Marine</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="military_branch" value="Police"
+                        {{ old('Police', $airport->military_branch ?? '') == 'Police' ? 'checked' : '' }}>
+                    <label class="form-check-label">Police</label>
                 </div>
             </div>
         </div>

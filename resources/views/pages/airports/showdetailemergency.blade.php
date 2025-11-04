@@ -624,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let map, mainAirportMarker, radiusCircle, routingControl = null;
     let nearbyMarkersGroup = L.featureGroup();
 
-    // Default icons
+    // === Default Icons ===
     const DEFAULT_MAIN_AIRPORT_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
     const DEFAULT_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
     const DEFAULT_AIRPORT_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
@@ -682,9 +682,11 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             if (distance > radiusKm) return;
 
-            // Filter Hospital berdasarkan facility_level
-            if (type === 'Hospital' && filters.hospitalLevel && filters.hospitalLevel !== 'all') {
-                if ((item.facility_level || '').toLowerCase() !== filters.hospitalLevel.toLowerCase()) return;
+            // Filter Hospital berdasarkan beberapa facility_level
+            if (type === 'Hospital' && filters.hospitalLevels && filters.hospitalLevels.length > 0) {
+                const itemLevel = (item.facility_level || '').toLowerCase();
+                const allowed = filters.hospitalLevels.map(l => l.toLowerCase());
+                if (!allowed.includes(itemLevel)) return;
             }
 
             // Filter Airport berdasarkan category
@@ -769,12 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // === Update Marker sesuai Filter ===
-    function updateMarkers(filterType, hospitalLevel, airportClassifications) {
+    function updateMarkers(filterType, hospitalLevels, airportClassifications) {
         nearbyMarkersGroup.clearLayers();
         map.removeLayer(radiusCircle);
         addMainAirportAndCircle();
 
-        const filters = { hospitalLevel, airportClassifications };
+        const filters = { hospitalLevels, airportClassifications };
 
         if (filterType === 'hospital') {
             addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
@@ -788,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fitMapToBounds();
     }
 
-    // === Filter Control di Peta ===
+    // === Filter Control ===
     const FilterControl = L.Control.extend({
         options: { position: 'topright' },
         onAdd: function() {
@@ -797,6 +799,7 @@ document.addEventListener('DOMContentLoaded', () => {
             container.style.borderRadius = '8px';
             container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
 
+            // Tombol toggle
             const toggleButton = L.DomUtil.create('button', '', container);
             toggleButton.innerHTML = 'Filter';
             toggleButton.style.background = '#007bff';
@@ -806,32 +809,36 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleButton.style.cursor = 'pointer';
             toggleButton.style.width = '100%';
 
+            // Panel filter
             const panel = L.DomUtil.create('div', '', container);
             panel.style.display = 'none';
             panel.style.padding = '10px';
             panel.style.maxHeight = '400px';
             panel.style.overflowY = 'auto';
             panel.innerHTML = `
-                <h6>Filter</h6>
-                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
-                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2">
+                <h6>Filter Options</h6>
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Hospitals</option>
                     <option value="airport">Airports</option>
                 </select>
+
                 <div id="hospitalFilter" style="display:none;">
                     <strong>Facility Level:</strong><br>
-                    ${['All','Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
-                        <label><input type="radio" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}</label>
+                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
+                        <label><input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}</label>
                     `).join('<br>')}
                 </div>
+
                 <div id="airportFilter" style="display:none; margin-top:8px;">
                     <strong>Category:</strong><br>
                     ${['International','Domestic','Military','Regional','Private'].map(cls => `
                         <label><input type="checkbox" name="airportClass" value="${cls}"> ${cls}</label>
                     `).join('<br>')}
                 </div>
+
+                <hr>
+                <button id="resetBtn" class="btn btn-sm btn-secondary w-100 mt-2">Reset Filter</button>
             `;
 
             L.DomEvent.disableClickPropagation(container);
@@ -840,17 +847,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
             });
 
-            const radiusSlider = panel.querySelector('#radiusRange');
-            const radiusLabel = panel.querySelector('#radiusLabel');
             const filterSelect = panel.querySelector('#mapFilter');
             const hospitalDiv = panel.querySelector('#hospitalFilter');
             const airportDiv = panel.querySelector('#airportFilter');
+            const resetBtn = panel.querySelector('#resetBtn');
 
             function refresh() {
                 const selectedType = filterSelect.value;
-                const selectedLevel = panel.querySelector('input[name="hospitalLevel"]:checked')?.value || 'all';
-                const selectedClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
-                updateMarkers(selectedType, selectedLevel, selectedClasses);
+                const selectedHospitalLevels = Array.from(panel.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+                const selectedAirportClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+                updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
             }
 
             filterSelect.addEventListener('change', () => {
@@ -860,28 +866,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 refresh();
             });
 
-            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(radio => {
-                radio.addEventListener('change', refresh);
+            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => {
+                chk.addEventListener('change', refresh);
             });
 
             panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
                 chk.addEventListener('change', refresh);
             });
 
-            radiusSlider.addEventListener('input', () => {
-                radiusKm = parseInt(radiusSlider.value);
-                radiusLabel.textContent = radiusKm;
-                refresh();
+            // Tombol Reset
+            resetBtn.addEventListener('click', () => {
+                filterSelect.value = 'all';
+                hospitalDiv.style.display = 'none';
+                airportDiv.style.display = 'none';
+                panel.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+                updateMarkers('all', [], []);
             });
 
             return container;
         }
     });
 
+    // === Radius Control (di luar tombol filter) ===
+    const RadiusControl = L.Control.extend({
+        options: { position: 'topleft' },
+        onAdd: function() {
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+            div.style.background = 'white';
+            div.style.padding = '8px';
+            div.style.borderRadius = '8px';
+            div.innerHTML = `
+                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label><br>
+                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range">
+            `;
+
+            const radiusSlider = div.querySelector('#radiusRange');
+            const radiusLabel = div.querySelector('#radiusLabel');
+            radiusSlider.addEventListener('input', () => {
+                radiusKm = parseInt(radiusSlider.value);
+                radiusLabel.textContent = radiusKm;
+                updateMarkers('all', [], []);
+            });
+
+            L.DomEvent.disableClickPropagation(div);
+            return div;
+        }
+    });
+
     // === Eksekusi ===
     initializeMap();
     addMainAirportAndCircle();
-    updateMarkers('all', 'all', []);
+    updateMarkers('all', [], []);
+    map.addControl(new RadiusControl());
     map.addControl(new FilterControl());
 });
 </script>

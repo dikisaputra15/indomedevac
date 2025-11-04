@@ -122,6 +122,81 @@
         .mb-4{
             margin-bottom: 0.5rem !important;
         }
+
+         /* Classification section */
+    .classification {
+      display: flex;
+      width: 100%;
+    }
+
+    .class-column {
+      flex: 1;
+      text-align: center;
+
+    }
+    .class-column:last-child {
+      border-right: none;
+    }
+
+    .class-header {
+      font-weight: 600;
+      padding: 0.1rem 0;
+    }
+
+    /* Color bars */
+    .class-medical-classification {border: none; text-align: center;}
+    .class-airport-category {border: none;}
+    .class-advanced { border-bottom: 3px solid #0070c0; }
+    .class-intermediate { border-bottom: 3px solid #00b050; }
+    .class-basic { border-bottom: 3px solid #ffc000; }
+
+    /* Hospital layout */
+    .hospital-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    /* For side-by-side classes */
+    .hospital-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+    }
+
+    .hospital-item {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .hospital-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Image inside icon box */
+    .hospital-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Airfield icons */
+    .category-item img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
     </style>
 
 @endpush
@@ -226,67 +301,116 @@
 </div>
 
  <div class="col-md-12">
-                    <div class="d-flex justify-content-between align-items-center gap-3 my-2">
+                <!-- Legend container -->
+                  <div class="classification">
+                    <!-- Airfield Classification -->
+                    <div class="classification" style="margin-right: 30px; width: 30%;">
+                      <!-- Airport -->
+                      <div class="class-column">
+                        <div class="class-header class-airport-category">Airfield Classification</div>
+                        <div class="hospital-list">
+                          <div class="hospital-row" style="flex-direction: column;">
+                            <!-- Airport row 1 -->
+                            <div class="hospital-item">
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
+                                  <small>International</small>
+                              </button>
 
-                        <div class="d-flex align-items-center gap-3">
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-airport.png" style="width:18px; height:18px;">
+                                  <small>Domestic</small>
+                              </button>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
-                                <small>International</small>
-                            </button>
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
+                                  <small>Regional</small>
+                              </button>
+                            </div>
+                            <!-- Airport row 2 -->
+                            <div class="hospital-item">
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
+                                  <small>Civil-Military</small>
+                              </button>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-airport.png" style="width:18px; height:18px;">
-                                <small>Domestic</small>
-                            </button>
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
+                                  <small>Military</small>
+                              </button>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
-                                <small>Regional</small>
-                            </button>
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
+                                  <small>Private</small>
+                              </button>
+                            </div>
+                          </div>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
-                                <small>Combined (Civil-Military)</small>
-                            </button>
+                        </div>
+                      </div>
+                    </div>
 
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level7Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
-                                <small>Military</small>
-                            </button>
-
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
-                                <small>Private</small>
-                            </button>
-
-                             <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level66Modal">
+                    <!-- Hospital Classification -->
+                    <div class="classification" style="flex-direction: column; width:100%;">
+                      <div class="class-header class-medical-classification">Medical Facility Classification</div>
+                      <div class="classification">
+                        <!-- Advanced -->
+                        <div class="class-column">
+                          <div class="class-header class-advanced">Advanced</div>
+                          <div class="hospital-list">
+                            <div class="hospital-item">
+                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level66Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24px; height:24px;">
                                 <small>Class A</small>
-                            </button>
-
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
-                                <small>Class B</small>
-                            </button>
-
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
-                                <small>Class C</small>
-                            </button>
-
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level33Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
-                                <small>Class D</small>
-                            </button>
-
-                            <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
-                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
-                                <small>PUSKESMAS</small>
-                            </button>
+                              </button>
+                            </div>
+                          </div>
                         </div>
 
+                        <!-- Intermediate -->
+                        <div class="class-column">
+                          <div class="class-header class-intermediate">Intermediate</div>
+                          <div class="hospital-list">
+                            <div class="hospital-row">
+                              <div class="hospital-item">
+                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
+                                  <small>Class B</small>
+                                </button>
+                              </div>
+                              <div class="hospital-item">
+                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
+                                  <small>Class C</small>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Basic -->
+                        <div class="class-column">
+                          <div class="class-header class-basic">Basic</div>
+                          <div class="hospital-list">
+                            <div class="hospital-row">
+                              <div class="hospital-item">
+                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level33Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
+                                  <small>Class D</small>
+                                </button>
+                              </div>
+                              <div class="hospital-item">
+                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
+                                    <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
+                                    <small>PUSKESMAS</small>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
 
 <div id="map"></div>
@@ -571,9 +695,7 @@
     });
 
     // --- Map Initialization ---
-    const map = L.map('map', {
-        fullscreenControl: true
-    }).setView([-6.80188562253168, 144.0733101155011], 6); // Set a broader initial view for PNG
+    const map = L.map('map', { fullscreenControl: true }).setView([-6.80188562253168, 144.0733101155011], 6);
 
     // --- Define Tile Layers ---
     const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -587,20 +709,15 @@
     });
 
     osmLayer.addTo(map);
-
-    const baseLayers = {
-        "Street Map": osmLayer,
-        "Satelit Map": satelliteLayer
-    };
-    L.control.layers(baseLayers).addTo(map);
+    L.control.layers({ "Street Map": osmLayer, "Satelit Map": satelliteLayer }).addTo(map);
 
     // --- Global Map State Variables ---
     let airportMarkers = L.featureGroup().addTo(map);
     let hospitalMarkers = L.featureGroup().addTo(map);
     let radiusCircle = null;
     let radiusPinMarker = null;
-    let lastClickedLocation = null; // Ini akan menyimpan lokasi klik terakhir (bisa dari peta kosong atau marker)
-    let drawnPolygonGeoJSON = null; // Stores the GeoJSON of the drawn polygon
+    let lastClickedLocation = null;
+    let drawnPolygonGeoJSON = null;
 
     // --- Leaflet Draw Initialization ---
     const drawnItems = new L.FeatureGroup().addTo(map);
@@ -608,61 +725,28 @@
         draw: {
             polygon: {
                 allowIntersection: false,
-                drawError: {
-                    color: '#e1e100',
-                    message: '<strong>Oh snap!</strong> you can\'t draw that!'
-                },
-                shapeOptions: {
-                    color: '#0000FF',
-                    fillColor: '#0000FF',
-                    fillOpacity: 0.2
-                }
+                drawError: { color: '#e1e100', message: '<strong>Oh snap!</strong> you can\'t draw that!' },
+                shapeOptions: { color: '#0000FF', fillColor: '#0000FF', fillOpacity: 0.2 }
             },
-            polyline: false,
-            rectangle: false,
-            circle: false,
-            marker: false,
-            circlemarker: false
+            polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
         },
-        edit: {
-            featureGroup: drawnItems,
-            remove: true,
-            poly: {
-                allowIntersection: false,
-                color: '#0000FF',
-                fillColor: '#0000FF',
-                fillOpacity: 0.2
-            }
-        }
+        edit: { featureGroup: drawnItems, remove: true, poly: { allowIntersection: false, color: '#0000FF', fillColor: '#0000FF', fillOpacity: 0.2 } }
     });
     map.addControl(drawControl);
 
-    // --- Leaflet Draw Event Handlers ---
     map.on(L.Draw.Event.CREATED, function (event) {
         const layer = event.layer;
         drawnItems.clearLayers();
         drawnItems.addLayer(layer);
         drawnPolygonGeoJSON = layer.toGeoJSON();
-        if (layer instanceof L.Polygon) {
-            layer.setStyle({
-                color: '#0000FF',
-                fillColor: '#0000FF',
-                fillOpacity: 0.2
-            });
-        }
+        if (layer instanceof L.Polygon) layer.setStyle({ color: '#0000FF', fillColor: '#0000FF', fillOpacity: 0.2 });
         applyFilters();
     });
 
     map.on(L.Draw.Event.EDITED, function (event) {
         event.layers.eachLayer(function (layer) {
             drawnPolygonGeoJSON = layer.toGeoJSON();
-            if (layer instanceof L.Polygon) {
-                layer.setStyle({
-                    color: '#0000FF',
-                    fillColor: '#0000FF',
-                    fillOpacity: 0.2
-                });
-            }
+            if (layer instanceof L.Polygon) layer.setStyle({ color: '#0000FF', fillColor: '#0000FF', fillOpacity: 0.2 });
         });
         applyFilters();
     });
@@ -675,31 +759,16 @@
 
     // --- Radius Search Functionality ---
     function updateRadiusCircleAndPin() {
-        if (radiusCircle) {
-            map.removeLayer(radiusCircle);
-            radiusCircle = null;
-        }
-        if (radiusPinMarker) {
-            map.removeLayer(radiusPinMarker);
-            radiusPinMarker = null;
-        }
+        if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
+        if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
 
-        const radius = parseInt(document.getElementById('radiusRange').value);
+        const radius = parseInt(document.getElementById('radiusRange').value || 0);
         if (radius > 0 && lastClickedLocation) {
-            radiusCircle = L.circle(lastClickedLocation, {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.3,
-                radius: radius * 1000
-            }).addTo(map);
-
+            radiusCircle = L.circle(lastClickedLocation, { color: 'red', fillColor: '#f03', fillOpacity: 0.3, radius: radius * 1000 }).addTo(map);
             const redIcon = new L.Icon({
                 iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
+                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
             });
             radiusPinMarker = L.marker(lastClickedLocation, { icon: redIcon }).addTo(map);
         }
@@ -708,41 +777,33 @@
     document.getElementById('radiusRange').addEventListener('input', function() {
         document.getElementById('radiusValue').textContent = this.value;
         updateRadiusCircleAndPin();
-        // applyFilters(); // Anda bisa mengaktifkan ini jika ingin filter diterapkan secara langsung saat slider radius digeser
     });
 
-    // Ini adalah event listener untuk klik pada peta kosong
     map.on('click', function(e) {
         lastClickedLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
         updateRadiusCircleAndPin();
     });
 
     // --- Data Fetching Functions ---
-    async function fetchData(url, filters) {
+    async function fetchData(url, filters = {}) {
         const params = new URLSearchParams();
         Object.keys(filters).forEach(key => {
-            if (Array.isArray(filters[key])) {
-                filters[key].forEach(value => params.append(`${key}[]`, value));
-            } else if (filters[key] !== '' && filters[key] !== null) {
-                params.append(key, filters[key]);
+            const val = filters[key];
+            if (Array.isArray(val)) {
+                val.forEach(v => params.append(`${key}[]`, v));
+            } else if (val !== '' && val !== null && typeof val !== 'undefined') {
+                params.append(key, val);
             }
         });
-
-        if (drawnPolygonGeoJSON) {
-            params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
-        }
-
+        if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
         if (filters.radius > 0 && filters.center_lat && filters.center_lng) {
             params.append('radius', filters.radius);
             params.append('center_lat', filters.center_lat);
             params.append('center_lng', filters.center_lng);
         }
-
         try {
             const response = await fetch(`${url}?${params.toString()}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error(`Error fetching data from ${url}:`, error);
@@ -750,156 +811,118 @@
         }
     }
 
-   function addMarkersToMap(data, markerGroup, iconUrl) { // Menghapus parameter detailUrlPrefix karena akan ditentukan secara dinamis
-    markerGroup.clearLayers();
-    data.forEach(item => {
-        const itemIcon = L.icon({
-            iconUrl: item.icon || iconUrl,
-            iconSize: [24, 24],
-            iconAnchor: [12, 24],
-            popupAnchor: [0, -20]
+    function addMarkersToMap(data, markerGroup, iconUrl) {
+        markerGroup.clearLayers();
+        data.forEach(item => {
+            const itemIcon = L.icon({ iconUrl: item.icon || iconUrl, iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20] });
+            const marker = L.marker([item.latitude, item.longitude], { icon: itemIcon }).addTo(markerGroup);
+
+            marker.on('click', function() {
+                lastClickedLocation = { lat: item.latitude, lng: item.longitude };
+                updateRadiusCircleAndPin();
+            });
+
+            let popupContent = ``;
+            let detailUrl = '';
+            let itemName = '';
+
+            if (item.airport_name) {
+                itemName = item.airport_name;
+                detailUrl = `/airports/${item.id}/detail`;
+                popupContent = `
+                    <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
+                    <strong>Classification:</strong> ${item.category || 'N/A'}<br>
+                    <strong>Address:</strong> ${item.address || 'N/A'}<br>
+                    ${item.website ? `<strong>Website:</strong><a href='${item.website}' target='__blank'> ${item.website} </a><br>` : ''}
+                `;
+            } else if (item.name) {
+                itemName = item.name;
+                detailUrl = `/hospitals/${item.id}`;
+                popupContent = `
+                    <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
+                    <strong>Global Classification:</strong> ${item.facility_category || 'N/A'}<br>
+                    <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
+                    <strong>Address:</strong> ${item.address || 'N/A'}<br>
+                    <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
+                    <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>
+                `;
+            } else {
+                itemName = item.id ? `Item ID: ${item.id}` : 'Unknown Item';
+                popupContent = `<b>${itemName}</b><br>Data detail tidak tersedia.`;
+            }
+
+            if (item.id && detailUrl) popupContent += `<a href="${detailUrl}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>`;
+
+            marker.bindPopup(popupContent);
         });
+        return data.length;
+    }
 
-        const marker = L.marker([item.latitude, item.longitude], { icon: itemIcon }).addTo(markerGroup);
-
-        // Tambahkan event listener click ke setiap marker
-        marker.on('click', function() {
-            lastClickedLocation = {
-                lat: item.latitude,
-                lng: item.longitude
-            };
-            updateRadiusCircleAndPin(); // Perbarui radius dan pin ke lokasi marker yang diklik
-        });
-
-        // --- AWAL PERUBAHAN PENTING DI SINI ---
-        let popupContent = ``;
-        let detailUrl = '';
-        let itemName = '';
-
-        // Deteksi apakah item adalah Airport atau Hospital
-        // Asumsi: Airport memiliki 'airport_name', Hospital memiliki 'name'
-        if (item.airport_name) {
-            // Ini adalah Airport
-            itemName = item.airport_name;
-            detailUrl = `/airports/${item.id}/detail`; // URL detail untuk Airport
-            popupContent = `
-                <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                <strong>Classification:</strong> ${item.category || 'N/A'}<br>
-                <strong>Address:</strong> ${item.address || 'N/A'}<br>
-                <strong>Telephone:</strong> ${item.telephone || 'N/A'}<br>
-                ${item.website ? `<strong>Website:</strong><a href='${item.website}' target='__blank'> ${item.website} </a><br>` : ''}
-            `;
-        } else if (item.name) {
-            // Ini adalah Hospital
-            itemName = item.name;
-            detailUrl = `/hospitals/${item.id}`; // URL detail untuk Hospital (PASTIKAN ROUTE INI ADA DI LARAVEL)
-            popupContent = `
-                <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
-                <strong>Global Classification:</strong> ${item.facility_category || 'N/A'}<br>
-                <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
-                <strong>Address:</strong> ${item.address || 'N/A'}<br>
-                <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
-                <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>
-            `;
-        } else {
-            // Fallback jika tidak teridentifikasi (opsional, tapi baik untuk debugging)
-            itemName = item.id ? `Item ID: ${item.id}` : 'Unknown Item';
-            popupContent = `<b>${itemName}</b><br>Data detail tidak tersedia.`;
-        }
-
-        // Tambahkan tombol Read More jika ada ID dan URL detail
-        if (item.id && detailUrl) {
-            popupContent += `<a href="${detailUrl}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>`;
-        }
-        // --- AKHIR PERUBAHAN PENTING DI SINI ---
-
-        marker.bindPopup(popupContent);
-    });
-    return data.length;
-}
-
-    // --- Main Filter Application Logic ---
+    // --- Main Filter Application Logic (form) ---
     async function applyFilters() {
-    const airportName = document.getElementById('airport_name').value;
-    const hospitalName = document.getElementById('hospital_name').value;
-    const radius = parseInt(document.getElementById('radiusRange').value);
-    const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked'))
-                                 .map(checkbox => checkbox.value);
+        const airportName = document.getElementById('airport_name').value;
+        const hospitalName = document.getElementById('hospital_name').value;
+        const radius = parseInt(document.getElementById('radiusRange').value) || 0;
+        const selectedProvinces = Array.from(document.querySelectorAll('.province-checkbox:checked')).map(checkbox => checkbox.value);
 
-    let commonFilters = { provinces: selectedProvinces };
+        let commonFilters = { provinces: selectedProvinces };
 
-    if (radius > 0 && lastClickedLocation) {
-        commonFilters.radius = radius;
-        commonFilters.center_lat = lastClickedLocation.lat;
-        commonFilters.center_lng = lastClickedLocation.lng;
+        if (radius > 0 && lastClickedLocation) {
+            commonFilters.radius = radius;
+            commonFilters.center_lat = lastClickedLocation.lat;
+            commonFilters.center_lng = lastClickedLocation.lng;
+        }
+
+        airportMarkers.clearLayers();
+        hospitalMarkers.clearLayers();
+
+        if (airportName && !hospitalName) {
+            const airportFilters = { name: airportName, ...commonFilters };
+            const airports = await fetchData('/api/airports', airportFilters);
+            addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        } else if (hospitalName && !airportName) {
+            const hospitalFilters = { name: hospitalName, ...commonFilters };
+            const hospitals = await fetchData('/api/hospital', hospitalFilters);
+            addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        } else if (!airportName && !hospitalName) {
+            const airports = await fetchData('/api/airports', commonFilters);
+            const hospitals = await fetchData('/api/hospital', commonFilters);
+            addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+            addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        } else {
+            const airports = await fetchData('/api/airports', { name: airportName, ...commonFilters });
+            const hospitals = await fetchData('/api/hospital', { name: hospitalName, ...commonFilters });
+            addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+            addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        }
+
+        updateRadiusCircleAndPin();
+
+        // fit bounds
+        let combinedBounds = L.featureGroup();
+        if (airportMarkers.getLayers().length > 0) combinedBounds.addLayer(airportMarkers);
+        if (hospitalMarkers.getLayers().length > 0) combinedBounds.addLayer(hospitalMarkers);
+        if (drawnItems.getLayers().length > 0) combinedBounds.addLayer(drawnItems);
+        if (radiusCircle) combinedBounds.addLayer(radiusCircle);
+        if (radiusPinMarker) combinedBounds.addLayer(radiusPinMarker);
+
+        if (combinedBounds.getLayers().length > 0) map.fitBounds(combinedBounds.getBounds(), { padding: [50, 50] });
+        else if (lastClickedLocation) map.setView(lastClickedLocation, 10);
+        else map.setView([-6.80188562253168, 144.0733101155011], 6);
+
+        // save state
+        const currentFilters = {
+            airport_name: airportName, hospital_name: hospitalName, radius: radius,
+            provinces: selectedProvinces,
+            center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
+            center_lng: lastClickedLocation ? lastClickedLocation.lng : null,
+        };
+        localStorage.setItem('mapFilterState', JSON.stringify(currentFilters));
+        localStorage.setItem('mapDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
+        localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
     }
 
-    // Kosongkan layer sebelum menambah ulang
-    airportMarkers.clearLayers();
-    hospitalMarkers.clearLayers();
-
-    // --- CASE 1: Filter airport saja ---
-    if (airportName && !hospitalName) {
-        const airportFilters = { name: airportName, ...commonFilters };
-        const airports = await fetchData('/api/airports', airportFilters);
-        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
-    }
-
-    // --- CASE 2: Filter hospital saja ---
-    else if (hospitalName && !airportName) {
-        const hospitalFilters = { name: hospitalName, ...commonFilters };
-        const hospitals = await fetchData('/api/hospital', hospitalFilters);
-        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
-    }
-
-    // --- CASE 3: Dua-duanya kosong → tampilkan semua ---
-    else if (!airportName && !hospitalName) {
-        const airports = await fetchData('/api/airports', commonFilters);
-        const hospitals = await fetchData('/api/hospital', commonFilters);
-        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
-        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
-    }
-
-    // --- CASE 4: Dua-duanya diisi (jika user isi dua sekaligus) ---
-    else {
-        const airports = await fetchData('/api/airports', { name: airportName, ...commonFilters });
-        const hospitals = await fetchData('/api/hospital', { name: hospitalName, ...commonFilters });
-        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
-        addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
-    }
-
-    // Update radius dan simpan state seperti biasa
-    updateRadiusCircleAndPin();
-    let combinedBounds = L.featureGroup();
-    if (airportMarkers.getLayers().length > 0) combinedBounds.addLayer(airportMarkers);
-    if (hospitalMarkers.getLayers().length > 0) combinedBounds.addLayer(hospitalMarkers);
-    if (drawnItems.getLayers().length > 0) combinedBounds.addLayer(drawnItems);
-    if (radiusCircle) combinedBounds.addLayer(radiusCircle);
-    if (radiusPinMarker) combinedBounds.addLayer(radiusPinMarker);
-
-    if (combinedBounds.getLayers().length > 0) {
-        map.fitBounds(combinedBounds.getBounds(), { padding: [50, 50] });
-    } else if (lastClickedLocation) {
-        map.setView(lastClickedLocation, 10);
-    } else {
-        map.setView([-6.80188562253168, 144.0733101155011], 6);
-    }
-
-    // Simpan filter ke localStorage
-    const currentFilters = {
-        airport_name: airportName,
-        hospital_name: hospitalName,
-        radius: radius,
-        provinces: selectedProvinces,
-        center_lat: lastClickedLocation ? lastClickedLocation.lat : null,
-        center_lng: lastClickedLocation ? lastClickedLocation.lng : null,
-    };
-    localStorage.setItem('mapFilterState', JSON.stringify(currentFilters));
-    localStorage.setItem('mapDrawnPolygon', JSON.stringify(drawnPolygonGeoJSON));
-    localStorage.setItem('mapLastClickedLocation', JSON.stringify(lastClickedLocation));
-}
-
-    // === Filter Control di dalam Peta ===
+    // === Filter Control in-map (panel) ===
     map.addControl(new (L.Control.extend({
         options: { position: 'topright' },
         onAdd: function () {
@@ -910,18 +933,10 @@
             container.style.overflow = 'hidden';
             container.style.zIndex = '9999';
 
-            // Tombol toggle
             const toggleButton = L.DomUtil.create('button', '', container);
             toggleButton.innerHTML = 'Filter';
-            toggleButton.style.width = '100%';
-            toggleButton.style.border = 'none';
-            toggleButton.style.background = '#007bff';
-            toggleButton.style.color = 'white';
-            toggleButton.style.padding = '6px';
-            toggleButton.style.cursor = 'pointer';
-            toggleButton.style.fontSize = '13px';
+            Object.assign(toggleButton.style, { width: '100%', border: 'none', background: '#007bff', color: 'white', padding: '6px', cursor: 'pointer', fontSize: '13px' });
 
-            // Panel filter
             const panel = L.DomUtil.create('div', '', container);
             panel.style.display = 'none';
             panel.style.padding = '10px';
@@ -937,11 +952,11 @@
                     <option value="airport">Airports</option>
                 </select>
 
-                <div id="hospitalFilter" style="display:none;">
+               <div id="hospitalFilter" style="display:none;">
                     <strong>Facility Level:</strong><br>
-                    ${['All','Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
+                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
                         <label style="display:block;font-size:13px;">
-                            <input type="radio" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
+                            <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
                         </label>
                     `).join('')}
                 </div>
@@ -958,7 +973,6 @@
 
             L.DomEvent.disableClickPropagation(container);
 
-            // === Toggle Show/Hide ===
             toggleButton.addEventListener('click', () => {
                 panel.style.display = (panel.style.display === 'none') ? 'block' : 'none';
             });
@@ -970,11 +984,11 @@
 
             function refresh() {
                 const selectedType = filterSelect.value;
-                const selectedLevel = panel.querySelector('input[name="hospitalLevel"]:checked')?.value || 'all';
+                const selectedLevels = Array.from(panel.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
                 const selectedClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
 
-                // === panggil applyFilters() dengan parameter baru ===
-                applyFiltersWithMapControl(selectedType, selectedLevel, selectedClasses);
+                // call applyFiltersWithMapControl with correct variable names
+                applyFiltersWithMapControl(selectedType, selectedLevels, selectedClasses);
             }
 
             filterSelect.addEventListener('change', () => {
@@ -984,13 +998,8 @@
                 refresh();
             });
 
-            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(radio => {
-                radio.addEventListener('change', refresh);
-            });
-
-            panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
-                chk.addEventListener('change', refresh);
-            });
+            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => { chk.addEventListener('change', refresh); });
+            panel.querySelectorAll('input[name="airportClass"]').forEach(chk => { chk.addEventListener('change', refresh); });
 
             return container;
         }
@@ -998,30 +1007,8 @@
 
     // --- Load Filters and Apply on Page Load ---
     async function loadFiltersAndApply() {
-        // Initialize Select2 first
-        $('.select21-search').select2({
-            placeholder: "🔍 Airport Name",
-            allowClear: true,
-            width: '100%',
-        });
-
-        // $('.select22-search').select2({
-        //     placeholder: "🔍 Airport Category",
-        //     allowClear: true,
-        //     width: '100%',
-        // });
-
-         $('.select23-search').select2({
-            placeholder: "🔍 Medical Facility Name",
-            allowClear: true,
-            width: '100%',
-        });
-
-        // $('.select24-search').select2({
-        //     placeholder: "🔍 Medical Facility Category",
-        //     allowClear: true,
-        //     width: '100%',
-        // });
+        $('.select21-search').select2({ placeholder: "🔍 Airport Name", allowClear: true, width: '100%' });
+        $('.select23-search').select2({ placeholder: "🔍 Medical Facility Name", allowClear: true, width: '100%' });
 
         const savedFilterStateString = localStorage.getItem('mapFilterState');
         const savedPolygonString = localStorage.getItem('mapDrawnPolygon');
@@ -1029,95 +1016,87 @@
 
         if (savedFilterStateString) {
             const savedFilters = JSON.parse(savedFilterStateString);
-
-            // Populate form fields
             document.getElementById('airport_name').value = savedFilters.airport_name || '';
-            // document.getElementById('airport_category').value = savedFilters.airport_category || '';
             document.getElementById('hospital_name').value = savedFilters.hospital_name || '';
-            // document.getElementById('hospital_category').value = savedFilters.hospital_category || '';
-
             const savedRadius = parseInt(savedFilters.radius) || 0;
             document.getElementById('radiusRange').value = savedRadius;
             document.getElementById('radiusValue').textContent = savedRadius;
-
-            // Handle province checkboxes
             const savedProvinces = savedFilters.provinces || [];
-            document.querySelectorAll('.province-checkbox').forEach(checkbox => {
-                checkbox.checked = savedProvinces.includes(checkbox.value);
-            });
-
-            // Trigger Select2 updates
+            document.querySelectorAll('.province-checkbox').forEach(checkbox => checkbox.checked = savedProvinces.includes(checkbox.value));
             $('#airport_name').val(savedFilters.airport_name).trigger('change');
-            // $('#airport_category').val(savedFilters.airport_category).trigger('change');
             $('#hospital_name').val(savedFilters.hospital_name).trigger('change');
-            // $('#hospital_category').val(savedFilters.hospital_category).trigger('change');
 
-            if (savedLocationString && savedLocationString !== 'null') {
-                lastClickedLocation = JSON.parse(savedLocationString);
-            }
-
+            if (savedLocationString && savedLocationString !== 'null') lastClickedLocation = JSON.parse(savedLocationString);
             if (savedPolygonString && savedPolygonString !== 'null') {
                 drawnPolygonGeoJSON = JSON.parse(savedPolygonString);
                 if (drawnPolygonGeoJSON && drawnPolygonGeoJSON.geometry && drawnPolygonGeoJSON.geometry.coordinates) {
-                    const layer = L.geoJSON(drawnPolygonGeoJSON, {
-                        style: function (feature) {
-                            return {
-                                color: '#0000FF',
-                                fillColor: '#0000FF',
-                                fillOpacity: 0.2
-                            };
-                        }
-                    });
+                    const layer = L.geoJSON(drawnPolygonGeoJSON, { style: { color: '#0000FF', fillColor: '#0000FF', fillOpacity: 0.2 } });
                     drawnItems.clearLayers();
                     drawnItems.addLayer(layer);
-                    if (map.editTools && layer.editing) {
-                         layer.editing.enable();
-                    }
+                    if (map.editTools && layer.editing) layer.editing.enable();
                 }
             }
         }
         await applyFilters();
     }
 
-    async function applyFiltersWithMapControl(selectedType, hospitalLevel, airportClasses) {
-    // Gunakan logika applyFilters() kamu, tapi tambahkan parameter sesuai filter control di peta
+    // Fix: correct parameter name and logic here
+   async function applyFiltersWithMapControl(selectedType, hospitalLevels = [], airportClasses = []) {
     let commonFilters = {};
 
-    // === Hospital Filter ===
+    // === Hospital ===
     if (selectedType === 'hospital' || selectedType === 'all') {
-        const hospitals = await fetchData('/api/hospital', {
-            category: hospitalLevel !== 'all' ? hospitalLevel : '',
-            ...commonFilters
-        });
+        const hospitalFilters = { ...commonFilters };
+
+        // hanya kirim category jika ada pilihan
+        if (hospitalLevels.length > 0) {
+            hospitalFilters.category = hospitalLevels;
+        }
+
+        const hospitals = await fetchData('/api/hospital', hospitalFilters);
         addMarkersToMap(hospitals, hospitalMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
     } else {
         hospitalMarkers.clearLayers();
     }
 
-    // === Airport Filter ===
+    // === Airport ===
     if (selectedType === 'airport' || selectedType === 'all') {
-        let airports = await fetchData('/api/airports', {
-            category: airportClasses.length ? airportClasses : [],
-            ...commonFilters
-        });
+        const airportFilters = { ...commonFilters };
 
         if (airportClasses.length > 0) {
-            airports = airports.filter(item => {
-                const airportCategories = (item.category || '')
-                    .split(',')
-                    .map(c => c.trim().toLowerCase());
-                const allowed = airportClasses.map(c => c.toLowerCase());
-                return airportCategories.some(cat => allowed.includes(cat));
-            });
+            airportFilters.category = airportClasses;
         }
 
-        addMarkersToMap(airports, airportMarkers, 'https://unpkg.com/leaflet/dist/images/marker-icon.png');
+        const airports = await fetchData('/api/airports', airportFilters);
+
+        // 🔍 Filter logika kategori (bisa multi kategori, case-insensitive)
+        const filteredAirports = airports.filter(item => {
+            if (airportClasses.length === 0) return true; // jika tidak ada filter, tampilkan semua
+
+            // Pecah kategori di database (misal "International, Domestic")
+            const airportCategories = (item.category || '')
+                .split(',')
+                .map(c => c.trim().toLowerCase());
+
+            // Ubah filter pilihan user ke lowercase juga
+            const allowed = airportClasses.map(c => c.toLowerCase());
+
+            // Cek apakah salah satu kategori di database cocok dengan filter pilihan
+            const hasMatch = airportCategories.some(cat => allowed.includes(cat));
+
+            return hasMatch;
+        });
+
+        addMarkersToMap(
+            filteredAirports,
+            airportMarkers,
+            'https://unpkg.com/leaflet/dist/images/marker-icon.png'
+        );
     } else {
         airportMarkers.clearLayers();
     }
 
 }
-
 
     // --- Event Listeners ---
     document.getElementById('filterForm').addEventListener('submit', function(e) {
@@ -1128,24 +1107,12 @@
     document.getElementById('resetFilter').addEventListener('click', function() {
         document.getElementById('filterForm').reset();
         document.getElementById('radiusValue').textContent = '0';
-        document.querySelectorAll('.province-checkbox').forEach(checkbox => {
-            checkbox.checked = false;
-        });
-
-        // Reset Select2
+        document.querySelectorAll('.province-checkbox').forEach(checkbox => { checkbox.checked = false; });
         $('#airport_name').val(null).trigger('change');
-        // $('#airport_category').val(null).trigger('change');
         $('#hospital_name').val(null).trigger('change');
-        // $('#hospital_category').val(null).trigger('change');
 
-        if (radiusCircle) {
-            map.removeLayer(radiusCircle);
-            radiusCircle = null;
-        }
-        if (radiusPinMarker) {
-            map.removeLayer(radiusPinMarker);
-            radiusPinMarker = null;
-        }
+        if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
+        if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
 
         drawnItems.clearLayers();
         drawnPolygonGeoJSON = null;
@@ -1158,7 +1125,7 @@
         applyFilters();
     });
 
-    // Initial load and filter application
+    // Initial load
     loadFiltersAndApply();
 </script>
 

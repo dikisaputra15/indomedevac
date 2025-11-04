@@ -609,116 +609,93 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nearbyHospitals = @json($nearbyHospitals);
     const nearbyAirports = @json($nearbyAirports);
-    let radiusKm = {{ $radius_km }}; // ⬅️ default 500 km
+    let radiusKm = {{ $radius_km }}; // default 500 km
 
     let map, mainMarker, radiusCircle, routingControl = null;
     let nearbyMarkersGroup = L.featureGroup();
 
-    // Default icons
     const DEFAULT_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
-    const DEFAULT_AIRPORT_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+    const DEFAULT_AIRPORT_ICON_URL  = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
     const DEFAULT_MAIN_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
 
     const mainHospitalIcon = new L.Icon({
         iconUrl: DEFAULT_MAIN_HOSPITAL_ICON_URL,
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
+        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
     });
 
-    // Inisialisasi peta
+    // === Inisialisasi Peta ===
     function initializeMap() {
         map = L.map('map', { fullscreenControl: true })
             .setView([hospitalData.latitude, hospitalData.longitude], 11);
 
         const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors',
-            maxZoom: 19
+            attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
         });
 
         const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri',
-            maxZoom: 19
+            attribution: 'Tiles &copy; Esri', maxZoom: 19
         });
 
         satelliteLayer.addTo(map);
         L.control.layers({ "Satellite": satelliteLayer, "Street": osmLayer }).addTo(map);
-
         nearbyMarkersGroup.addTo(map);
     }
 
-    // Tambahkan marker utama rumah sakit dan radius
+    // === Tambahkan Marker Utama dan Radius ===
     function addMainHospitalAndCircle() {
         mainMarker = L.marker([hospitalData.latitude, hospitalData.longitude], { icon: mainHospitalIcon })
             .addTo(map)
             .bindPopup(`<b>${hospitalData.name}</b><br>This is the main hospital.`);
 
         radiusCircle = L.circle([hospitalData.latitude, hospitalData.longitude], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.1,
-            radius: radiusKm * 1000
+            color: 'red', fillColor: '#f03', fillOpacity: 0.1, radius: radiusKm * 1000
         }).addTo(map);
     }
 
-    // Tambahkan marker sekitar dengan filter + radius check
+    // === Tambahkan Marker Sekitar ===
     function addNearbyMarkers(data, defaultIconUrl, type, filters = {}) {
         data.forEach(item => {
-            // Hitung jarak antar titik
             const distance = calculateDistance(
                 hospitalData.latitude, hospitalData.longitude,
                 item.latitude, item.longitude
             );
+            if (distance > radiusKm) return;
 
-            // Filter berdasarkan radius
-            if (distance > radiusKm) return; // ⬅️ hanya tampil dalam radius
-
-            // Filter HOSPITAL berdasarkan facility_level
-            if (type === 'Hospital' && filters.hospitalLevel && filters.hospitalLevel !== 'all') {
-                if ((item.facility_level || '').toLowerCase() !== filters.hospitalLevel.toLowerCase()) return;
+            // Filter hospital berdasarkan multiple facility_level
+            if (type === 'Hospital' && filters.hospitalLevels && filters.hospitalLevels.length > 0) {
+                const level = (item.facility_level || '').toLowerCase();
+                const allowed = filters.hospitalLevels.map(l => l.toLowerCase());
+                if (!allowed.includes(level)) return;
             }
 
-            // Filter AIRPORT berdasarkan category
+            // Filter airport berdasarkan kategori
             if (type === 'Airport' && filters.airportClassifications && filters.airportClassifications.length > 0) {
-                const airportCategories = (item.category || '')
-                    .split(',')
-                    .map(c => c.trim().toLowerCase());
+                const airportCategories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
                 const allowed = filters.airportClassifications.map(c => c.toLowerCase());
                 const hasMatch = airportCategories.some(cat => allowed.includes(cat));
                 if (!hasMatch) return;
             }
 
             const icon = L.icon({
-                iconUrl: item.icon || defaultIconUrl,
-                iconSize: [24, 24],
-                iconAnchor: [12, 24],
-                popupAnchor: [0, -20]
+                iconUrl: item.icon || defaultIconUrl, iconSize: [24, 24],
+                iconAnchor: [12, 24], popupAnchor: [0, -20]
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
             const name = item.name || item.airport_name || 'N/A';
             const level = item.facility_level || item.category || 'N/A';
-
             const detailUrl = (type === 'Airport')
                 ? `/airports/${item.id}/detail`
                 : `/hospitals/${item.id}`;
 
-            const group = (type === 'Airport') ? `` : `${item.facility_category || ''} -`;
-
-            const jarak = item.distance
-                            ? `<strong>Distance:</strong> ${item.distance.toFixed(2)} km`
-                            : '';
+            const distanceText = `<strong>Distance:</strong> ${distance.toFixed(2)} km`;
 
             marker.bindPopup(`
                 <div style="font-size:13px;">
-                    <a href="${detailUrl}" target="_blank">
-                        ${name}
-                    </a><br>
-                    ${group} ${level}<br>
-                    ${jarak}
-                    <br><button class="btn btn-sm btn-primary mt-2"
+                    <a href="${detailUrl}" target="_blank">${name}</a><br>
+                    ${level}<br>${distanceText}<br>
+                    <button class="btn btn-sm btn-primary mt-2"
                         onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
                         Get Direction
                     </button>
@@ -729,67 +706,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hitung jarak antar titik (Haversine)
+    // === Hitung Jarak (Haversine) ===
     function calculateDistance(lat1, lon1, lat2, lon2) {
         const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
         const dLon = (lon2 - lon1) * Math.PI / 180;
-        const a =
-            Math.sin(dLat / 2) ** 2 +
+        const a = Math.sin(dLat / 2) ** 2 +
             Math.cos(lat1 * Math.PI / 180) *
             Math.cos(lat2 * Math.PI / 180) *
             Math.sin(dLon / 2) ** 2;
         return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-   // Routing direction tanpa pin waypoint routing bawaan
+    // === Routing ===
     window.getDirection = function(lat, lng) {
-        // Hapus route sebelumnya
         if (routingControl) map.removeControl(routingControl);
 
-        // Tambahkan routing baru tanpa marker bawaan
         routingControl = L.Routing.control({
             waypoints: [
                 L.latLng(hospitalData.latitude, hospitalData.longitude),
                 L.latLng(lat, lng)
             ],
-            routeWhileDragging: false,
-            addWaypoints: false,
-            collapsible: true,
-            show: false,
-            createMarker: function() {
-                // Return null supaya routing tidak menambahkan marker waypoint
-                return null;
-            },
-            lineOptions: {
-                styles: [{ color: 'red', opacity: 0.7, weight: 4 }]
-            }
+            routeWhileDragging: false, addWaypoints: false,
+            collapsible: true, show: false,
+            createMarker: () => null,
+            lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
         }).addTo(map);
-
-        // Pastikan garis route tidak menutupi marker
-        routingControl.on('routesfound', () => {
-            if (mainMarker && typeof mainMarker.bringToFront === 'function') {
-                mainMarker.bringToFront();
-            }
-            if (nearbyMarkersGroup && typeof nearbyMarkersGroup.bringToFront === 'function') {
-                nearbyMarkersGroup.bringToFront();
-            }
-        });
     };
 
-    // Fit map ke semua marker
+    // === Fit Map ===
     function fitMapToBounds() {
         const bounds = L.featureGroup([mainMarker, nearbyMarkersGroup, radiusCircle]).getBounds();
         if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50] });
     }
 
-    // Render ulang marker sesuai filter + radius
-    function updateMarkers(filterType, hospitalLevel, airportClassifications) {
+    // === Update Marker ===
+    function updateMarkers(filterType, hospitalLevels, airportClassifications) {
         nearbyMarkersGroup.clearLayers();
         map.removeLayer(radiusCircle);
-        addMainHospitalAndCircle(); // ⬅️ redraw radius
+        addMainHospitalAndCircle();
 
-        const filters = { hospitalLevel, airportClassifications };
+        const filters = { hospitalLevels, airportClassifications };
 
         if (filterType === 'hospital') {
             addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
@@ -803,54 +760,75 @@ document.addEventListener('DOMContentLoaded', () => {
         fitMapToBounds();
     }
 
-   // === Filter Control di dalam Peta ===
+    // === Kontrol Radius (selalu terlihat) ===
+    const RadiusControl = L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function() {
+            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom p-2 bg-white rounded');
+            container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            container.innerHTML = `
+                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label><br>
+                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range">
+            `;
+            L.DomEvent.disableClickPropagation(container);
+
+            const radiusSlider = container.querySelector('#radiusRange');
+            const radiusLabel = container.querySelector('#radiusLabel');
+            radiusSlider.addEventListener('input', () => {
+                radiusKm = parseInt(radiusSlider.value);
+                radiusLabel.textContent = radiusKm;
+                refreshFilters();
+            });
+            return container;
+        }
+    });
+
+    // === Filter Control (dengan tombol reset) ===
     const FilterControl = L.Control.extend({
         options: { position: 'topright' },
-        onAdd: function () {
+        onAdd: function() {
             const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
             container.style.background = 'white';
             container.style.borderRadius = '3px';
             container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-            container.style.overflow = 'hidden';
 
-            // Tombol toggle
             const toggleButton = L.DomUtil.create('button', '', container);
             toggleButton.innerHTML = 'Filter';
+<<<<<<< HEAD
             toggleButton.style.width = '100%';
+=======
+            toggleButton.style.background = '#007bff';
+            toggleButton.style.color = 'white';
             toggleButton.style.border = 'none';
-            toggleButton.style.background = '#ffffff';
-            toggleButton.style.color = 'black';
+>>>>>>> 5278ad0a7e2527fb0b167c1ca60ab00e5d552a8b
             toggleButton.style.padding = '6px';
             toggleButton.style.cursor = 'pointer';
-            toggleButton.style.fontSize = '13px';
+            toggleButton.style.width = '100%';
 
-            // Panel filter (default hidden)
             const panel = L.DomUtil.create('div', '', container);
             panel.style.display = 'none';
             panel.style.padding = '10px';
-            panel.style.maxWidth = '220px';
             panel.style.maxHeight = '400px';
             panel.style.overflowY = 'auto';
             panel.innerHTML = `
-                <h6 style="margin:0 0 5px 0;">Filter</h6>
-                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
-                <input type="range" id="radiusRange" min="10" max="500" value="${radiusKm}" step="10" class="form-range mb-2">
-
+                <h6>Filter</h6>
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Hospitals</option>
                     <option value="airport">Airports</option>
                 </select>
-
                 <div id="hospitalFilter" style="display:none;">
                     <strong>Facility Level:</strong><br>
-                    ${['All','Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
+                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
                         <label style="display:block;font-size:13px;">
+<<<<<<< HEAD
                             <input type="checkbox" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
+=======
+                            <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
+>>>>>>> 5278ad0a7e2527fb0b167c1ca60ab00e5d552a8b
                         </label>
                     `).join('')}
                 </div>
-
                 <div id="airportFilter" style="display:none; margin-top:8px;">
                     <strong>Category:</strong><br>
                     ${['International','Domestic','Military','Regional','Private'].map(cls => `
@@ -859,27 +837,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         </label>
                     `).join('')}
                 </div>
+                <button id="resetFilter" class="btn btn-sm btn-secondary mt-2 w-100">Reset Filter</button>
             `;
 
             L.DomEvent.disableClickPropagation(container);
 
-            // === Toggle Show/Hide ===
             toggleButton.addEventListener('click', () => {
-                panel.style.display = (panel.style.display === 'none') ? 'block' : 'none';
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
             });
 
-            // === Event filter logic ===
-            const radiusSlider = panel.querySelector('#radiusRange');
-            const radiusLabel = panel.querySelector('#radiusLabel');
             const filterSelect = panel.querySelector('#mapFilter');
             const hospitalDiv = panel.querySelector('#hospitalFilter');
             const airportDiv = panel.querySelector('#airportFilter');
+            const resetBtn = panel.querySelector('#resetFilter');
 
             function refresh() {
                 const selectedType = filterSelect.value;
-                const selectedLevel = panel.querySelector('input[name="hospitalLevel"]:checked')?.value || 'all';
-                const selectedClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
-                updateMarkers(selectedType, selectedLevel, selectedClasses);
+                const selectedHospitalLevels = Array.from(panel.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+                const selectedAirportClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+                updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
             }
 
             filterSelect.addEventListener('change', () => {
@@ -889,17 +865,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 refresh();
             });
 
-            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(radio => {
-                radio.addEventListener('change', refresh);
+            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => {
+                chk.addEventListener('change', refresh);
             });
 
             panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
                 chk.addEventListener('change', refresh);
             });
 
-            radiusSlider.addEventListener('input', () => {
-                radiusKm = parseInt(radiusSlider.value);
-                radiusLabel.textContent = radiusKm;
+            resetBtn.addEventListener('click', () => {
+                panel.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+                filterSelect.value = 'all';
+                hospitalDiv.style.display = 'none';
+                airportDiv.style.display = 'none';
+                radiusKm = {{ $radius_km }};
                 refresh();
             });
 
@@ -907,10 +886,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Jalankan
+    function refreshFilters() {
+        const selectedType = document.querySelector('#mapFilter')?.value || 'all';
+        const selectedHospitalLevels = Array.from(document.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+        const selectedAirportClasses = Array.from(document.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+        updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
+    }
+
+    // === Jalankan ===
     initializeMap();
     addMainHospitalAndCircle();
-    updateMarkers('all', 'all', []);
+    updateMarkers('all', [], []);
+    map.addControl(new RadiusControl());
     map.addControl(new FilterControl());
 });
 </script>

@@ -160,8 +160,15 @@ class HospitalController extends Controller
 
         // Filter by category
         $query->when($request->filled('category'), function ($q) use ($request) {
-            $q->where('facility_level', 'like', '%' . $request->input('category') . '%');
+            $categories = $request->input('category'); // bisa array atau string
+
+            if (is_array($categories)) {
+                $q->whereIn('facility_level', $categories);
+            } else {
+                $q->where('facility_level', 'like', '%' . $categories . '%');
+            }
         });
+
 
         // Filter by location
         $query->when($request->filled('location'), function ($q) use ($request) {
