@@ -789,14 +789,18 @@ document.addEventListener('DOMContentLoaded', () => {
         onAdd: function() {
             const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
             container.style.background = 'white';
-            container.style.borderRadius = '8px';
+            container.style.borderRadius = '3px';
             container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
 
             const toggleButton = L.DomUtil.create('button', '', container);
             toggleButton.innerHTML = 'Filter';
+<<<<<<< HEAD
+            toggleButton.style.width = '100%';
+=======
             toggleButton.style.background = '#007bff';
             toggleButton.style.color = 'white';
             toggleButton.style.border = 'none';
+>>>>>>> 5278ad0a7e2527fb0b167c1ca60ab00e5d552a8b
             toggleButton.style.padding = '6px';
             toggleButton.style.cursor = 'pointer';
             toggleButton.style.width = '100%';
@@ -817,7 +821,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <strong>Facility Level:</strong><br>
                     ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
                         <label style="display:block;font-size:13px;">
+<<<<<<< HEAD
+                            <input type="checkbox" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
+=======
                             <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
+>>>>>>> 5278ad0a7e2527fb0b167c1ca60ab00e5d552a8b
                         </label>
                     `).join('')}
                 </div>
