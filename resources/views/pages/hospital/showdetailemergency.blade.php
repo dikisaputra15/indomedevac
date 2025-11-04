@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
         onAdd: function () {
             const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
             container.style.background = 'white';
-            container.style.borderRadius = '8px';
+            container.style.borderRadius = '3px';
             container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
             container.style.overflow = 'hidden';
 
@@ -818,8 +818,8 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleButton.innerHTML = 'Filter';
             toggleButton.style.width = '100%';
             toggleButton.style.border = 'none';
-            toggleButton.style.background = '#007bff';
-            toggleButton.style.color = 'white';
+            toggleButton.style.background = '#ffffff';
+            toggleButton.style.color = 'black';
             toggleButton.style.padding = '6px';
             toggleButton.style.cursor = 'pointer';
             toggleButton.style.fontSize = '13px';
@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <strong>Facility Level:</strong><br>
                     ${['All','Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
                         <label style="display:block;font-size:13px;">
-                            <input type="radio" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
+                            <input type="checkbox" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
                         </label>
                     `).join('')}
                 </div>
