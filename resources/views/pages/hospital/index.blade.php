@@ -367,221 +367,223 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // === Inisialisasi Peta ===
-    const map = L.map('map', { fullscreenControl: true })
-        .setView([-6.80188562253168, 144.0733101155011], 6);
+// === Inisialisasi Peta ===
+const map = L.map('map').setView([-4.245820574165665, 122.16203857061076], 5);
 
-    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
-    }).addTo(map);
+// === Base Layers ===
+const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+}).addTo(map);
 
-    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles © Esri', maxZoom: 19
-    });
+const satelliteLayer = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    { attribution: 'Tiles © Esri', maxZoom: 19 }
+);
 
-    L.control.layers({ "Street Map": osmLayer, "Satellite Map": satelliteLayer }).addTo(map);
+L.control.layers(
+    { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
+    null,
+    { position: 'topleft' }
+).addTo(map);
 
-    // === Global Variables ===
-    let hospitalMarkers = L.featureGroup().addTo(map);
-    let radiusCircle = null;
-    let radiusPinMarker = null;
-    let lastClickedLocation = null;
-    let drawnPolygonGeoJSON = null;
+L.control.fullscreen({ position: 'topleft' }).addTo(map);
 
-    // === Leaflet Draw ===
-    const drawnItems = new L.FeatureGroup().addTo(map);
-    const drawControl = new L.Control.Draw({
-        draw: {
-            polygon: { allowIntersection: false, shapeOptions: { color: '#346abb', fillColor: '#346abb', fillOpacity: 0.2 } },
-            polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
-        },
-        edit: { featureGroup: drawnItems }
-    });
-    map.addControl(drawControl);
+// === Styling posisi kontrol ===
+const style = document.createElement('style');
+style.textContent = `
+.leaflet-top.leaflet-left .leaflet-control-layers { margin-top: 5px !important; }
+.leaflet-top.leaflet-left .leaflet-control-zoom { margin-top: 10px !important; }
+`;
+document.head.appendChild(style);
 
-    // === Event Polygon ===
-    map.on(L.Draw.Event.CREATED, e => {
-        drawnItems.clearLayers();
-        drawnItems.addLayer(e.layer);
-        drawnPolygonGeoJSON = e.layer.toGeoJSON();
-        applyFiltersWithMapControl();
-    });
+// === Variabel Global ===
+let hospitalMarkers = L.featureGroup().addTo(map);
+let radiusCircle = null;
+let radiusPinMarker = null;
+let lastClickedLocation = null;
+let drawnPolygonGeoJSON = null;
 
-    map.on(L.Draw.Event.EDITED, e => {
-        e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
-        applyFiltersWithMapControl();
-    });
+// === Leaflet Draw ===
+const drawnItems = new L.FeatureGroup().addTo(map);
+const drawControl = new L.Control.Draw({
+    draw: {
+        polygon: { allowIntersection: false, shapeOptions: { color: '#ff6600', fillColor: '#ff6600', fillOpacity: 0.2 } },
+        polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
+    },
+    edit: { featureGroup: drawnItems }
+});
+map.addControl(drawControl);
 
-    map.on(L.Draw.Event.DELETED, () => {
-        drawnItems.clearLayers();
-        drawnPolygonGeoJSON = null;
-        applyFiltersWithMapControl();
-    });
+// === Event Polygon ===
+map.on(L.Draw.Event.CREATED, e => {
+    drawnItems.clearLayers();
+    drawnItems.addLayer(e.layer);
+    drawnPolygonGeoJSON = e.layer.toGeoJSON();
+    applyHospitalFilters();
+});
 
-    // === Radius Circle Update ===
-    function updateRadiusCircleAndPin(radius = 0) {
-        if (radiusCircle) map.removeLayer(radiusCircle);
-        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
-        radiusCircle = radiusPinMarker = null;
+map.on(L.Draw.Event.EDITED, e => {
+    e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
+    applyHospitalFilters();
+});
 
-        if (radius > 0 && lastClickedLocation) {
-            radiusCircle = L.circle(lastClickedLocation, {
-                color: 'red', fillColor: '#f03', fillOpacity: 0.3, radius: radius * 1000
-            }).addTo(map);
+map.on(L.Draw.Event.DELETED, () => {
+    drawnItems.clearLayers();
+    drawnPolygonGeoJSON = null;
+    applyHospitalFilters();
+});
 
-            const redIcon = L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
-            });
+// === Radius Circle ===
+function updateRadiusCircleAndPin(radius = 0) {
+    if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
+    if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
 
-            radiusPinMarker = L.marker(lastClickedLocation, { icon: redIcon }).addTo(map);
-        }
-    }
-
-    map.on('click', e => {
-        lastClickedLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
-        const radius = parseInt(document.querySelector('#radiusRangeMap').value || 0);
-        document.querySelector('#radiusValueMap').textContent = radius;
-        updateRadiusCircleAndPin(radius);
-        applyFiltersWithMapControl();
-    });
-
-    // === Fetch Data ===
-    async function fetchData(url, filters = {}) {
-        const params = new URLSearchParams();
-        Object.entries(filters).forEach(([k, v]) => {
-            if (Array.isArray(v)) v.forEach(x => params.append(`${k}[]`, x));
-            else if (v !== '' && v != null) params.append(k, v);
+    if (radius > 0 && lastClickedLocation) {
+        radiusCircle = L.circle(lastClickedLocation, {
+            color: 'red', fillColor: '#f03', fillOpacity: 0.3, radius: radius * 1000
+        }).addTo(map);
+        const redIcon = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
         });
-        if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
-
-        try {
-            const res = await fetch(`${url}?${params.toString()}`);
-            return res.ok ? await res.json() : [];
-        } catch (e) {
-            console.error(`Error fetching ${url}:`, e);
-            return [];
-        }
+        radiusPinMarker = L.marker(lastClickedLocation, { icon: redIcon }).addTo(map);
     }
+}
 
-    // === Tambah Marker Rumah Sakit ===
-    function addHospitalMarkers(data) {
-        hospitalMarkers.clearLayers();
-        data.forEach(hospital => {
-            if (!hospital.latitude || !hospital.longitude) return;
+map.on('click', e => {
+    lastClickedLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
+    const radius = parseInt(document.querySelector('#radiusRangeMap').value || 0);
+    document.querySelector('#radiusValueMap').textContent = radius;
+    updateRadiusCircleAndPin(radius);
+    applyHospitalFilters();
+});
 
-            const icon = L.icon({
-                iconUrl: hospital.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
-                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
-            });
+// === Fetch Data Hospital ===
+async function fetchHospitalData(filters = {}) {
+    const params = new URLSearchParams();
+    Object.entries(filters).forEach(([k, v]) => {
+        if (Array.isArray(v)) v.forEach(x => params.append(`${k}[]`, x));
+        else if (v !== '' && v != null) params.append(k, v);
+    });
+    if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
 
-            const marker = L.marker([hospital.latitude, hospital.longitude], { icon }).addTo(hospitalMarkers);
+    try {
+        const res = await fetch(`/api/hospital?${params.toString()}`);
+        return res.ok ? await res.json() : [];
+    } catch (e) {
+        console.error('Error fetching hospital data:', e);
+        return [];
+    }
+}
 
-            marker.on('click', () => {
-                lastClickedLocation = { lat: hospital.latitude, lng: hospital.longitude };
-                updateRadiusCircleAndPin(parseInt(document.querySelector('#radiusRangeMap').value || 0));
-            });
+// === Tambah Marker Hospital ===
+function addHospitalMarkers(data) {
+    hospitalMarkers.clearLayers();
+    data.forEach(h => {
+        if (!h.latitude || !h.longitude) return;
 
-            marker.bindPopup(`
-                <h5 style="border-bottom:1px solid #ccc;">${hospital.name || 'N/A'}</h5>
-                <strong>Global Classification:</strong> ${hospital.facility_category || 'N/A'}<br>
-                <strong>Facility Level:</strong> ${hospital.facility_level || 'N/A'}<br>
-                <strong>Address:</strong> ${hospital.address || 'N/A'}<br>
-                <strong>Province:</strong> ${hospital.provinces_region || 'N/A'}<br>
-                <strong>Coords:</strong> ${hospital.latitude}, ${hospital.longitude}<br>
-                ${hospital.id ? `<a href="/hospitals/${hospital.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
-            `);
+        const icon = L.icon({
+            iconUrl: h.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
+            iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
         });
 
-        if (hospitalMarkers.getLayers().length > 0)
-            map.fitBounds(hospitalMarkers.getBounds(), { padding: [50, 50] });
+        const marker = L.marker([h.latitude, h.longitude], { icon }).addTo(hospitalMarkers);
+
+        marker.bindPopup(`
+            <h5 style="border-bottom:1px solid #ccc;">${h.name || 'N/A'}</h5>
+            <strong>Global Classification:</strong> ${h.facility_category || 'N/A'}<br>
+            <strong>Country Classification:</strong> ${h.facility_level || 'N/A'}<br>
+            <strong>Address:</strong> ${h.address || 'N/A'}<br>
+            <strong>Coords:</strong> ${h.latitude}, ${h.longitude}<br>
+            <strong>Province:</strong> ${h.provinces_region || 'N/A'}<br>
+            ${h.id ? `<a href="/hospitals/${h.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
+        `);
+    });
+
+    if (hospitalMarkers.getLayers().length > 0)
+        map.fitBounds(hospitalMarkers.getBounds(), { padding: [50, 50] });
+}
+
+// === Apply Filter ===
+async function applyHospitalFilters() {
+    const provs = [...document.querySelectorAll('.province-checkbox:checked')].map(e => e.value);
+    const levels = [...document.querySelectorAll('input[name="hospitalLevel"]:checked')].map(e => e.value);
+    const hospitalSelect = $('#hospital_name_map').val() || '';
+    const hospitalName = Array.isArray(hospitalSelect) ? hospitalSelect[0] : hospitalSelect;
+    const radius = parseInt(document.getElementById('radiusRangeMap')?.value || 0);
+
+    let filters = {};
+    if (hospitalName) filters.name = hospitalName;
+    if (provs.length > 0) filters.provinces = provs;
+    if (radius > 0 && lastClickedLocation) {
+        filters.radius = radius;
+        filters.center_lat = lastClickedLocation.lat;
+        filters.center_lng = lastClickedLocation.lng;
     }
 
-    // === Apply Filter ===
-    async function applyFiltersWithMapControl() {
-        const name = document.querySelector('#hospital_name_map')?.value || '';
-        const facilityLevels = Array.from(document.querySelectorAll('input[name="hospitalLevel"]:checked')).map(cb => cb.value);
-        const provinces = Array.from(document.querySelectorAll('.province-checkbox:checked')).map(cb => cb.value);
-        const radius = parseInt(document.querySelector('#radiusRangeMap')?.value || 0);
+    const hospitals = await fetchHospitalData(filters);
 
-        const filters = { name, category: facilityLevels, provinces };
+    const filteredHospitals = hospitals.filter(h => {
+        if (levels.length === 0) return true;
+        if (!h.facility_level) return false;
+        const dbLevels = h.facility_level.split(',').map(c => c.trim().toLowerCase());
+        return levels.some(sel => dbLevels.includes(sel.toLowerCase()));
+    });
 
-        if (radius > 0 && lastClickedLocation) {
-            filters.radius = radius;
-            filters.center_lat = lastClickedLocation.lat;
-            filters.center_lng = lastClickedLocation.lng;
-        }
+    addHospitalMarkers(filteredHospitals);
+    document.getElementById('totalCountDisplay').innerHTML = `<strong>Hospitals:</strong> ${filteredHospitals.length}`;
+}
 
-        const hospitals = await fetchData('/api/hospital', filters);
-        document.querySelector('#totalHospitals').textContent = hospitals.length;
-        addHospitalMarkers(hospitals);
-        updateRadiusCircleAndPin(radius);
-    }
+// === Select2 Inisialisasi ===
+$(document).ready(function() {
+    $('#hospital_name_map').select2({
+        width: '100%',
+        placeholder: 'Search Hospital',
+        allowClear: true
+    });
 
-    // === Radius Panel ===
-    const RadiusPanel = L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function () {
-            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            div.style.background = 'white';
-            div.style.padding = '10px';
-            div.style.borderRadius = '8px';
-            div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
-            div.style.minWidth = '160px';
-            div.style.textAlign = 'center';
+    $('#hospital_name_map').on('change', function() {
+        applyHospitalFilters();
+    });
+});
 
-            div.innerHTML = `
-                <strong>Radius Filter <span id="radiusValueMap">0</span> km</strong><br>
+// === Filter Panel ===
+const FilterPanel = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function () {
+        const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+        Object.assign(div.style, {
+            background: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+            minWidth: '260px',
+            maxHeight: '85vh',
+            overflowY: 'auto'
+        });
+
+        div.innerHTML = `
+            <button style="background:#007bff;color:white;border:none;width:100%;padding:8px;">Filter & Radius</button>
+            <div id="filterPanel" style="padding:10px;">
+                <strong>Radius: <span id="radiusValueMap">0</span> km</strong>
                 <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
                 <div style="display:flex;gap:5px;">
                     <button id="applyRadiusMap" class="btn btn-sm btn-primary flex-fill">Apply</button>
                     <button id="resetRadiusMap" class="btn btn-sm btn-danger flex-fill">Reset</button>
                 </div>
-            `;
-
-            L.DomEvent.disableClickPropagation(div);
-            return div;
-        }
-    });
-    map.addControl(new RadiusPanel());
-
-    // === Filter Panel ===
-    map.addControl(new (L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function () {
-            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            Object.assign(container.style, {
-                background: 'white', borderRadius: '8px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)', overflow: 'hidden', zIndex: '9999', maxWidth: '280px'
-            });
-
-            const btn = L.DomUtil.create('button', '', container);
-            btn.textContent = 'Filter';
-            Object.assign(btn.style, {
-                background: '#007bff', color: 'white', border: 'none',
-                width: '100%', padding: '6px', cursor: 'pointer'
-            });
-
-            const panel = L.DomUtil.create('div', '', container);
-            Object.assign(panel.style, { display: 'none', padding: '10px', maxHeight: '440px', overflowY: 'auto' });
-
-            panel.innerHTML = `
-                <h6>Filter Hospitals</h6>
-                <label class="form-label">Hospital Name</label>
+                <hr>
+                <label>Hospital Name:</label>
                 <select id="hospital_name_map" class="form-select form-select-sm mb-2 select-search-hospital">
                     <option value="">Select Hospital</option>
                     @foreach($hospitalNames as $n)
                         <option value="{{ $n }}">{{ $n }}</option>
                     @endforeach
                 </select>
-
-                <strong>Facility Level:</strong><br>
+                <label>Facility Level:</label>
                 ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(c => `
                     <label style="display:block;font-size:13px;">
                         <input type="checkbox" name="hospitalLevel" value="${c}"> ${c}
                     </label>`).join('')}
-
                 <hr>
                 <strong>Province</strong>
                 <div style="max-height:120px;overflow-y:auto;border:1px solid #ccc;padding:5px;border-radius:5px;margin-top:6px;">
@@ -592,72 +594,66 @@
                         </div>
                     @endforeach
                 </div>
-
                 <hr>
-                <button id="resetHospitalFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset Filter</button>
+                <button id="resetMapFilter" class="btn btn-sm btn-secondary w-100">Reset All</button>
+                <div id="totalCountDisplay" style="margin-top:8px;text-align:center;font-size:13px;"></div>
+            </div>`;
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+    }
+});
+map.addControl(new FilterPanel());
 
-                <p class="mt-2 mb-0 text-center"><strong>Total:</strong> <span id="totalHospitals">0</span> facilities</p>
-            `;
+// === Events ===
+document.addEventListener('input', e => {
+    if (e.target.id === 'radiusRangeMap') {
+        const r = parseInt(e.target.value || 0);
+        document.getElementById('radiusValueMap').textContent = r;
+        updateRadiusCircleAndPin(r);
+    }
+});
 
-            btn.addEventListener('click', () => {
-                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            });
-
-            setTimeout(() => $('.select-search-hospital').select2({ width: '100%', placeholder: 'Search Hospital' }), 300);
-
-            panel.querySelector('#resetHospitalFilter').addEventListener('click', () => {
-                panel.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
-                $(panel).find('.select-search-hospital').val(null).trigger('change');
-                drawnItems.clearLayers();
-                drawnPolygonGeoJSON = null;
-                if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
-                if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
-                lastClickedLocation = null;
-                applyFiltersWithMapControl();
-            });
-
-            L.DomEvent.disableClickPropagation(container);
-            return container;
+document.addEventListener('click', async e => {
+    if (e.target.id === 'applyRadiusMap') {
+        const radius = parseInt(document.getElementById('radiusRangeMap').value || 0);
+        if (radius > 0 && !lastClickedLocation) {
+            alert('Klik lokasi di peta untuk menentukan titik radius.');
+            return;
         }
-    }))());
+        await applyHospitalFilters();
+    }
 
-    // === Event Filter Change ===
-    document.addEventListener('change', e => {
-        if (e.target.id === 'hospital_name_map' || e.target.name === 'hospitalLevel' || e.target.classList.contains('province-checkbox'))
-            applyFiltersWithMapControl();
-    });
+    if (e.target.id === 'resetRadiusMap') {
+        document.getElementById('radiusRangeMap').value = 0;
+        document.getElementById('radiusValueMap').textContent = '0';
+        if (radiusCircle) map.removeLayer(radiusCircle);
+        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+        lastClickedLocation = null;
+        await applyHospitalFilters();
+    }
 
-    // --- Event listeners for radius panel ---
-    document.addEventListener('input', e => {
-        if (e.target.id === 'radiusRangeMap') {
-            const radius = parseInt(e.target.value || 0);
-            document.getElementById('radiusValueMap').textContent = radius;
-            updateRadiusCircleAndPin(radius); // hanya update tampilan, belum apply
-        }
-    });
+    if (e.target.id === 'resetMapFilter') {
+        document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.getElementById('hospital_name_map').value = '';
+        document.getElementById('radiusRangeMap').value = 0;
+        document.getElementById('radiusValueMap').textContent = '0';
+        if (radiusCircle) map.removeLayer(radiusCircle);
+        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+        lastClickedLocation = null;
+        drawnItems.clearLayers();
+        drawnPolygonGeoJSON = null;
+        await applyHospitalFilters();
+    }
+});
 
-    document.addEventListener('click', e => {
-        if (e.target.id === 'applyRadiusMap') {
-            const radius = parseInt(document.getElementById('radiusRangeMap').value || 0);
-            applyFiltersWithMapControl('all', [], [], [], radius); // apply filter radius baru
-        }
+document.addEventListener('change', e => {
+    if (e.target.classList.contains('province-checkbox') || e.target.name === 'hospitalLevel') {
+        applyHospitalFilters();
+    }
+});
 
-        if (e.target.id === 'resetRadiusMap') {
-            document.getElementById('radiusRangeMap').value = 0;
-            document.getElementById('radiusValueMap').textContent = 0;
-            if (radiusCircle) map.removeLayer(radiusCircle);
-            if (radiusPinMarker) map.removeLayer(radiusPinMarker);
-            lastClickedLocation = null;
-            applyFiltersWithMapControl('all');
-        }
-    });
-
-    $(document).on('select2:select select2:unselect', '#hospital_name_map', function () {
-        applyFiltersWithMapControl();
-    });
-
-    // === Load Awal ===
-    document.addEventListener('DOMContentLoaded', applyFiltersWithMapControl);
+// === Inisialisasi Awal ===
+applyHospitalFilters();
 </script>
 
 @endpush

@@ -319,219 +319,231 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // === Inisialisasi Peta ===
-    const map = L.map('map', { fullscreenControl: true })
-        .setView([-6.80188562253168, 144.0733101155011], 6);
+// === Inisialisasi Peta ===
+const map = L.map('map')
+    .setView([-4.245820574165665, 122.16203857061076], 5);
 
-    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
-    }).addTo(map);
+// === Layer ===
+const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+}).addTo(map);
 
-    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles © Esri', maxZoom: 19
-    });
+const satelliteLayer = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    { attribution: 'Tiles © Esri', maxZoom: 19 }
+);
 
-    L.control.layers({ "Street Map": osmLayer, "Satellite Map": satelliteLayer }).addTo(map);
+L.control.layers(
+    { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
+    null,
+    { position: 'topleft' }
+).addTo(map);
 
-    // === Global Variables ===
-    let airportMarkers = L.featureGroup().addTo(map);
-    let radiusCircle = null;
-    let radiusPinMarker = null;
-    let lastClickedLocation = null;
-    let drawnPolygonGeoJSON = null;
+L.control.fullscreen({
+    position: 'topleft' // tetap di kiri atas
+}).addTo(map);
 
-    // === Leaflet Draw ===
-    const drawnItems = new L.FeatureGroup().addTo(map);
-    const drawControl = new L.Control.Draw({
-        draw: {
-            polygon: { allowIntersection: false, shapeOptions: { color: '#ff6600', fillColor: '#ff6600', fillOpacity: 0.2 } },
-            polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
-        },
-        edit: { featureGroup: drawnItems }
-    });
-    map.addControl(drawControl);
+// === Styling posisi kontrol ===
+const style = document.createElement('style');
+style.textContent = `
+.leaflet-top.leaflet-left .leaflet-control-layers { margin-top: 5px !important; }
+.leaflet-top.leaflet-left .leaflet-control-zoom { margin-top: 10px !important; }
+`;
+document.head.appendChild(style);
 
-    // === Event Polygon ===
-    map.on(L.Draw.Event.CREATED, e => {
-        drawnItems.clearLayers();
-        drawnItems.addLayer(e.layer);
-        drawnPolygonGeoJSON = e.layer.toGeoJSON();
-        applyAirportFilters();
-    });
+// === Variabel Global ===
+let airportMarkers = L.featureGroup().addTo(map);
+let radiusCircle = null;
+let radiusPinMarker = null;
+let lastClickedLocation = null;
+let drawnPolygonGeoJSON = null;
 
-    map.on(L.Draw.Event.EDITED, e => {
-        e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
-        applyAirportFilters();
-    });
+// === Leaflet Draw ===
+const drawnItems = new L.FeatureGroup().addTo(map);
+const drawControl = new L.Control.Draw({
+    draw: {
+        polygon: { allowIntersection: false, shapeOptions: { color: '#ff6600', fillColor: '#ff6600', fillOpacity: 0.2 } },
+        polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
+    },
+    edit: { featureGroup: drawnItems }
+});
+map.addControl(drawControl);
 
-    map.on(L.Draw.Event.DELETED, () => {
-        drawnItems.clearLayers();
-        drawnPolygonGeoJSON = null;
-        applyAirportFilters();
-    });
+// === Event Polygon ===
+map.on(L.Draw.Event.CREATED, e => {
+    drawnItems.clearLayers();
+    drawnItems.addLayer(e.layer);
+    drawnPolygonGeoJSON = e.layer.toGeoJSON();
+    applyAirportFilters();
+});
 
-    // === Radius Circle ===
-    function updateRadiusCircleAndPin(radius = 0) {
-        if (radiusCircle) map.removeLayer(radiusCircle);
-        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
-        radiusCircle = radiusPinMarker = null;
+map.on(L.Draw.Event.EDITED, e => {
+    e.layers.eachLayer(layer => drawnPolygonGeoJSON = layer.toGeoJSON());
+    applyAirportFilters();
+});
 
-        if (radius > 0 && lastClickedLocation) {
-            radiusCircle = L.circle(lastClickedLocation, {
-                color: 'red', fillColor: '#f03', fillOpacity: 0.3, radius: radius * 1000
-            }).addTo(map);
+map.on(L.Draw.Event.DELETED, () => {
+    drawnItems.clearLayers();
+    drawnPolygonGeoJSON = null;
+    applyAirportFilters();
+});
 
-            const redIcon = L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
-            });
+// === Radius Circle ===
+function updateRadiusCircleAndPin(radius = 0) {
+    if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
+    if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
 
-            radiusPinMarker = L.marker(lastClickedLocation, { icon: redIcon }).addTo(map);
-        }
-    }
-
-    map.on('click', e => {
-        lastClickedLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
-        const radius = parseInt(document.querySelector('#radiusRangeAirport').value || 0);
-        document.querySelector('#radiusValueAirport').textContent = radius;
-        updateRadiusCircleAndPin(radius);
-        applyAirportFilters();
-    });
-
-    // === Fetch Data ===
-    async function fetchAirportData(url, filters = {}) {
-        const params = new URLSearchParams();
-        Object.entries(filters).forEach(([k, v]) => {
-            if (Array.isArray(v)) v.forEach(x => params.append(`${k}[]`, x));
-            else if (v !== '' && v != null) params.append(k, v);
+    if (radius > 0 && lastClickedLocation) {
+        radiusCircle = L.circle(lastClickedLocation, {
+            color: 'red', fillColor: '#f03', fillOpacity: 0.3, radius: radius * 1000
+        }).addTo(map);
+        const redIcon = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
         });
-        if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
-
-        try {
-            const res = await fetch(`${url}?${params.toString()}`);
-            return res.ok ? await res.json() : [];
-        } catch (e) {
-            console.error('Error fetching airport data:', e);
-            return [];
-        }
+        radiusPinMarker = L.marker(lastClickedLocation, { icon: redIcon }).addTo(map);
     }
+}
 
-    // === Tambah Marker Airport ===
-    function addAirportMarkers(data) {
-        airportMarkers.clearLayers();
-        data.forEach(airport => {
-            if (!airport.latitude || !airport.longitude) return;
+map.on('click', e => {
+    lastClickedLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
+    const radius = parseInt(document.querySelector('#radiusRangeMap').value || 0);
+    document.querySelector('#radiusValueMap').textContent = radius;
+    updateRadiusCircleAndPin(radius);
+    applyAirportFilters();
+});
 
-            const icon = L.icon({
-                iconUrl: airport.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
-                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
-            });
+// === Fetch Data Airport ===
+async function fetchAirportData(filters = {}) {
+    const params = new URLSearchParams();
+    Object.entries(filters).forEach(([k, v]) => {
+        if (Array.isArray(v)) v.forEach(x => params.append(`${k}[]`, x));
+        else if (v !== '' && v != null) params.append(k, v);
+    });
+    if (drawnPolygonGeoJSON) params.append('polygon', JSON.stringify(drawnPolygonGeoJSON));
 
-            const marker = L.marker([airport.latitude, airport.longitude], { icon }).addTo(airportMarkers);
+    try {
+        const res = await fetch(`/api/airports?${params.toString()}`);
+        return res.ok ? await res.json() : [];
+    } catch (e) {
+        console.error('Error fetching airport data:', e);
+        return [];
+    }
+}
 
-            marker.on('click', () => {
-                lastClickedLocation = { lat: airport.latitude, lng: airport.longitude };
-                updateRadiusCircleAndPin(parseInt(document.querySelector('#radiusRangeAirport').value || 0));
-            });
+// === Tambah Marker Airport ===
+function addAirportMarkers(data) {
+    airportMarkers.clearLayers();
+    data.forEach(airport => {
+        if (!airport.latitude || !airport.longitude) return;
 
-            marker.bindPopup(`
-                <h5 style="border-bottom:1px solid #ccc;">${airport.airport_name || 'N/A'}</h5>
-                <strong>Classification:</strong> ${airport.category || 'N/A'}<br>
-                <strong>Address:</strong> ${airport.address || 'N/A'}<br>
-                <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
-                ${airport.website ? `<strong>Website:</strong><a href='${airport.website}' target='__blank'> ${airport.website} </a><br>` : ''}
-                ${airport.id ? `<a href="/airports/${airport.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
-            `);
+        const icon = L.icon({
+            iconUrl: airport.icon || 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
+            iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
         });
 
-        if (airportMarkers.getLayers().length > 0)
-            map.fitBounds(airportMarkers.getBounds(), { padding: [50, 50] });
+        const marker = L.marker([airport.latitude, airport.longitude], { icon }).addTo(airportMarkers);
+
+        marker.bindPopup(`
+            <h5 style="border-bottom:1px solid #ccc;">${airport.airport_name || 'N/A'}</h5>
+            <strong>Classification:</strong> ${airport.category || 'N/A'}<br>
+            <strong>Address:</strong> ${airport.address || 'N/A'}<br>
+            <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
+            ${airport.website ? `<strong>Website:</strong><a href='${airport.website}' target='__blank'> ${airport.website} </a><br>` : ''}
+            ${airport.id ? `<a href="/airports/${airport.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
+        `);
+    });
+
+    if (airportMarkers.getLayers().length > 0)
+        map.fitBounds(airportMarkers.getBounds(), { padding: [50, 50] });
+}
+
+// === Apply Filter ===
+async function applyAirportFilters() {
+    // Ambil provinsi terpilih
+    const provs = [...document.querySelectorAll('.province-checkbox:checked')].map(e => e.value);
+    // Ambil kategori airport
+    const aClasses = [...document.querySelectorAll('input[name="airportClass"]:checked')].map(e => e.value);
+    // Ambil nama airport dari select2
+    const airportSelect = $('#airport_name_map').val() || '';
+    const airportName = Array.isArray(airportSelect) ? airportSelect[0] : airportSelect;
+    // Ambil radius
+    const radius = parseInt(document.getElementById('radiusRangeMap')?.value || 0);
+
+    // Siapkan filters
+    let filters = {};
+    if (airportName) filters.name = airportName;
+    if (provs.length > 0) filters.provinces = provs;
+    if (radius > 0 && lastClickedLocation) {
+        filters.radius = radius;
+        filters.center_lat = lastClickedLocation.lat;
+        filters.center_lng = lastClickedLocation.lng;
     }
 
-    // === Apply Filter ===
-    async function applyAirportFilters() {
-        const name = document.querySelector('#airport_name_map')?.value || '';
-        const categories = Array.from(document.querySelectorAll('input[name="airportCategory"]:checked')).map(cb => cb.value);
-        const provinces = Array.from(document.querySelectorAll('.province-checkbox:checked')).map(cb => cb.value);
-        const radius = parseInt(document.querySelector('#radiusRangeAirport')?.value || 0);
+    const airports = await fetchAirportData(filters);
 
-        const filters = { name, categories, provinces };
+    const filteredAirports = airports.filter(a => {
+        if (aClasses.length === 0) return true;
+        if (!a.category) return false;
+        const dbCategories = a.category.split(',').map(c => c.trim().toLowerCase());
+        return aClasses.some(sel => dbCategories.includes(sel.toLowerCase()));
+    });
 
-        if (radius > 0 && lastClickedLocation) {
-            filters.radius = radius;
-            filters.center_lat = lastClickedLocation.lat;
-            filters.center_lng = lastClickedLocation.lng;
-        }
+    addAirportMarkers(filteredAirports);
+    document.getElementById('totalCountDisplay').innerHTML = `<strong>Airports:</strong> ${filteredAirports.length}`;
+}
 
-        const airports = await fetchAirportData('/api/airports', filters);
-        document.querySelector('#totalAirports').textContent = airports.length;
-        addAirportMarkers(airports);
-        updateRadiusCircleAndPin(radius);
-    }
+// === Select2 Inisialisasi ===
+$(document).ready(function() {
+    $('#airport_name_map').select2({
+        width: '100%',
+        placeholder: 'Search Airport',
+        allowClear: true
+    });
 
-    // === Radius Panel ===
-    const RadiusPanel = L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function () {
-            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            div.style.background = 'white';
-            div.style.padding = '10px';
-            div.style.borderRadius = '8px';
-            div.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
-            div.style.minWidth = '160px';
-            div.style.textAlign = 'center';
+    // Event select2 agar memicu filter otomatis
+    $('#airport_name_map').on('change', function() {
+        applyAirportFilters();
+    });
+});
 
-            div.innerHTML = `
-                <strong>Radius Filter <span id="radiusValueAirport">0</span> km</strong><br>
-                <input type="range" id="radiusRangeAirport" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
+// === Filter Panel ===
+const FilterPanel = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function () {
+        const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+        Object.assign(div.style, {
+            background: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+            minWidth: '260px',
+            maxHeight: '85vh',
+            overflowY: 'auto'
+        });
+
+        div.innerHTML = `
+            <button style="background:#007bff;color:white;border:none;width:100%;padding:8px;">Filter & Radius</button>
+            <div id="filterPanel" style="padding:10px;">
+                <strong>Radius: <span id="radiusValueMap">0</span> km</strong>
+                <input type="range" id="radiusRangeMap" min="0" max="500" value="0" style="width:100%;margin-bottom:6px;">
                 <div style="display:flex;gap:5px;">
-                    <button id="applyRadiusAirport" class="btn btn-sm btn-primary flex-fill">Apply</button>
-                    <button id="resetRadiusAirport" class="btn btn-sm btn-danger flex-fill">Reset</button>
+                    <button id="applyRadiusMap" class="btn btn-sm btn-primary flex-fill">Apply</button>
+                    <button id="resetRadiusMap" class="btn btn-sm btn-danger flex-fill">Reset</button>
                 </div>
-            `;
-            L.DomEvent.disableClickPropagation(div);
-            return div;
-        }
-    });
-    map.addControl(new RadiusPanel());
-
-    // === Filter Panel ===
-    map.addControl(new (L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function () {
-            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            Object.assign(container.style, {
-                background: 'white', borderRadius: '8px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)', overflow: 'hidden', zIndex: '9999', maxWidth: '280px'
-            });
-
-            const btn = L.DomUtil.create('button', '', container);
-            btn.textContent = 'Filter';
-            Object.assign(btn.style, {
-                background: '#007bff', color: 'white', border: 'none',
-                width: '100%', padding: '6px', cursor: 'pointer'
-            });
-
-            const panel = L.DomUtil.create('div', '', container);
-            Object.assign(panel.style, { display: 'none', padding: '10px', maxHeight: '440px', overflowY: 'auto' });
-
-            panel.innerHTML = `
-                <h6>Filter Airports</h6>
-                <label class="form-label">Airport Name</label>
+                <hr>
+                <label>Airport Name:</label>
                 <select id="airport_name_map" class="form-select form-select-sm mb-2 select-search-airport">
                     <option value="">Select Airport</option>
                     @foreach($airportNames as $n)
                         <option value="{{ $n }}">{{ $n }}</option>
                     @endforeach
                 </select>
-
-                <strong>Category:</strong><br>
-                ${['International', 'Domestic', 'Military', 'Regional', 'Private'].map(c => `
+                <label>Airport Category:</label>
+                ${['International','Domestic','Military','Regional','Private'].map(c => `
                     <label style="display:block;font-size:13px;">
-                        <input type="checkbox" name="airportCategory" value="${c}"> ${c}
+                        <input type="checkbox" name="airportClass" value="${c}"> ${c}
                     </label>`).join('')}
-
                 <hr>
                 <strong>Province</strong>
                 <div style="max-height:120px;overflow-y:auto;border:1px solid #ccc;padding:5px;border-radius:5px;margin-top:6px;">
@@ -542,67 +554,67 @@
                         </div>
                     @endforeach
                 </div>
-
                 <hr>
-                <button id="resetAirportFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset Filter</button>
+                <button id="resetMapFilter" class="btn btn-sm btn-secondary w-100">Reset All</button>
+                <div id="totalCountDisplay" style="margin-top:8px;text-align:center;font-size:13px;"></div>
+            </div>`;
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+    }
+});
+map.addControl(new FilterPanel());
 
-                <p class="mt-2 mb-0 text-center"><strong>Total:</strong> <span id="totalAirports">0</span> airports</p>
-            `;
+// === Events ===
+document.addEventListener('input', e => {
+    if (e.target.id === 'radiusRangeMap') {
+        const r = parseInt(e.target.value || 0);
+        document.getElementById('radiusValueMap').textContent = r;
+        updateRadiusCircleAndPin(r);
+    }
+});
 
-            btn.addEventListener('click', () => {
-                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            });
-
-            setTimeout(() => $('.select-search-airport').select2({ width: '100%', placeholder: 'Search Airport' }), 300);
-
-            panel.querySelector('#resetAirportFilter').addEventListener('click', () => {
-                panel.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
-                $(panel).find('.select-search-airport').val(null).trigger('change');
-                drawnItems.clearLayers();
-                drawnPolygonGeoJSON = null;
-                if (radiusCircle) { map.removeLayer(radiusCircle); radiusCircle = null; }
-                if (radiusPinMarker) { map.removeLayer(radiusPinMarker); radiusPinMarker = null; }
-                lastClickedLocation = null;
-                applyAirportFilters();
-            });
-
-            L.DomEvent.disableClickPropagation(container);
-            return container;
+document.addEventListener('click', async e => {
+    if (e.target.id === 'applyRadiusMap') {
+        const radius = parseInt(document.getElementById('radiusRangeMap').value || 0);
+        if (radius > 0 && !lastClickedLocation) {
+            alert('Klik lokasi di peta untuk menentukan titik radius.');
+            return;
         }
-    }))());
+        await applyAirportFilters();
+    }
 
-    // === Event Listeners ===
-    document.addEventListener('change', e => {
-        if (e.target.id === 'airport_name_map' || e.target.name === 'airportCategory' || e.target.classList.contains('province-checkbox'))
-            applyAirportFilters();
-    });
+    if (e.target.id === 'resetRadiusMap') {
+        document.getElementById('radiusRangeMap').value = 0;
+        document.getElementById('radiusValueMap').textContent = '0';
+        if (radiusCircle) map.removeLayer(radiusCircle);
+        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+        lastClickedLocation = null;
+        await applyAirportFilters();
+    }
 
-    document.addEventListener('input', e => {
-        if (e.target.id === 'radiusRangeAirport') {
-            const radius = parseInt(e.target.value || 0);
-            document.getElementById('radiusValueAirport').textContent = radius;
-            updateRadiusCircleAndPin(radius);
-        }
-    });
+    if (e.target.id === 'resetMapFilter') {
+        document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.getElementById('airport_name_map').value = '';
+        document.getElementById('radiusRangeMap').value = 0;
+        document.getElementById('radiusValueMap').textContent = '0';
+        if (radiusCircle) map.removeLayer(radiusCircle);
+        if (radiusPinMarker) map.removeLayer(radiusPinMarker);
+        lastClickedLocation = null;
+        drawnItems.clearLayers();
+        drawnPolygonGeoJSON = null;
+        await applyAirportFilters();
+    }
+});
 
-    document.addEventListener('click', e => {
-        if (e.target.id === 'applyRadiusAirport') applyAirportFilters();
-        if (e.target.id === 'resetRadiusAirport') {
-            document.getElementById('radiusRangeAirport').value = 0;
-            document.getElementById('radiusValueAirport').textContent = 0;
-            if (radiusCircle) map.removeLayer(radiusCircle);
-            if (radiusPinMarker) map.removeLayer(radiusPinMarker);
-            lastClickedLocation = null;
-            applyAirportFilters();
-        }
-    });
-
-    $(document).on('select2:select select2:unselect', '#airport_name_map', function () {
+// === Checkbox & select change auto apply ===
+document.addEventListener('change', e => {
+    if (e.target.classList.contains('province-checkbox') || e.target.name === 'airportClass') {
         applyAirportFilters();
-    });
+    }
+});
 
-    // === Load Awal ===
-    document.addEventListener('DOMContentLoaded', applyAirportFilters);
+// === Inisialisasi Awal ===
+applyAirportFilters();
 </script>
 
 @endpush

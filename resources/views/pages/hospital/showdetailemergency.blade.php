@@ -609,11 +609,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nearbyHospitals = @json($nearbyHospitals);
     const nearbyAirports = @json($nearbyAirports);
-    let radiusKm = {{ $radius_km }}; // default 500 km
+    let radiusKm = {{ $radius_km }}; // default radius
 
     let map, mainMarker, radiusCircle, routingControl = null;
     let nearbyMarkersGroup = L.featureGroup();
 
+    // === ICON DEFAULT ===
     const DEFAULT_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
     const DEFAULT_AIRPORT_ICON_URL  = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
     const DEFAULT_MAIN_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
@@ -624,9 +625,9 @@ document.addEventListener('DOMContentLoaded', () => {
         iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
     });
 
-    // === Inisialisasi Peta ===
+    // === INISIALISASI PETA ===
     function initializeMap() {
-        map = L.map('map', { fullscreenControl: true })
+        map = L.map('map')
             .setView([hospitalData.latitude, hospitalData.longitude], 11);
 
         const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -634,15 +635,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri', maxZoom: 19
-        });
+            attribution: 'Tiles © Esri', maxZoom: 19
+        }).addTo(map);
 
-        satelliteLayer.addTo(map);
-        L.control.layers({ "Satellite": satelliteLayer, "Street": osmLayer }).addTo(map);
+        L.control.layers(
+            { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
+            null,
+            { position: 'topleft' }
+        ).addTo(map);
+
+        L.control.fullscreen({ position: 'topleft' }).addTo(map);
+
+        // === Styling posisi kontrol ===
+        const style = document.createElement('style');
+        style.textContent = `
+        .leaflet-top.leaflet-left .leaflet-control-layers { margin-top: 5px !important; }
+        .leaflet-top.leaflet-left .leaflet-control-zoom { margin-top: 10px !important; }
+        `;
+        document.head.appendChild(style);
+
         nearbyMarkersGroup.addTo(map);
     }
 
-    // === Tambahkan Marker Utama dan Radius ===
+    // === MARKER UTAMA DAN RADIUS ===
     function addMainHospitalAndCircle() {
         mainMarker = L.marker([hospitalData.latitude, hospitalData.longitude], { icon: mainHospitalIcon })
             .addTo(map)
@@ -653,7 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).addTo(map);
     }
 
-    // === Tambahkan Marker Sekitar ===
+    // === TAMBAH MARKER SEKITAR ===
     function addNearbyMarkers(data, defaultIconUrl, type, filters = {}) {
         data.forEach(item => {
             const distance = calculateDistance(
@@ -662,19 +677,18 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             if (distance > radiusKm) return;
 
-            // Filter hospital berdasarkan multiple facility_level
-            if (type === 'Hospital' && filters.hospitalLevels && filters.hospitalLevels.length > 0) {
+            // Filter hospital
+            if (type === 'Hospital' && filters.hospitalLevels?.length > 0) {
                 const level = (item.facility_level || '').toLowerCase();
                 const allowed = filters.hospitalLevels.map(l => l.toLowerCase());
                 if (!allowed.includes(level)) return;
             }
 
-            // Filter airport berdasarkan kategori
-            if (type === 'Airport' && filters.airportClassifications && filters.airportClassifications.length > 0) {
-                const airportCategories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
+            // Filter airport
+            if (type === 'Airport' && filters.airportClassifications?.length > 0) {
+                const categories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
                 const allowed = filters.airportClassifications.map(c => c.toLowerCase());
-                const hasMatch = airportCategories.some(cat => allowed.includes(cat));
-                if (!hasMatch) return;
+                if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
             const icon = L.icon({
@@ -685,18 +699,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = L.marker([item.latitude, item.longitude], { icon });
             const name = item.name || item.airport_name || 'N/A';
             const level = item.facility_level || item.category || 'N/A';
-            const detailUrl = (type === 'Airport')
+            const url = (type === 'Airport')
                 ? `/airports/${item.id}/detail`
                 : `/hospitals/${item.id}`;
 
-            const distanceText = `<strong>Distance:</strong> ${distance.toFixed(2)} km`;
-
             marker.bindPopup(`
                 <div style="font-size:13px;">
-                    <a href="${detailUrl}" target="_blank">${name}</a><br>
-                    ${level}<br>${distanceText}<br>
+                    <a href="${url}" target="_blank">${name}</a><br>
+                    ${level}<br>
+                    <strong>Distance:</strong> ${distance.toFixed(2)} km<br>
                     <button class="btn btn-sm btn-primary mt-2"
-                        onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
+                        onclick="getDirection(${item.latitude}, ${item.longitude})">
                         Get Direction
                     </button>
                 </div>
@@ -706,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === Hitung Jarak (Haversine) ===
+    // === HITUNG JARAK ===
     function calculateDistance(lat1, lon1, lat2, lon2) {
         const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -718,10 +731,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-    // === Routing ===
+    // === ROUTING ===
     window.getDirection = function(lat, lng) {
         if (routingControl) map.removeControl(routingControl);
-
         routingControl = L.Routing.control({
             waypoints: [
                 L.latLng(hospitalData.latitude, hospitalData.longitude),
@@ -734,20 +746,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }).addTo(map);
     };
 
-    // === Fit Map ===
+    // === FIT MAP ===
     function fitMapToBounds() {
         const bounds = L.featureGroup([mainMarker, nearbyMarkersGroup, radiusCircle]).getBounds();
         if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50] });
     }
 
-    // === Update Marker ===
+    // === UPDATE MARKER ===
     function updateMarkers(filterType, hospitalLevels, airportClassifications) {
         nearbyMarkersGroup.clearLayers();
         map.removeLayer(radiusCircle);
         addMainHospitalAndCircle();
 
         const filters = { hospitalLevels, airportClassifications };
-
         if (filterType === 'hospital') {
             addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
         } else if (filterType === 'airport') {
@@ -760,16 +771,47 @@ document.addEventListener('DOMContentLoaded', () => {
         fitMapToBounds();
     }
 
-    // === Kontrol Radius (selalu terlihat) ===
-    const RadiusControl = L.Control.extend({
+    // === FILTER CONTROL (TETAP TERBUKA & ADA RADIUS) ===
+    const FilterControl = L.Control.extend({
         options: { position: 'topright' },
         onAdd: function() {
-            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom p-2 bg-white rounded');
+            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control p-2 bg-white rounded');
             container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            container.style.width = '220px';
+            container.style.maxHeight = '420px';
+            container.style.overflowY = 'auto';
+
             container.innerHTML = `
-                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label><br>
-                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range">
+                <h6><strong>Filter</strong></h6>
+
+                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
+                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2">
+
+                <select id="mapFilter" class="form-select form-select-sm mb-2">
+                    <option value="all">Show All</option>
+                    <option value="hospital">Hospitals</option>
+                    <option value="airport">Airports</option>
+                </select>
+
+                <div id="hospitalFilter" style="display:none;">
+                    <strong>Facility Level:</strong><br>
+                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)']
+                        .map(lvl => `<label style="display:block;font-size:13px;">
+                            <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
+                        </label>`).join('')}
+                </div>
+
+                <div id="airportFilter" style="display:none;margin-top:8px;">
+                    <strong>Category:</strong><br>
+                    ${['International','Domestic','Military','Regional','Private']
+                        .map(cls => `<label style="display:block;font-size:13px;">
+                            <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
+                        </label>`).join('')}
+                </div>
+
+                <button id="resetFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset Filter</button>
             `;
+
             L.DomEvent.disableClickPropagation(container);
 
             const radiusSlider = container.querySelector('#radiusRange');
@@ -779,72 +821,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 radiusLabel.textContent = radiusKm;
                 refreshFilters();
             });
-            return container;
-        }
-    });
 
-    // === Filter Control (dengan tombol reset) ===
-    const FilterControl = L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function() {
-            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            container.style.background = 'white';
-            container.style.borderRadius = '3px';
-            container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-
-            const toggleButton = L.DomUtil.create('button', '', container);
-            toggleButton.innerHTML = 'Filter';
-            toggleButton.style.width = '100%';
-            toggleButton.style.padding = '6px';
-            toggleButton.style.cursor = 'pointer';
-            toggleButton.style.width = '100%';
-
-            const panel = L.DomUtil.create('div', '', container);
-            panel.style.display = 'none';
-            panel.style.padding = '10px';
-            panel.style.maxHeight = '400px';
-            panel.style.overflowY = 'auto';
-            panel.innerHTML = `
-                <h6>Filter</h6>
-                <select id="mapFilter" class="form-select form-select-sm mb-2">
-                    <option value="all">Show All</option>
-                    <option value="hospital">Hospitals</option>
-                    <option value="airport">Airports</option>
-                </select>
-                <div id="hospitalFilter" style="display:none;">
-                    <strong>Facility Level:</strong><br>
-                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
-                        <label style="display:block;font-size:13px;">
-                            <input type="checkbox" name="hospitalLevel" value="${lvl === 'All' ? 'all' : lvl}"> ${lvl}
-                        </label>
-                    `).join('')}
-                </div>
-                <div id="airportFilter" style="display:none; margin-top:8px;">
-                    <strong>Category:</strong><br>
-                    ${['International','Domestic','Military','Regional','Private'].map(cls => `
-                        <label style="display:block;font-size:13px;">
-                            <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
-                        </label>
-                    `).join('')}
-                </div>
-                <button id="resetFilter" class="btn btn-sm btn-secondary mt-2 w-100">Reset Filter</button>
-            `;
-
-            L.DomEvent.disableClickPropagation(container);
-
-            toggleButton.addEventListener('click', () => {
-                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            });
-
-            const filterSelect = panel.querySelector('#mapFilter');
-            const hospitalDiv = panel.querySelector('#hospitalFilter');
-            const airportDiv = panel.querySelector('#airportFilter');
-            const resetBtn = panel.querySelector('#resetFilter');
+            const filterSelect = container.querySelector('#mapFilter');
+            const hospitalDiv = container.querySelector('#hospitalFilter');
+            const airportDiv = container.querySelector('#airportFilter');
+            const resetBtn = container.querySelector('#resetFilter');
 
             function refresh() {
                 const selectedType = filterSelect.value;
-                const selectedHospitalLevels = Array.from(panel.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
-                const selectedAirportClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+                const selectedHospitalLevels = Array.from(container.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+                const selectedAirportClasses = Array.from(container.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
                 updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
             }
 
@@ -855,20 +841,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 refresh();
             });
 
-            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => {
-                chk.addEventListener('change', refresh);
-            });
-
-            panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
-                chk.addEventListener('change', refresh);
-            });
+            container.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => chk.addEventListener('change', refresh));
+            container.querySelectorAll('input[name="airportClass"]').forEach(chk => chk.addEventListener('change', refresh));
 
             resetBtn.addEventListener('click', () => {
-                panel.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+                container.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
                 filterSelect.value = 'all';
                 hospitalDiv.style.display = 'none';
                 airportDiv.style.display = 'none';
                 radiusKm = {{ $radius_km }};
+                radiusSlider.value = radiusKm;
+                radiusLabel.textContent = radiusKm;
                 refresh();
             });
 
@@ -883,11 +866,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
     }
 
-    // === Jalankan ===
+    // === JALANKAN ===
     initializeMap();
     addMainHospitalAndCircle();
     updateMarkers('all', [], []);
-    map.addControl(new RadiusControl());
     map.addControl(new FilterControl());
 });
 </script>
