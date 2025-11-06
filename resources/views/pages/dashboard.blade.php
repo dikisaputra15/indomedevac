@@ -213,12 +213,12 @@
 
 <div class="card">
     <div class="row" style="background-color: #dfeaf1;">
-        <div class="col-md-6">
-            <div class="d-flex p-3">
+        <div class="col-md-9">
+            <div class="d-flex p-3" style="justify-content: center;">
                 <div class="d-flex gap-2">
                       
                 <!-- Airport -->
-                      <div class="class-column">
+                      <div class="class-column" style="margin-right: 100px;">
                         <div class="class-header class-airport-category">Airfield Classification</div>
                         <div class="airport-list">
                           <div class="hospital-row" style="flex-direction: column;">
@@ -327,7 +327,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <div class="d-flex justify-content-end p-3">
                 <div class="d-flex gap-2 mt-2">
 
@@ -595,7 +595,8 @@
 
 <script>
     // --- Map Initialization ---
-    const map = L.map('map').setView([-4.245820574165665, 122.16203857061076], 5);
+    const map = L.map('map', { fullscreenControl: true })
+        .setView([-4.245820574165665, 122.16203857061076], 5);
 
     const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
@@ -606,26 +607,7 @@
         { attribution: 'Tiles © Esri', maxZoom: 19 }
     );
 
-    L.control.layers(
-        { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
-        null,
-        { position: 'topleft' } // posisi kiri atas
-    ).addTo(map);
-
-    L.control.fullscreen({
-        position: 'topleft' // tetap di kiri atas
-    }).addTo(map);
-
-    const style = document.createElement('style');
-    style.textContent = `
-        .leaflet-top.leaflet-left .leaflet-control-layers {
-            margin-top: 5px !important;
-        }
-        .leaflet-top.leaflet-left .leaflet-control-zoom {
-            margin-top: 10px !important;
-        }
-        `;
-    document.head.appendChild(style);
+    L.control.layers({ "Street Map": osmLayer, "Satellite Map": satelliteLayer }).addTo(map);
 
     // --- Global States ---
     let airportMarkers = L.featureGroup().addTo(map);
