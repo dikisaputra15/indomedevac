@@ -595,8 +595,7 @@
 
 <script>
     // --- Map Initialization ---
-    const map = L.map('map', { fullscreenControl: true })
-        .setView([-4.245820574165665, 122.16203857061076], 5);
+    const map = L.map('map').setView([-4.245820574165665, 122.16203857061076], 5);
 
     const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
@@ -607,7 +606,26 @@
         { attribution: 'Tiles © Esri', maxZoom: 19 }
     );
 
-    L.control.layers({ "Street Map": osmLayer, "Satellite Map": satelliteLayer }).addTo(map);
+    L.control.layers(
+        { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
+        null,
+        { position: 'topleft' } // posisi kiri atas
+    ).addTo(map);
+
+    L.control.fullscreen({
+        position: 'topleft' // tetap di kiri atas
+    }).addTo(map);
+
+    const style = document.createElement('style');
+    style.textContent = `
+        .leaflet-top.leaflet-left .leaflet-control-layers {
+            margin-top: 5px !important;
+        }
+        .leaflet-top.leaflet-left .leaflet-control-zoom {
+            margin-top: 10px !important;
+        }
+        `;
+    document.head.appendChild(style);
 
     // --- Global States ---
     let airportMarkers = L.featureGroup().addTo(map);

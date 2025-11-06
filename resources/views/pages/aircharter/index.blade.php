@@ -93,7 +93,7 @@
 <div class="card">
      <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
         <div class="d-flex gap-2 align-items-center">
-            <h2 class="fw-bold">AIR CHARTER INFORMATION - Papua New Guinea </h2>
+            <h2 class="fw-bold">AIR CHARTER INFORMATION - Indonesia </h2>
         </div>
 
         <div class="d-flex gap-2 ms-auto">
@@ -106,6 +106,11 @@
             <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3">
                 <i class="bi bi-airplane fs-3"></i>
                 <small>Airports</small>
+            </a>
+
+            <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
+                  <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
+                <small>Air Charter</small>
             </a>
 
             <!-- Button 7 -->

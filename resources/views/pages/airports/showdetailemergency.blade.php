@@ -622,39 +622,48 @@ document.addEventListener('DOMContentLoaded', () => {
     let radiusKm = {{ $radius_km }};
 
     let map, mainAirportMarker, radiusCircle, routingControl = null;
-    let nearbyMarkersGroup = L.featureGroup();
+    const nearbyMarkersGroup = L.featureGroup();
 
-    // === Default Icons ===
     const DEFAULT_MAIN_AIRPORT_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
-    const DEFAULT_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
-    const DEFAULT_AIRPORT_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+    const DEFAULT_HOSPITAL_ICON_URL     = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
+    const DEFAULT_AIRPORT_ICON_URL      = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
 
     const mainAirportIcon = new L.Icon({
         iconUrl: DEFAULT_MAIN_AIRPORT_ICON_URL,
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
+        iconSize: [25, 41], iconAnchor: [12, 41],
+        popupAnchor: [1, -34], shadowSize: [41, 41]
     });
 
     // === Inisialisasi Peta ===
     function initializeMap() {
-        map = L.map('map', { fullscreenControl: true })
+        map = L.map('map')
             .setView([airportData.latitude, airportData.longitude], 11);
 
         const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors',
-            maxZoom: 19
+            attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
         });
 
-        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles © Esri',
-            maxZoom: 19
-        });
+        const satelliteLayer = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            { attribution: 'Tiles © Esri', maxZoom: 19 }
+        ).addTo(map);
 
-        satelliteLayer.addTo(map);
-        L.control.layers({ "Satellite": satelliteLayer, "Street": osmLayer }).addTo(map);
+       L.control.layers(
+            { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
+            null,
+            { position: 'topleft' }
+        ).addTo(map);
+
+        L.control.fullscreen({ position: 'topleft' }).addTo(map);
+
+        // === Styling posisi kontrol ===
+        const style = document.createElement('style');
+        style.textContent = `
+        .leaflet-top.leaflet-left .leaflet-control-layers { margin-top: 5px !important; }
+        .leaflet-top.leaflet-left .leaflet-control-zoom { margin-top: 10px !important; }
+        `;
+        document.head.appendChild(style);
 
         nearbyMarkersGroup.addTo(map);
     }
@@ -666,10 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .bindPopup(`<b>${airportData.name}</b><br>This is the main airport.`);
 
         radiusCircle = L.circle([airportData.latitude, airportData.longitude], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.1,
-            radius: radiusKm * 1000
+            color: 'red', fillColor: '#f03', fillOpacity: 0.1, radius: radiusKm * 1000
         }).addTo(map);
     }
 
@@ -682,33 +688,29 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             if (distance > radiusKm) return;
 
-            // Filter Hospital berdasarkan beberapa facility_level
-            if (type === 'Hospital' && filters.hospitalLevels && filters.hospitalLevels.length > 0) {
+            // Filter hospital by facility level
+            if (type === 'Hospital' && filters.hospitalLevels?.length > 0) {
                 const itemLevel = (item.facility_level || '').toLowerCase();
                 const allowed = filters.hospitalLevels.map(l => l.toLowerCase());
                 if (!allowed.includes(itemLevel)) return;
             }
 
-            // Filter Airport berdasarkan category
-            if (type === 'Airport' && filters.airportClassifications && filters.airportClassifications.length > 0) {
+            // Filter airport by category
+            if (type === 'Airport' && filters.airportClassifications?.length > 0) {
                 const airportCategories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
                 const allowed = filters.airportClassifications.map(c => c.toLowerCase());
-                const hasMatch = airportCategories.some(cat => allowed.includes(cat));
-                if (!hasMatch) return;
+                if (!airportCategories.some(cat => allowed.includes(cat))) return;
             }
 
             const icon = L.icon({
                 iconUrl: item.icon || defaultIconUrl,
-                iconSize: [24, 24],
-                iconAnchor: [12, 24],
-                popupAnchor: [0, -20]
+                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
             const name = item.name || item.airport_name || 'N/A';
             const level = item.facility_level || item.category || 'N/A';
             const distanceText = `<strong>Distance:</strong> ${distance.toFixed(2)} km`;
-
             const detailUrl = (type === 'Airport')
                 ? `/airports/${item.id}/detail`
                 : `/hospitals/${item.id}`;
@@ -716,8 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
             marker.bindPopup(`
                 <div style="font-size:13px;">
                     <a href="${detailUrl}" target="_blank">${name}</a><br>
-                    ${level}<br>
-                    ${distanceText}<br>
+                    ${level}<br>${distanceText}<br>
                     <button class="btn btn-sm btn-primary mt-2"
                         onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
                         Get Direction
@@ -729,7 +730,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === Hitung Jarak (Haversine) ===
     function calculateDistance(lat1, lon1, lat2, lon2) {
         const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -754,26 +754,24 @@ document.addEventListener('DOMContentLoaded', () => {
             addWaypoints: false,
             collapsible: true,
             show: false,
-            createMarker: function() { return null; },
+            createMarker: () => null,
             lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
         }).addTo(map);
 
         routingControl.on('routesfound', () => {
-            if (mainAirportMarker) mainAirportMarker.bringToFront();
-            if (nearbyMarkersGroup) nearbyMarkersGroup.bringToFront();
+            if (mainAirportMarker?.bringToFront) mainAirportMarker.bringToFront();
+            nearbyMarkersGroup.eachLayer(marker => marker.bringToFront && marker.bringToFront());
         });
     };
 
-    // === Fit Map to Bounds ===
     function fitMapToBounds() {
         const bounds = L.featureGroup([mainAirportMarker, nearbyMarkersGroup, radiusCircle]).getBounds();
         if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50] });
     }
 
-    // === Update Marker sesuai Filter ===
     function updateMarkers(filterType, hospitalLevels, airportClassifications) {
         nearbyMarkersGroup.clearLayers();
-        map.removeLayer(radiusCircle);
+        if (radiusCircle) map.removeLayer(radiusCircle);
         addMainAirportAndCircle();
 
         const filters = { hospitalLevels, airportClassifications };
@@ -790,33 +788,21 @@ document.addEventListener('DOMContentLoaded', () => {
         fitMapToBounds();
     }
 
-    // === Filter Control ===
-    const FilterControl = L.Control.extend({
+    // === Gabungan Filter + Radius ===
+    const FilterRadiusControl = L.Control.extend({
         options: { position: 'topright' },
         onAdd: function() {
-            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            container.style.background = 'white';
-            container.style.borderRadius = '8px';
-            container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control p-2 bg-white rounded');
+            div.style.width = '260px';
+            div.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            div.style.maxHeight = '85vh';
+            div.style.overflowY = 'auto';
 
-            // Tombol toggle
-            const toggleButton = L.DomUtil.create('button', '', container);
-            toggleButton.innerHTML = 'Filter';
-            toggleButton.style.background = '#007bff';
-            toggleButton.style.color = 'white';
-            toggleButton.style.border = 'none';
-            toggleButton.style.padding = '6px';
-            toggleButton.style.cursor = 'pointer';
-            toggleButton.style.width = '100%';
+            div.innerHTML = `
+                <h6 style="text-align:center;">Map Filters</h6>
+                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label><br>
+                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2"><br>
 
-            // Panel filter
-            const panel = L.DomUtil.create('div', '', container);
-            panel.style.display = 'none';
-            panel.style.padding = '10px';
-            panel.style.maxHeight = '400px';
-            panel.style.overflowY = 'auto';
-            panel.innerHTML = `
-                <h6>Filter Options</h6>
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Hospitals</option>
@@ -825,100 +811,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div id="hospitalFilter" style="display:none;">
                     <strong>Facility Level:</strong><br>
-                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(lvl => `
-                        <label><input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}</label>
-                    `).join('<br>')}
+                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)']
+                        .map(lvl => `
+                        <label style="display:block;font-size:13px;">
+                            <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
+                        </label>`).join('')}
                 </div>
 
-                <div id="airportFilter" style="display:none; margin-top:8px;">
+                <div id="airportFilter" style="display:none;margin-top:8px;">
                     <strong>Category:</strong><br>
-                    ${['International','Domestic','Military','Regional','Private'].map(cls => `
-                        <label><input type="checkbox" name="airportClass" value="${cls}"> ${cls}</label>
-                    `).join('<br>')}
+                    ${['International','Domestic','Military','Regional','Private']
+                        .map(cls => `
+                        <label style="display:block;font-size:13px;">
+                            <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
+                        </label>`).join('')}
                 </div>
 
-                <hr>
-                <button id="resetBtn" class="btn btn-sm btn-secondary w-100 mt-2">Reset Filter</button>
+                <button id="resetFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset All</button>
             `;
-
-            L.DomEvent.disableClickPropagation(container);
-
-            toggleButton.addEventListener('click', () => {
-                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            });
-
-            const filterSelect = panel.querySelector('#mapFilter');
-            const hospitalDiv = panel.querySelector('#hospitalFilter');
-            const airportDiv = panel.querySelector('#airportFilter');
-            const resetBtn = panel.querySelector('#resetBtn');
-
-            function refresh() {
-                const selectedType = filterSelect.value;
-                const selectedHospitalLevels = Array.from(panel.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
-                const selectedAirportClasses = Array.from(panel.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
-                updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
-            }
-
-            filterSelect.addEventListener('change', () => {
-                const val = filterSelect.value;
-                hospitalDiv.style.display = val === 'hospital' ? 'block' : 'none';
-                airportDiv.style.display = val === 'airport' ? 'block' : 'none';
-                refresh();
-            });
-
-            panel.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => {
-                chk.addEventListener('change', refresh);
-            });
-
-            panel.querySelectorAll('input[name="airportClass"]').forEach(chk => {
-                chk.addEventListener('change', refresh);
-            });
-
-            // Tombol Reset
-            resetBtn.addEventListener('click', () => {
-                filterSelect.value = 'all';
-                hospitalDiv.style.display = 'none';
-                airportDiv.style.display = 'none';
-                panel.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
-                updateMarkers('all', [], []);
-            });
-
-            return container;
-        }
-    });
-
-    // === Radius Control (di luar tombol filter) ===
-    const RadiusControl = L.Control.extend({
-        options: { position: 'topleft' },
-        onAdd: function() {
-            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-            div.style.background = 'white';
-            div.style.padding = '8px';
-            div.style.borderRadius = '8px';
-            div.innerHTML = `
-                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label><br>
-                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range">
-            `;
-
-            const radiusSlider = div.querySelector('#radiusRange');
-            const radiusLabel = div.querySelector('#radiusLabel');
-            radiusSlider.addEventListener('input', () => {
-                radiusKm = parseInt(radiusSlider.value);
-                radiusLabel.textContent = radiusKm;
-                updateMarkers('all', [], []);
-            });
 
             L.DomEvent.disableClickPropagation(div);
             return div;
         }
     });
 
-    // === Eksekusi ===
+    function refreshFilters() {
+        const selectedType = document.querySelector('#mapFilter')?.value || 'all';
+        const selectedHospitalLevels = Array.from(document.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+        const selectedAirportClasses = Array.from(document.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+        updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
+    }
+
     initializeMap();
     addMainAirportAndCircle();
     updateMarkers('all', [], []);
-    map.addControl(new RadiusControl());
-    map.addControl(new FilterControl());
+    map.addControl(new FilterRadiusControl());
+
+    // === Event Binding ===
+    document.addEventListener('input', e => {
+        if (e.target.id === 'radiusRange') {
+            radiusKm = parseInt(e.target.value);
+            document.getElementById('radiusLabel').textContent = radiusKm;
+            refreshFilters();
+        }
+    });
+
+    document.addEventListener('change', e => {
+        if (e.target.id === 'mapFilter') {
+            const val = e.target.value;
+            document.getElementById('hospitalFilter').style.display = val === 'hospital' ? 'block' : 'none';
+            document.getElementById('airportFilter').style.display = val === 'airport' ? 'block' : 'none';
+            refreshFilters();
+        }
+        if (e.target.name === 'hospitalLevel' || e.target.name === 'airportClass') {
+            refreshFilters();
+        }
+    });
+
+    document.addEventListener('click', e => {
+        if (e.target.id === 'resetFilter') {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('mapFilter').value = 'all';
+            document.getElementById('hospitalFilter').style.display = 'none';
+            document.getElementById('airportFilter').style.display = 'none';
+            radiusKm = {{ $radius_km }};
+            document.getElementById('radiusRange').value = radiusKm;
+            document.getElementById('radiusLabel').textContent = radiusKm;
+            refreshFilters();
+        }
+    });
 });
 </script>
 
