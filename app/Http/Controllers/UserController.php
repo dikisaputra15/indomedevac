@@ -21,10 +21,11 @@ class UserController extends Controller
                 return $user->getRoleNames()->join(', ');
             })
             ->addColumn('action', function($row){
-                  $roleName = $row->roles->first()->name ?? '';
-                 $updateButton = '<a href="' . route('user.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
-                 $ubahrole = '<button class="btn btn-warning btn-sm edit-role-btn" data-id="' . $row->id . '" data-role="' . $roleName . '">Ubah Role</button>';
-                 return $updateButton." ". $ubahrole;
+                $roleName = $row->roles->first()->name ?? '';
+                $updateButton = '<a href="' . route('user.edit', $row->id) . '" class="btn btn-primary btn-sm">Edit</a>';
+                $ubahrole = '<button class="btn btn-warning btn-sm edit-role-btn" data-id="' . $row->id . '" data-role="' . $roleName . '">Ubah Role</button>';
+                $deleteButton = '<button class="btn btn-sm btn-danger delete-btn" data-id="'.$row->id.'">Delete</button>';
+                return $updateButton." ". $ubahrole." ". $deleteButton;
             })
             ->rawColumns(['action'])
             ->addIndexColumn()
@@ -106,9 +107,19 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $role = User::findOrFail($id);
+
+        if($role->delete()){
+            $response['success'] = 1;
+            $response['msg'] = 'Delete successfully';
+        }else{
+            $response['success'] = 0;
+            $response['msg'] = 'Invalid ID.';
+        }
+
+        return response()->json($response);
     }
 
       public function updateRole(Request $request, User $user)

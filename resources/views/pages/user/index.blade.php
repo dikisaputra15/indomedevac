@@ -152,6 +152,42 @@ $('#formUbahRole').on('submit', function (e) {
     });
 });
 
+     // Event listener untuk tombol hapus
+            $('#userTable').on('click', '.delete-btn', function () {
+                var roleId = $(this).data('id');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Data will be deleted permanently!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, Delete!",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/user/' + roleId,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response){
+                            if(response.success == 1){
+                                alert("Record deleted.");
+                                var oTable = $('#userTable').dataTable();
+                                oTable.fnDraw(false);
+                            }else{
+                                    alert("Invalid ID.");
+                                }
+                            },
+
+                        });
+                    }
+                });
+            });
+
 
         });
     </script>
