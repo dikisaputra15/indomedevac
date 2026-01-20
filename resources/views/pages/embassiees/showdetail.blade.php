@@ -137,7 +137,7 @@
                     <strong>Email:</strong> {!! $embassy->email ?? '-' !!}
                 </p>
                 <p>
-                    <strong>Website:</strong> <a href="{{ $embassy->website }}" target="_blank">{!! $embassy->website !!}</a>
+                    <strong>Website:</strong> {!! $embassy->website !!}
                 </p>
                 <p>
                     <strong>Latitude:</strong> {{ $embassy->latitude ?? '-' }}

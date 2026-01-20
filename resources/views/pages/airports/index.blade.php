@@ -450,7 +450,7 @@ function addAirportMarkers(data) {
             <strong>Classification:</strong> ${airport.category || 'N/A'}<br>
             <strong>Address:</strong> ${airport.address || 'N/A'}<br>
             <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
-            ${airport.website ? `<strong>Website:</strong><a href='${airport.website}' target='__blank'> ${airport.website} </a><br>` : ''}
+            ${airport.website ? `<strong>Website:</strong> ${airport.website} <br>` : ''}
             ${airport.id ? `<a href="/airports/${airport.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
         `);
     });
