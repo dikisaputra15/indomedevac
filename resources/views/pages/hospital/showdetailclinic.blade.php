@@ -226,10 +226,10 @@
         </div>
     </div>
 
-    <div class="col-sm-12">
-              <div class="card">
-
-                <div class="classification" style="flex-direction: column; width:100%;">
+    <div class="row">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="classification" style="flex-direction: column; width:100%;">
                       <div class="class-header class-medical-classification">Medical Facility Classification</div>
                       <div class="classification">
                         <!-- Advanced -->
@@ -287,8 +287,10 @@
                           </div>
                         </div>
                       </div>
-                    </div>
         </div>
+    </div>
+</div>
+</div>
 
     <div class="row">
         <div class="col-sm-6">
