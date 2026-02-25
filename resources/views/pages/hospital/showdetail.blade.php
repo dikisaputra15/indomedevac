@@ -380,7 +380,7 @@
 
 <!-- PUSKESMAS -->
 <div class="modal fade" id="level11Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
          <div class="d-flex align-items-center">
@@ -390,12 +390,111 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal text-justify">A basic healthcare facility focusing on preventive, promotive, and basic curative services. Located at the sub-district and village level, offers maternal and child health, immunization, and community health programs.</p>
+        <p class="p-modal text-justify">A Public Health Center (Pusat Kesehatan Masyarakat / Puskesmas) is a government-operated primary healthcare facility regulated by the Ministry of Health of the Republic of Indonesia (Kementerian Kesehatan Republik Indonesia), commonly referred to in English as the Indonesian Ministry of Health (MOH), under national health service regulations. Puskesmas function as a first-level healthcare provider (Fasilitas Kesehatan Tingkat Pertama / FKTP) within Indonesia’s health system and BPJS Kesehatan referral framework, it operates at the sub-district (kecamatan) level and serves as the backbone of community-based healthcare delivery. Puskesmas provides comprehensive primary care services, including promotive, preventive, curative, and rehabilitative care focusing on maternal and child health, immunization, and public health programs for the defined population it serves.</p>
+
+        <p class="p-modal text-justify">
+            Most Puskesmas are automatically BPJS-contracted as government facilities. Private clinics acting as FKTP must formally contract with BPJS to serve insured patients. BPJS participants generally must first access care at FKTP before being referred to a hospital, except in emergencies.
+        </p>
+
+        <p class="p-modal text-justify">
+            <b>Note:</b> BPJS (Badan Penyelenggara Jaminan Sosial), Social Security Administering Body. In Indonesia, BPJS refers to the public agencies that administer the national social security system under the National Social Security System (SJSN). There are two main bodies:
+            <ul>
+                <li>BPJS Kesehatan – Administers national health insurance (JKN).</li>
+                <li>BPJS Ketenagakerjaan – Administers employment-related social security (work injury, old-age savings, pension, death benefits).</li>
+            </ul>
+            <a href="{{ asset('files/moh-regulation-no3-2020.pdf') }}" target="_blank">Indonesia Ministry of Health (MOH) regulation (Permenkes No. 3 Tahun 2020)</a>
+        </p>
+
+        <p class="p-modal text-justify">
+            <strong>Bed Capacity</strong>
+            <ul>
+                <li>
+                    <strong>Non-Inpatient Puskesmas (Rawat Jalan)</strong>
+                    <ul>
+                        <li>No inpatient beds</li>
+                        <li>Focused on outpatient and preventive services</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Inpatient Puskesmas (Rawat Inap)</strong>
+                    <ul>
+                        <li>Typically 5–10 short-stay beds</li>
+                        <li>Designed for basic observation, uncomplicated deliveries, and short-term stabilization</li>
+                        <li>Bed capacity is limited and not comparable to hospital inpatient facilities</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+
+        <p class="p-modal text-justify">
+            <strong>Clinical Services</strong>
+            <ul>
+                <li>
+                    <strong>Primary Medical Services</strong>
+                    <ul>
+                        <li>General practitioner consultations</li>
+                        <li>Basic diagnosis and treatment of common illnesses</li>
+                        <li>Maternal and child health services</li>
+                        <li>Immunization services</li>
+                        <li>Family planning services</li>
+                        <li>Basic dental services</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Public Health & Preventive Services</strong>
+                    <ul>
+                        <li>Disease surveillance and outbreak response</li>
+                        <li>Health promotion and education programs</li>
+                        <li>Community nutrition programs</li>
+                        <li>Environmental health services</li>
+                        <li>School health programs (UKS)</li>
+                        <li>Posyandu supervision</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Emergency & Stabilization Services</strong>
+                    <ul>
+                        <li>Basic emergency care</li>
+                        <li>Initial trauma stabilization</li>
+                        <li>Basic life support</li>
+                        <li>Referral coordination to hospitals (Class D/C/B/A)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Diagnostic & Support Services</strong>
+                    <ul>
+                        <li>Basic laboratory testing</li>
+                        <li>Basic pharmacy services</li>
+                        <li>Basic medical procedures (wound care, minor procedures)</li>
+                        <li>Antenatal and postnatal care services</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Outreach & Community Services</strong>
+                    <ul>
+                        <li>Mobile health services (Puskesmas Keliling)</li>
+                        <li>Home visits</li>
+                        <li>Integrated community health programs</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+
+        <p class="p-modal text-justify">
+            <strong>Public Health Center (PUSKESMAS) Role</strong>
+            <ul>
+                <li>First-level entry point into Indonesia’s healthcare system</li>
+                <li>Primary gatekeeper in the BPJS referral system</li>
+                <li>Community health program implementation center</li>
+                <li>Preventive and promotive health service hub</li>
+                <li>Early detection and disease surveillance center</li>
+                <li>Referral coordinator to higher-level hospitals</li>
+            </ul>
+        </P>
       </div>
     </div>
   </div>
 </div>
-
 
 <div class="modal fade" id="level22Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -409,15 +508,14 @@
       </div>
       <div class="modal-body">
         <p><b>Community Health Post - Health Sub Center (CHP)</b></p>
-        <p class="p-modal text-justify">Primary health, ambulatory care, and short stay inpatient and maternity care at the local rural / remote community level, with a minimum of six (6) health workers to ensure safe 24-hour care and treatment.</p>
+        <p class="p-modal">Primary health, ambulatory care, and short stay inpatient and maternity care at the local rural / remote community level, with a minimum of six (6) health workers to ensure safe 24-hour care and treatment.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Class D — Sub-district Hospital -->
 <div class="modal fade" id="level33Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
          <div class="d-flex align-items-center">
@@ -427,15 +525,92 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal text-justify">Provides basic inpatient and emergency care with general practitioners and limited specialist support. Mainly located in sub-districts serving as the first referral point before higher-level hospitals.</p>
+        <p class="p-modal text-justify">
+            A Class D Hospital (Rumah Sakit Kelas D), regulated by the Ministry of Health of the Republic of Indonesia (Kementerian Kesehatan Republik Indonesia), commonly referred to in English as the Indonesian Ministry of Health (MOH). Class D hospitals provide basic inpatient, outpatient, and emergency services with general practitioners and limited specialist support, including basic medical and surgical capability.
+        </p>
+        <p class="p-modal text-justify">
+            Class D hospitals operate mainly at the sub-district level, it serves as an entry-level facility within the referral system, managing uncomplicated cases, stabilizing emergency patients, and referring more complex conditions to higher-level hospitals. This classification applies to both public and private institutions that meet the established minimum infrastructure, staffing, and service standards.
+        </p>
+        <p class="p-modal text-justify">
+            Public Class D hospitals commonly contract with BPJS. Private Class D hospitals may choose whether to participate. In the referral system, they receive patients from Puskesmas or other first-level facilities if contracted.
+        </p>
+        <p class="p-modal text-justify">
+            Only hospitals that have formal cooperation agreements with BPJS Kesehatan can receive BPJS-referred patients.
+        </p>
+        <p class="p-modal text-justify">
+            <b>Note:</b> BPJS (Badan Penyelenggara Jaminan Sosial), Social Security Administering Body. In Indonesia, BPJS refers to the public agencies that administer the national social security system under the National Social Security System (SJSN). There are two main bodies:
+            <ul>
+                <li>BPJS Kesehatan – Administers national health insurance (JKN).</li>
+                <li>BPJS Ketenagakerjaan – Administers employment-related social security (work injury, old-age savings, pension, death benefits).</li>
+            </ul>
+            <a href="{{ asset('files/moh-regulation-no3-2020.pdf') }}" target="_blank">Indonesia Ministry of Health (MOH) regulation (Permenkes No. 3 Tahun 2020)</a>
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Bed Capacity</strong></p>
+            Minimum 50 inpatient beds (Most Class D hospitals operate between 50–100 beds)
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Clinical Services</strong></p>
+             <ul>
+                <li>
+                    <strong>Core Medical Services</strong>
+                    <ul>
+                        <li>At least 2 basic specialist services (typically Internal Medicine and Surgery, or adjusted based on regional need)</li>
+                        <li>General practitioner-led services</li>
+                        <li>Basic maternal and child health services</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Emergency & Critical Care</strong>
+                    <ul>
+                        <li>24/7 Emergency Unit (basic capability)</li>
+                        <li>Initial stabilization of trauma and acute cases</li>
+                        <li>Referral coordination to Class C/B hospitals</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Diagnostic Services</strong>
+                    <ul>
+                        <li>Basic laboratory</li>
+                        <li>Basic radiology / X-ray (limited)</li>
+                        <li>Standard ultrasound (if available)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Surgical & Therapeutic Facilities</strong>
+                    <ul>
+                        <li>Minor surgical procedures</li>
+                        <li>Basic obstetric procedures</li>
+                        <li>Wound care and emergency interventions</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Supporting Medical Infrastructure</strong>
+                    <ul>
+                        <li>Pharmacy</li>
+                        <li>Basic sterilization services</li>
+                        <li>Medical records system</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+        <p class="p-modal text-justify">
+            <strong>Class D Hospital Role</strong>
+            <ul>
+                <li>First-level hospital within the referral system</li>
+                <li>Bridging facility between primary care (Puskesmas/clinics) and higher-level hospitals</li>
+                <li>Basic inpatient and emergency care provider</li>
+                <li>Stabilization and referral coordination center</li>
+                <li>Healthcare access expansion tool in remote or newly developed areas</li>
+            </ul>
+        </P>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Class C — District-Level Hospital -->
 <div class="modal fade" id="level44Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
          <div class="d-flex align-items-center">
@@ -445,15 +620,96 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal text-justify">Provides core specialist care in internal medicine, surgery, obstetrics, and pediatrics. Manages common medical conditions, refers complex cases to higher-level hospitals.</p>
+        <p class="p-modal text-justify">
+            A secondary-level hospital regulated by the Ministry of Health of the Republic of Indonesia (Kementerian Kesehatan Republik Indonesia), commonly referred to in English as the Indonesian Ministry of Health (MOH). Class C hospitals provide core specialist services in internal medicine, surgery, obstetrics, and pediatrics, managing common medical conditions across inpatient and outpatient settings.
+        </p>
+        <p class="p-modal text-justify">
+            Class C hospitals function primarily as a regency/city (kabupaten/kota) referral hospital, a Class C facility performs common surgical procedures, stabilizes emergency patients, and refers more complex or subspecialty cases to Class B or Class A hospitals. This classification applies to both public and private hospitals that meet the prescribed infrastructure, staffing, and service standards.
+        </p>
+        <p class="p-modal text-justify">
+            Many Class C hospitals (particularly public facilities) contract with BPJS and therefore serve as the most common hospital-level provider for BPJS participants. However, private Class C hospitals may operate partially or entirely outside the BPJS system depending on their contractual status.
+        </p>
+        <p class="p-modal text-justify">
+            Only hospitals that have formal cooperation agreements with BPJS Kesehatan can receive BPJS-referred patients.
+        </p>
+        <p class="p-modal text-justify">
+            Note: BPJS (Badan Penyelenggara Jaminan Sosial), Social Security Administering Body. In Indonesia, BPJS refers to the public agencies that administer the national social security system under the National Social Security System (SJSN). There are two main bodies:
+            <ul>
+                <li>BPJS Kesehatan – Administers national health insurance (JKN).</li>
+                <li>BPJS Ketenagakerjaan – Administers employment-related social security (work injury, old-age savings, pension, death benefits).</li>
+            </ul>
+            <a href="{{ asset('files/moh-regulation-no3-2020.pdf') }}" target="_blank">Indonesia Ministry of Health (MOH) regulation (Permenkes No. 3 Tahun 2020)</a>
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Bed Capacity</strong></p>
+            Minimum 100 inpatient beds (Most Class C hospitals operate between 100–200 beds, depending on district demand)
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Clinical Services</strong></p>
+             <ul>
+                <li>
+                    <strong>Core Medical Services</strong>
+                    <ul>
+                        <li>4 basic specialists: Internal Medicine, Surgery, Pediatrics, Obstetrics & Gynecology</li>
+                        <li>General anesthesia services</li>
+                        <li>Basic radiology and pathology services</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Emergency & Critical Care</strong>
+                    <ul>
+                        <li>24/7 Emergency Department (IGD)</li>
+                        <li>Basic resuscitation capability</li>
+                        <li>Limited ICU or high-dependency care (depending on facility)</li>
+                        <li>Maternal and neonatal emergency care</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Diagnostic Services</strong>
+                    <ul>
+                        <li>Basic laboratory services</li>
+                        <li>X-ray radiology</li>
+                        <li>Standard ultrasound</li>
+                        <li>Blood transfusion service (limited capacity)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Surgical & Therapeutic Facilities</strong>
+                    <ul>
+                        <li>Operating theatre(s) for general surgery</li>
+                        <li>Obstetric surgery capability (C-section)</li>
+                        <li>Minor orthopedic and emergency surgical procedures</li>
+                        <li>Basic inpatient and outpatient treatment</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Supporting Medical Infrastructure</strong>
+                    <ul>
+                        <li>Pharmacy</li>
+                        <li>CSSD (basic sterilization services)</li>
+                        <li>Medical records system</li>
+                        <li>Nutrition services</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+        <p class="p-modal text-justify">
+            <strong>Class C Hospital Role</strong>
+            <ul>
+                <li>District-level referral hospital</li>
+                <li>Primary inpatient and surgical provider for local population</li>
+                <li>Stabilization point before referral to Class B/A hospitals</li>
+                <li>Key BPJS referral destination from primary care (Puskesmas/clinics)</li>
+                <li>Essential maternal and emergency care provider at regional level</li>
+            </ul>
+        </P>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Class B — Provincial Referral Hospital -->
 <div class="modal fade" id="level55Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
@@ -463,15 +719,101 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal text-justify">Provides broad specialist and limited subspecialist services, functions as regional referral centers, includes ICUs, operating theaters, and diagnostic facilities.</p>
+        <p class="p-modal text-justify">
+            Secondary–tertiary level referral hospital regulated by the Ministry of Health of the Republic of Indonesia (Kementerian Kesehatan Republik Indonesia), commonly referred to in English as the Indonesian Ministry of Health (MOH). Class B hospitals provide comprehensive specialist medical services and selected subspecialist services, supported by advanced diagnostic and therapeutic facilities.
+        </p>
+        <p class="p-modal text-justify">
+           Class B hospitals function as provincial or inter-district referral centers, managing moderate to complex medical and surgical cases referred from lower-level hospitals (Class C and D), while referring highly complex subspecialty cases to Class A hospitals. This classification applies equally to public and private hospitals that meet the required standards of infrastructure, human resources, equipment, and service capability.
+        </p>
+        <p class="p-modal text-justify">
+           Public Class B hospitals typically contract with BPJS. Private Class B hospitals may selectively contract or operate fully private services. BPJS patients are accepted only in contracted facilities and generally arrive through referrals from Class C or D hospitals.
+        </p>
+        <p class="p-modal text-justify">
+           Only hospitals that have formal cooperation agreements with BPJS Kesehatan can receive BPJS-referred patients.
+        </p>
+        <p class="p-modal text-justify">
+           <b>Note:</b> BPJS (Badan Penyelenggara Jaminan Sosial), Social Security Administering Body. In Indonesia, BPJS refers to the public agencies that administer the national social security system under the National Social Security System (SJSN). There are two main bodies:
+            <ul>
+                <li>BPJS Kesehatan – Administers national health insurance (JKN).</li>
+                <li>BPJS Ketenagakerjaan – Administers employment-related social security (work injury, old-age savings, pension, death benefits).</li>
+            </ul>
+            <a href="{{ asset('files/moh-regulation-no3-2020.pdf') }}" target="_blank">Indonesia Ministry of Health (MOH) regulation (Permenkes No. 3 Tahun 2020)</a>
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Bed Capacity</strong></p>
+            Minimum 200 inpatient beds. Most Class B hospitals operate between 200–400+ beds, depending on regional demand and provincial role.
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Clinical Services</strong></p>
+             <ul>
+                <li>
+                    <strong>Core Medical Services</strong>
+                    <ul>
+                        <li>4 basic specialists: Internal Medicine, Surgery, Pediatrics, Obstetrics & Gynecology</li>
+                        <li>Additional major specialties (e.g., Anesthesiology, Radiology, Pathology, Neurology, Psychiatry, Dermatology, ENT, Ophthalmology)</li>
+                        <li>Selected subspecialty services (e.g., cardiology, orthopedics, urology, pulmonology — depending on hospital capability)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Emergency & Critical Care</strong>
+                    <ul>
+                        <li>24/7 Emergency Department (IGD)</li>
+                        <li>ICU</li>
+                        <li>NICU and/or PICU (depending on capacity)</li>
+                        <li>HCU (High Care Unit)</li>
+                        <li>Trauma stabilization capability</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Diagnostic Services</strong>
+                    <ul>
+                        <li>CT Scan (standard in most Class B hospitals)</li>
+                        <li>Advanced ultrasound</li>
+                        <li>Comprehensive laboratory services</li>
+                        <li>Blood bank/transfusion unit</li>
+                        <li>Endoscopy services</li>
+                        <li>Basic interventional procedures</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Surgical & Therapeutic Facilities</strong>
+                    <ul>
+                        <li>Multiple operating theatres</li>
+                        <li>Major general surgery capability</li>
+                        <li>Orthopedic and obstetric surgery capability</li>
+                        <li>Dialysis unit (in most provincial hospitals)</li>
+                        <li>Chemotherapy (in hospitals with oncology service)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Supporting Medical Infrastructure</strong>
+                    <ul>
+                        <li>24-hour pharmacy</li>
+                        <li>Central Sterile Supply Department (CSSD)</li>
+                        <li>Medical rehabilitation service</li>
+                        <li>Nutrition & dietetics service</li>
+                        <li>Medical records system</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+        <p class="p-modal text-justify">
+            <strong>Class B Hospital Role</strong>
+            <ul>
+                <li>Provincial-level referral hospital</li>
+                <li>Secondary escalation point in the BPJS referral system (from Class C/D)</li>
+                <li>Regional center for specialist services</li>
+                <li>Stabilization and management center for moderate to complex cases</li>
+                <li>Supporting teaching hospital (in many provinces)</li>
+            </ul>
+        </P>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Class A — National Referral Hospital -->
 <div class="modal fade" id="level66Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
@@ -481,7 +823,102 @@
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="p-modal text-justify">Highest-level hospital providing, extensive specialist and subspecialist services supported by advanced technology and large bed capacity. Class A hospitals also often serve as teaching and research centers.</p>
+        <p class="p-modal text-justify">
+            A Class A Hospital (Rumah Sakit Kelas A), regulated by the Ministry of Health of the Republic of Indonesia (Kementerian Kesehatan Republik Indonesia), commonly referred to in English as the Indonesian Ministry of Health (MOH), represents the highest hospital classification in Indonesia.
+        </p>
+        <p class="p-modal text-justify">
+            Class A hospitals function as national or apex referral centers within Indonesia’s tiered healthcare and Badan Penyelenggara Jaminan Sosial (BPJS) referral system, provide the most comprehensive range of specialist and subspecialist services, supported by advanced diagnostic, therapeutic, critical care capability, and large bed capacity. Serving as national and/or top-tier referral centers within the healthcare system.
+        </p>
+        <p class="p-modal text-justify">
+            Class A hospitals manage highly complex, multidisciplinary medical and surgical cases referred from Class B, C, and D hospitals, and frequently function as teaching and research institutions.
+        </p>
+        <p class="p-modal text-justify">
+            This classification applies to both public and private hospitals that meet the highest standards of infrastructure, medical personnel, equipment, and service capability.
+        </p>
+        <p class="p-modal text-justify">
+            Public Class A hospitals generally participate in BPJS Kesehatan, receive BPJS patients primarily through referral from Class B hospitals or directly in emergency cases.
+        </p>
+        <p class="p-modal text-justify">
+            Private Class A hospitals may or may not contract with BPJS. Only hospitals that have formal cooperation agreements with BPJS Kesehatan can receive BPJS-referred patients.
+        </p>
+        <p class="p-modal text-justify">
+            <b>Note:</b> BPJS (Badan Penyelenggara Jaminan Sosial), Social Security Administering Body. In Indonesia, BPJS refers to the public agencies that administer the national social security system under the National Social Security System (SJSN). There are two main bodies:
+            <ul>
+                <li>BPJS Kesehatan – Administers national health insurance (JKN).</li>
+                <li>BPJS Ketenagakerjaan – Administers employment-related social security (work injury, old-age savings, pension, death benefits).</li>
+            </ul>
+            <a href="{{ asset('files/moh-regulation-no3-2020.pdf') }}" target="_blank">Indonesia Ministry of Health (MOH) regulation (Permenkes No. 3 Tahun 2020)</a>
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Bed Capacity</strong></p>
+            Minimum 250 inpatient beds. Major national referral hospitals often exceed 500–1,000 beds depending on scope and regional demand.
+        </p>
+        <p class="p-modal text-justify">
+            <p><strong>Clinical Services</strong></p>
+             <ul>
+                <li>
+                    <strong>Core Medical Services</strong>
+                    <ul>
+                        <li>4 basic specialists: Internal Medicine, Surgery, Pediatrics, Obstetrics & Gynecology (Ob/gyn)</li>
+                        <li>Full range of medical subspecialties (cardiology, nephrology, pulmonology, oncology, etc.)</li>
+                        <li>Full range of surgical subspecialties (neurosurgery, cardiothoracic, orthopedics, urology, plastic surgery, etc.)</li>
+                        <li>Comprehensive non-surgical specialties (neurology, psychiatry, dermatology, ENT, ophthalmology, rehabilitation medicine)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Emergency & Critical Care</strong>
+                    <ul>
+                        <li>24/7 Emergency Department (IGD)</li>
+                        <li>ICU, NICU, PICU, HCU</li>
+                        <li>Advanced trauma and resuscitation capability</li>
+                        <li>Disaster response readiness</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Diagnostic Services</strong>
+                    <ul>
+                        <li>CT Scan & MRI</li>
+                        <li>Cath Lab (cardiac catheterization)</li>
+                        <li>Advanced radiology & interventional radiology</li>
+                        <li>Full clinical & anatomical pathology labs</li>
+                        <li>Blood bank</li>
+                        <li>Endoscopy & advanced imaging</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Surgical & Therapeutic Facilities</strong>
+                    <ul>
+                        <li>Multiple fully equipped operating theatres</li>
+                        <li>Cardiac & neurosurgery capability</li>
+                        <li>Dialysis units</li>
+                        <li>Chemotherapy & oncology services</li>
+                        <li>Radiotherapy (in comprehensive centers)</li>
+                    </ul>
+                </li>
+                <li class="mt-2">
+                    <strong>Supporting Medical Infrastructure</strong>
+                    <ul>
+                        <li>24-hour pharmacy</li>
+                        <li>CSSD (Central Sterile Supply Department)</li>
+                        <li>Medical rehabilitation center</li>
+                        <li>Medical gas system</li>
+                        <li>Electronic medical records (in modern facilities)</li>
+                        <li>Nutrition & dietetics service</li>
+                    </ul>
+                </li>
+            </ul>
+        </p>
+        <p class="p-modal text-justify">
+            <strong>Class A Hospital Role</strong>
+            <ul>
+                <li>National and/or top-tier referral hospital</li>
+                <li>Highest escalation level in BPJS referral system</li>
+                <li>Teaching hospital for medical students, residents, and specialists</li>
+                <li>Research and clinical innovation center</li>
+                <li>Complex case management center (multi-disciplinary cases)</li>
+                <li>National disaster and emergency medical support hub</li>
+            </ul>
+        </P>
       </div>
     </div>
   </div>
