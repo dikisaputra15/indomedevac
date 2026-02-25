@@ -1012,7 +1012,7 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Edit Nearest Medical Facility
+                Edit Nearest Airfields and Medical Facilities
               </h3>
             </div>
             <!-- /.card-header -->

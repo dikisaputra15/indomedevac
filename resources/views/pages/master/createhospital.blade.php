@@ -794,7 +794,7 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Medical Support Website
+                Emergency Medical Support
               </h3>
             </div>
             <!-- /.card-header -->
@@ -830,13 +830,13 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Nearest Airport
+                Nearest Airfields and Medical Facilities
               </h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
 
-                <textarea id="summernote2" name="nearest_airport">
+                <textarea id="summernote2" name="nearest_airfield">
                 </textarea>
 
             </div>
