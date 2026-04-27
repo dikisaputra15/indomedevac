@@ -185,14 +185,14 @@
         </div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="card">
             <div class="card-header fw-bold"><img src="{{ asset('images/suport-service-icon.png') }}" style="width: 30px; height: 30px;"> Information Support</div>
             <div class="card-body overflow-auto">
-                <h5>Specific Flight Information</h5>
+                <h5>Specific Airfield - Flight Information</h5>
                 <?php echo $airport->other_flight_information; ?>
 
-                <h5>General Flight Information</h5>
+                <h5>General - Flight Information</h5>
                 <?php echo $airport->general_flight_information; ?>
 
                 <h5>Aircraft Information</h5>
@@ -202,7 +202,7 @@
     </div>
 
     <!-- Kolom kanan dengan 1 card besar -->
-    <div class="col-md-7">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-header fw-bold"><img src="{{ asset('images/flight-tracker-icon.png') }}" style="width: 30px; height: 30px;"> Flight Tracker</div>
 
