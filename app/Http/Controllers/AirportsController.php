@@ -36,7 +36,14 @@ class AirportsController extends Controller
      */
     public function filter(Request $request)
     {
-        $query = Airport::query();
+        $query = Airport::query()
+            ->leftJoin('cities', 'airports.city_id', '=', 'cities.id')
+            ->leftJoin('provincesregions', 'airports.province_id', '=', 'provincesregions.id')
+            ->select(
+                'airports.*',
+                'cities.city as city_name',
+                'provincesregions.provinces_region as province_name'
+            );
 
         $query->where('airport_status', true);
 
@@ -67,7 +74,7 @@ class AirportsController extends Controller
             // Ensure province IDs are an array and valid integers
             $provinceIds = array_filter((array) $request->input('provinces'), 'is_numeric');
             if (!empty($provinceIds)) {
-                $q->whereIn('province_id', $provinceIds);
+                $q->whereIn('airports.province_id', $provinceIds);
             }
         });
 
@@ -88,7 +95,7 @@ class AirportsController extends Controller
             $haversine = "(6371 * acos(cos(radians(?)) * cos(radians(latitude))
                             * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))";
 
-            $query->selectRaw("airports.*, $haversine AS distance", [
+            $query->selectRaw("airports.*, cities.city as city_name, provincesregions.provinces_region as province_name, $haversine AS distance", [
                     $centerLat, $centerLng, $centerLat
                 ])
                 ->whereRaw("$haversine < ?", [

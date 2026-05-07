@@ -163,8 +163,8 @@ class HospitalController extends Controller
     public function filter(Request $request)
     {
         $query = Hospital::query();
-        $query->join('cities', 'hospitals.province_id', '=', 'cities.id');
-        $query->join('provincesregions', 'hospitals.province_id', '=', 'provincesregions.id');
+        $query->leftJoin('cities', 'hospitals.city_id', '=', 'cities.id');
+        $query->leftJoin('provincesregions', 'hospitals.province_id', '=', 'provincesregions.id');
         $query->select('hospitals.*', 'cities.city', 'provincesregions.provinces_region');
 
         $query->where('hospital_status', true);
@@ -216,7 +216,7 @@ class HospitalController extends Controller
             $haversine = "(6371 * acos(cos(radians(?)) * cos(radians(latitude))
                         * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))";
 
-            $query->selectRaw("hospitals.*, $haversine AS distance", [
+            $query->selectRaw("hospitals.*, cities.city, provincesregions.provinces_region, $haversine AS distance", [
                     $centerLat, $centerLng, $centerLat
                 ])
                 ->whereRaw("$haversine < ?", [

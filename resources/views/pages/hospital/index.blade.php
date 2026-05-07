@@ -941,7 +941,10 @@ function addHospitalMarkers(data) {
             <h5 style="border-bottom:1px solid #ccc;">${h.name || 'N/A'}</h5>
             <strong>Global Classification:</strong> ${h.facility_category || 'N/A'}<br>
             <strong>Country Classification:</strong> ${h.facility_level || 'N/A'}<br>
-            <strong>Address:</strong> ${h.address || 'N/A'}<br>
+            <strong>Address:</strong>
+                ${h.address || 'N/A'}
+                ${h.city ? ', ' + h.city : ''}
+                ${h.provinces_region ? ', ' + h.provinces_region : ''}, Indonesia <br>
             <strong>Coords:</strong> ${h.latitude}, ${h.longitude}<br>
             <strong>Province:</strong> ${h.provinces_region || 'N/A'}<br>
             ${h.id ? `<a href="/hospitals/${h.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}

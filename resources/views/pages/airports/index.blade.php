@@ -453,7 +453,10 @@ function addAirportMarkers(data) {
         marker.bindPopup(`
             <h5 style="border-bottom:1px solid #ccc;">${airport.airport_name || 'N/A'}</h5>
             <strong>Classification:</strong> ${airport.category || 'N/A'}<br>
-            <strong>Address:</strong> ${airport.address || 'N/A'}<br>
+            <strong>Address:</strong>
+                ${airport.address || 'N/A'}
+                ${airport.city_name ? ', ' + airport.city_name : ''}
+                ${airport.province_name ? ', ' + airport.province_name : ''}, Indonesia <br>
             <strong>Telephone:</strong> ${airport.telephone || 'N/A'}<br>
             ${airport.website ? `<strong>Website:</strong> ${airport.website} <br>` : ''}
             ${airport.id ? `<a href="/airports/${airport.id}/detail" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
