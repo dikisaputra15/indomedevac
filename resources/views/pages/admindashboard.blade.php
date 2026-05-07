@@ -1205,7 +1205,10 @@
                 popupContent = `
                     <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
                     <strong>Classification:</strong> ${item.category || 'N/A'}<br>
-                    <strong>Address:</strong> ${item.address || 'N/A'}<br>
+                    <strong>Address:</strong>
+                        ${item.address || 'N/A'}
+                        ${item.city_name ? ', ' + item.city_name : ''}
+                        ${item.province_name ? ', ' + item.province_name : ''}, Indonesia <br>
                     ${item.website ? `<strong>Website:</strong> <a href='${item.website}' target='__blank'>${item.website}</a><br>` : ''}
                 `;
             } else if (item.name) {
@@ -1215,7 +1218,10 @@
                     <h5 style="border-bottom:1px solid #cccccc;">${itemName}</h5>
                     <strong>Global Classification:</strong> ${item.facility_category || 'N/A'}<br>
                     <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
-                    <strong>Address:</strong> ${item.address || 'N/A'}<br>
+                    <strong>Address:</strong>
+                        ${item.address || 'N/A'}
+                        ${item.city ? ', ' + item.city : ''}
+                        ${item.provinces_region ? ', ' + item.provinces_region : ''}, Indonesia <br>
                     <strong>Coords:</strong> ${item.latitude}, ${item.longitude}<br>
                     <strong>Province:</strong> ${item.provinces_region || 'N/A'}<br>
                 `;
