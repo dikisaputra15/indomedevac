@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Airport;
 use App\Models\Hospital;
+use App\Models\Police;
 use App\Models\Provincesregion;
 use App\Models\City;
 use Illuminate\Support\Facades\DB;
@@ -211,9 +212,14 @@ class AirportsController extends Controller
             ->orderBy('distance')
             ->get();
 
-        $radius_km = 500; // Radius lingkaran untuk ditampilkan di peta
+        $nearbyPolices = Police::selectRaw("*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ))) AS distance", [$airport->latitude, $airport->longitude, $airport->latitude])
+            ->having('distance', '<=', 500)
+            ->orderBy('distance')
+            ->get();
 
-        return view('pages.airports.showdetailemergency', compact('airport', 'nearbyAirports', 'nearbyHospitals', 'radius_km', 'hospital'));
+        $radius_km = 100; // Radius lingkaran untuk ditampilkan di peta
+
+        return view('pages.airports.showdetailemergency', compact('airport', 'nearbyAirports', 'nearbyHospitals', 'radius_km', 'hospital', 'nearbyPolices'));
     }
 
     public function showairlinesdestination($id)
