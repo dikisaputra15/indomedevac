@@ -376,6 +376,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -465,6 +466,12 @@
                 });
 
                 const name = item.airport_name || 'N/A';
+                const jsName = name
+                        .replace(/\\/g, '\\\\')
+                        .replace(/'/g, "\\'")
+                        .replace(/"/g, '\\"')
+                        .replace(/\n/g, ' ')
+                        .replace(/\r/g, ' ');
                 const detailUrl = `/airports/${item.id}/detail`;
                 const distance = item.distance ? `<br><strong>Distance:</strong> ${item.distance.toFixed(2)} km` : '';
 
@@ -472,7 +479,7 @@
                     .bindPopup(`
                         <b><a href="${detailUrl}">${name}</a></b> (Airport)<br>
                         ${distance}<br>
-                        <button class="btn btn-sm btn-primary mt-2" onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
+                        <button class="btn btn-sm btn-primary mt-2" onclick="getDirection(${item.latitude}, ${item.longitude}, '${jsName}')">
                             Get Direction
                         </button>
                     `);
@@ -489,61 +496,128 @@
         }
 
         // === Get Direction Function ===
-        window.getDirection = function(lat, lng, name) {
-            if (routingControl) {
-                map.removeControl(routingControl);
+       window.getDirection = function(lat, lng, name) {
+
+    if (routingControl) {
+        map.removeControl(routingControl);
+    }
+
+    // Loading alert
+    Swal.fire({
+        title: 'Finding Route...',
+        text: `Searching route to ${name}`,
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(airportData.latitude, airportData.longitude),
+            L.latLng(lat, lng)
+        ],
+        routeWhileDragging: true,
+        show: true,
+
+        createMarker: function(i, wp, nWps) {
+
+            if (i === 0) {
+                return L.marker(wp.latLng, {
+                    icon: mainAirportIcon
+                }).bindPopup(`
+                    <b>${airportData.name}</b><br>
+                    Start Point
+                `);
             }
 
-            routingControl = L.Routing.control({
-                waypoints: [
-                    L.latLng(airportData.latitude, airportData.longitude), // asal
-                    L.latLng(lat, lng) // tujuan
-                ],
-                routeWhileDragging: true,
-                show: true,
-                createMarker: function(i, wp, nWps) {
-                    if (i === 0) {
-                        return L.marker(wp.latLng, { icon: mainAirportIcon }) // pakai icon bandara
-                            .bindPopup(`<b>${airportData.name}</b><br>Start Point`);
-                    } else if (i === nWps - 1) {
-                        return L.marker(wp.latLng)
-                            .bindPopup(`<b>${name}</b><br>Destination`);
-                    }
-                }
-            }).addTo(map);
+            else if (i === nWps - 1) {
+                return L.marker(wp.latLng)
+                    .bindPopup(`
+                        <b>${name}</b><br>
+                        Destination
+                    `);
+            }
+        }
 
-            // sembunyikan panel bawaan saat pertama kali
+    }).addTo(map);
+
+    // ✅ Route ditemukan
+    routingControl.on('routesfound', function(e) {
+
+        Swal.close();
+
+        const routes = e.routes;
+
+        if (!routes || routes.length === 0) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Route Not Found',
+                text: `No available route to ${name}`
+            });
+
+            return;
+        }
+
+        // sembunyikan panel routing
+        const panel = document.querySelector('.leaflet-routing-container');
+
+        if (panel) {
+            panel.style.display = 'none';
+        }
+    });
+
+    // ❌ Routing error
+    routingControl.on('routingerror', function(e) {
+
+        Swal.close();
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Routing Error',
+            text: `Route to ${name} is not available`
+        });
+
+        console.log(e);
+    });
+
+    // tombol toggle panel
+    if (!document.getElementById('toggle-route-panel')) {
+
+        const toggleBtn = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+
+        toggleBtn.id = 'toggle-route-panel';
+
+        toggleBtn.innerHTML =
+            '<a href="#" title="Show/Hide Route Panel"><i class="fa fa-route"></i></a>';
+
+        toggleBtn.style.alignItems = 'center';
+        toggleBtn.style.justifyContent = 'center';
+
+        toggleBtn.onclick = function(e) {
+
+            e.preventDefault();
+
             const panel = document.querySelector('.leaflet-routing-container');
-            if (panel) {
+
+            if (!panel) return;
+
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+            } else {
                 panel.style.display = 'none';
-            }
-
-            // buat tombol toggle kalau belum ada
-            if (!document.getElementById('toggle-route-panel')) {
-                const toggleBtn = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-                toggleBtn.id = 'toggle-route-panel';
-                toggleBtn.innerHTML = '<a href="#" title="Show/Hide Route Panel"><i class="fa fa-route"></i></a>';
-                toggleBtn.style.alignItems = 'center';
-                toggleBtn.style.justifyContent = 'center';
-
-                toggleBtn.onclick = function(e) {
-                    e.preventDefault();
-                    if (panel.style.display === 'none') {
-                        panel.style.display = 'block';
-                    } else {
-                        panel.style.display = 'none';
-                    }
-                };
-
-                // pasang tombol di pojok kanan atas map
-                map.getContainer().appendChild(toggleBtn);
-                toggleBtn.style.position = 'absolute';
-                toggleBtn.style.top = '60px';
-                toggleBtn.style.right = '10px';
-                toggleBtn.style.zIndex = 1000;
             }
         };
 
+        map.getContainer().appendChild(toggleBtn);
+
+        toggleBtn.style.position = 'absolute';
+        toggleBtn.style.top = '60px';
+        toggleBtn.style.right = '10px';
+        toggleBtn.style.zIndex = 1000;
+    }
+};
 
         // Eksekusi utama
         initializeMap();

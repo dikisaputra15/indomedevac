@@ -1038,6 +1038,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -1195,18 +1196,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === ROUTING ===
     window.getDirection = function(lat, lng) {
-        if (routingControl) map.removeControl(routingControl);
-        routingControl = L.Routing.control({
-            waypoints: [
-                L.latLng(hospitalData.latitude, hospitalData.longitude),
-                L.latLng(lat, lng)
-            ],
-            routeWhileDragging: false, addWaypoints: false,
-            collapsible: true, show: false,
-            createMarker: () => null,
-            lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
-        }).addTo(map);
-    };
+    if (routingControl) map.removeControl(routingControl);
+
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(hospitalData.latitude, hospitalData.longitude),
+            L.latLng(lat, lng)
+        ],
+        routeWhileDragging: false,
+        addWaypoints: false,
+        collapsible: true,
+        show: false,
+        createMarker: () => null,
+        lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
+    }).addTo(map);
+
+    // ✅ Kalau route berhasil
+    routingControl.on('routesfound', function(e) {
+        const routes = e.routes;
+        if (!routes || routes.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Route Not Found',
+                text: 'No route could be found to this destination.'
+            });
+        }
+    });
+
+    // ❌ Kalau error (ini yang paling penting)
+    routingControl.on('routingerror', function(e) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Routing Error',
+            text: 'Route is not available.'
+        });
+    });
+};
 
     // === FIT MAP ===
     function fitMapToBounds() {

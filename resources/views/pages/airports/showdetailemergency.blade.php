@@ -6,8 +6,9 @@
 @push('styles')
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
     #map {
         height: 600px;
@@ -1043,7 +1044,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -1164,6 +1165,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
             const name = item.name || item.airport_name || item.name_police || 'N/A';
+            const jsName = name
+                        .replace(/\\/g, '\\\\')
+                        .replace(/'/g, "\\'")
+                        .replace(/"/g, '\\"')
+                        .replace(/\n/g, ' ')
+                        .replace(/\r/g, ' ');
             const level = item.facility_level || item.category || item.category || 'N/A';
             const distanceText = `<strong>Distance:</strong> ${distance.toFixed(2)} km`;
 
@@ -1182,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${detailUrl}" target="_blank">${name}</a><br>
                     ${level}<br>${distanceText}<br>
                     <button class="btn btn-sm btn-primary mt-2"
-                        onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
+                         onclick="getDirection(${item.latitude}, ${item.longitude}, '${jsName}')">
                         Get Direction
                     </button>
                 </div>
@@ -1204,27 +1211,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // === Routing ===
-    window.getDirection = function(lat, lng, name) {
-        if (routingControl) map.removeControl(routingControl);
+   window.getDirection = function(lat, lng, name) {
+    if (routingControl) map.removeControl(routingControl);
 
-        routingControl = L.Routing.control({
-            waypoints: [
-                L.latLng(airportData.latitude, airportData.longitude),
-                L.latLng(lat, lng)
-            ],
-            routeWhileDragging: false,
-            addWaypoints: false,
-            collapsible: true,
-            show: false,
-            createMarker: () => null,
-            lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
-        }).addTo(map);
+    // ✅ Loading dulu
+    Swal.fire({
+        title: 'Finding Route...',
+        text: `Searching route to ${name}`,
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
-        routingControl.on('routesfound', () => {
-            if (mainAirportMarker?.bringToFront) mainAirportMarker.bringToFront();
-            nearbyMarkersGroup.eachLayer(marker => marker.bringToFront && marker.bringToFront());
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(airportData.latitude, airportData.longitude),
+            L.latLng(lat, lng)
+        ],
+        routeWhileDragging: false,
+        addWaypoints: false,
+        collapsible: true,
+        show: false,
+        createMarker: () => null,
+        lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
+    }).addTo(map);
+
+    // ✅ Kalau route ditemukan
+    routingControl.on('routesfound', function(e) {
+        Swal.close();
+
+        const routes = e.routes;
+
+        if (!routes || routes.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Route Not Found',
+                text: `No available route to ${name}`
+            });
+            return;
+        }
+
+        // Biar marker tetap di atas
+        if (mainAirportMarker?.bringToFront) mainAirportMarker.bringToFront();
+        nearbyMarkersGroup.eachLayer(marker => {
+            if (marker.bringToFront) marker.bringToFront();
         });
-    };
+    });
+
+    // ❌ Kalau error (ini penting)
+    routingControl.on('routingerror', function(e) {
+        Swal.close();
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Routing Error',
+            text: `Route to ${name} is not available`
+        });
+    });
+};
 
     function fitMapToBounds() {
         const bounds = L.featureGroup([mainAirportMarker, nearbyMarkersGroup, radiusCircle]).getBounds();
