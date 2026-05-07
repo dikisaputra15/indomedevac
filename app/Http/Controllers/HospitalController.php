@@ -121,14 +121,14 @@ class HospitalController extends Controller
 
         $latitude = $hospital->latitude;
         $longitude = $hospital->longitude;
-        $radius_km = 500; // Your desired radius
+        $radius_km = 100; // Your desired radius
 
         // Fetch nearby hospitals (excluding the current one)
         $nearbyHospitals = Hospital::selectRaw("
             id, name, icon, latitude, longitude, facility_level, facility_category,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
-        ->having('distance', '<=', $radius_km)
+        ->having('distance', '<=', 500)
         ->where('id', '!=', $hospital->id) // Exclude the current hospital
         ->orderBy('distance')
         ->get();
@@ -138,7 +138,7 @@ class HospitalController extends Controller
             id, airport_name AS name, icon, latitude, longitude, category,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
-        ->having('distance', '<=', $radius_km)
+        ->having('distance', '<=', 500)
         ->orderBy('distance')
         ->get();
 
@@ -153,7 +153,7 @@ class HospitalController extends Controller
                 * sin( radians( latitude ) )
             )) AS distance
         ", [$latitude, $longitude, $latitude])
-        ->having('distance', '<=', $radius_km)
+        ->having('distance', '<=', 500)
         ->orderBy('distance')
         ->get();
 

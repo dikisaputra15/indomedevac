@@ -1273,7 +1273,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="all">Show All</option>
                     <option value="hospital">Hospitals</option>
                     <option value="airport">Airports</option>
-                    <option value="police">Police</option>
                 </select>
 
                 <div id="hospitalFilter" style="display:none;">
