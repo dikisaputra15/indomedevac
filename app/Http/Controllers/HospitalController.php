@@ -16,7 +16,7 @@ class HospitalController extends Controller
      */
     public function index(Request $request)
     {
-        $hospitalNames = DB::table('hospitals')->distinct()->pluck('name')->filter()->sort()->values();
+        $hospitalNames = DB::table('hospitals')->where('hospital_status', true)->distinct()->pluck('name')->filter()->sort()->values();
         $hospitalCategories = DB::table('hospitals')->distinct()->pluck('facility_level')->filter()->sort()->values();
         $hospitalLocations = DB::table('hospitals')->distinct()->pluck('address')->filter()->sort()->values();
 
@@ -128,6 +128,7 @@ class HospitalController extends Controller
             id, name, icon, latitude, longitude, facility_level, facility_category,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
+        ->where('hospital_status', true)
         ->having('distance', '<=', 500)
         ->where('id', '!=', $hospital->id) // Exclude the current hospital
         ->orderBy('distance')
@@ -138,6 +139,7 @@ class HospitalController extends Controller
             id, airport_name AS name, icon, latitude, longitude, category,
             ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance
         ", [$latitude, $longitude, $latitude])
+        ->where('airport_status', true)
         ->having('distance', '<=', 500)
         ->orderBy('distance')
         ->get();
@@ -153,6 +155,7 @@ class HospitalController extends Controller
                 * sin( radians( latitude ) )
             )) AS distance
         ", [$latitude, $longitude, $latitude])
+        ->where('police_status', true)
         ->having('distance', '<=', 500)
         ->orderBy('distance')
         ->get();

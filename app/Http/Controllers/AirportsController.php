@@ -21,7 +21,7 @@ class AirportsController extends Controller
     {
         // Using `unique()` and `values()` on collections ensures distinct, sorted results.
         // `filter()` removes null/empty values.
-        $airportNames = Airport::distinct()->pluck('airport_name')->filter()->sort()->values();
+        $airportNames = Airport::where('airport_status', true)->distinct()->pluck('airport_name')->filter()->sort()->values();
         $airportCategories = Airport::distinct()->pluck('category')->filter()->sort()->values();
         $airportLocations = Airport::distinct()->pluck('address')->filter()->sort()->values();
 
@@ -208,6 +208,7 @@ class AirportsController extends Controller
 
           // --- Ambil Bandara Terdekat ---
         $nearbyAirports = Airport::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$airport->latitude, $airport->longitude, $airport->latitude])
+            ->where('airport_status', true)
             ->having('distance', '<=', 500) // Filter dalam radius 100 km (sesuaikan)
             ->where('id', '!=', $airport->id) // Jangan sertakan bandara utama itu sendiri
             ->orderBy('distance')
@@ -215,11 +216,13 @@ class AirportsController extends Controller
 
         // --- Ambil Rumah Sakit Terdekat ---
         $nearbyHospitals = Hospital::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$airport->latitude, $airport->longitude, $airport->latitude])
+            ->where('hospital_status', true)
             ->having('distance', '<=', 500) // Filter dalam radius 100 km (sesuaikan)
             ->orderBy('distance')
             ->get();
 
         $nearbyPolices = Police::selectRaw("*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ))) AS distance", [$airport->latitude, $airport->longitude, $airport->latitude])
+            ->where('police_status', true)
             ->having('distance', '<=', 500)
             ->orderBy('distance')
             ->get();
