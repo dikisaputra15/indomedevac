@@ -115,6 +115,18 @@
                     <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Polsek</label>
                 </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Mobil Brigade (Brimob)" data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}">
+                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                    <label class="form-check-label">Police Mobil Brigade (Brimob)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Bomb Squad (Gegana)" data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}">
+                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                    <label class="form-check-label">Police Bomb Squad (Gegana)</label>
+                </div>
             </div>
         </div>
 

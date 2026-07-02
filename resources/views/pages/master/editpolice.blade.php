@@ -164,6 +164,28 @@
                     <label>Polsek</label>
                 </div>
 
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Police Mobil Brigade (Brimob)' ? 'selected' : '' }}">
+                    <input class="form-check-input category-radio"
+                        type="radio"
+                        name="category"
+                        value="Police Mobil Brigade (Brimob)"
+                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        {{ $police->category == 'Police Mobil Brigade (Brimob)' ? 'checked' : '' }}>
+                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <label>Police Mobil Brigade (Brimob)</label>
+                </div>
+
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Police Bomb Squad (Gegana)' ? 'selected' : '' }}">
+                    <input class="form-check-input category-radio"
+                        type="radio"
+                        name="category"
+                        value="Police Bomb Squad (Gegana)"
+                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        {{ $police->category == 'Police Bomb Squad (Gegana)' ? 'checked' : '' }}>
+                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <label>Police Bomb Squad (Gegana)</label>
+                </div>
+
             </div>
         </div>
 
