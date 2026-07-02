@@ -93,38 +93,38 @@
 
                 <input type="hidden" name="icon" id="icon">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Kepolisian Negara Republik Indonesia (Mabes Polri)" data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}">
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Kepolisian Negara Republik Indonesia (Mabes Polri)" data-icon="{{ asset('images/Layer1.png') }}">
+                    <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Kepolisian Negara Republik Indonesia (Mabes Polri)</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Polda" data-icon="{{ asset('images/dot-red.png') }}">
-                    <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Polda" data-icon="{{ asset('images/Layer2.png') }}">
+                    <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Polda</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Polres" data-icon="{{ asset('images/dot-orange-ppc.png') }}">
-                    <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Polres" data-icon="{{ asset('images/Layer3.png') }}">
+                    <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Polres</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Polsek" data-icon="{{ asset('images/dot-green.png') }}">
-                    <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Polsek" data-icon="{{ asset('images/Layer4.png') }}">
+                    <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Polsek</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Mobil Brigade (Brimob)" data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}">
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Mobil Brigade (Brimob)" data-icon="{{ asset('images/Brimob.png') }}">
+                    <img src="{{ asset('images/Brimob.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Police Mobil Brigade (Brimob)</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Bomb Squad (Gegana)" data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}">
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Bomb Squad (Gegana)" data-icon="{{ asset('images/Gegana.png') }}">
+                    <img src="{{ asset('images/Gegana.png') }}" style="width:12px; height:12px;">
                     <label class="form-check-label">Police Bomb Squad (Gegana)</label>
                 </div>
             </div>

@@ -125,9 +125,9 @@
                         type="radio"
                         name="category"
                         value="Kepolisian Negara Republik Indonesia (Mabes Polri)"
-                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        data-icon="{{ asset('images/Layer1.png') }}"
                         {{ $police->category == 'Kepolisian Negara Republik Indonesia (Mabes Polri)' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <img src="{{ asset('images/Layer1.png') }}" width="16">
                     <label>Kepolisian Negara Republik Indonesia (Mabes Polri)</label>
                 </div>
 
@@ -136,9 +136,9 @@
                         type="radio"
                         name="category"
                         value="Polda"
-                        data-icon="{{ asset('images/dot-red.png') }}"
+                        data-icon="{{ asset('images/Layer2.png') }}"
                         {{ $police->category == 'Polda' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-red.png') }}" width="16">
+                    <img src="{{ asset('images/Layer2.png') }}" width="16">
                     <label>Polda</label>
                 </div>
 
@@ -147,9 +147,9 @@
                         type="radio"
                         name="category"
                         value="Polres"
-                        data-icon="{{ asset('images/dot-orange-ppc.png') }}"
+                        data-icon="{{ asset('images/Layer3.png') }}"
                         {{ $police->category == 'Polres' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-orange-ppc.png') }}" width="16">
+                    <img src="{{ asset('images/Layer3.png') }}" width="16">
                     <label>Polres</label>
                 </div>
 
@@ -158,9 +158,9 @@
                         type="radio"
                         name="category"
                         value="Polsek"
-                        data-icon="{{ asset('images/dot-green.png') }}"
+                        data-icon="{{ asset('images/Layer4.png') }}"
                         {{ $police->category == 'Polsek' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-green.png') }}" width="16">
+                    <img src="{{ asset('images/Layer4.png') }}" width="16">
                     <label>Polsek</label>
                 </div>
 
@@ -169,9 +169,9 @@
                         type="radio"
                         name="category"
                         value="Police Mobil Brigade (Brimob)"
-                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        data-icon="{{ asset('images/Brimob.png') }}"
                         {{ $police->category == 'Police Mobil Brigade (Brimob)' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <img src="{{ asset('images/Brimob.png') }}" width="16">
                     <label>Police Mobil Brigade (Brimob)</label>
                 </div>
 
@@ -180,9 +180,9 @@
                         type="radio"
                         name="category"
                         value="Police Bomb Squad (Gegana)"
-                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        data-icon="{{ asset('images/Gegana.png') }}"
                         {{ $police->category == 'Police Bomb Squad (Gegana)' ? 'checked' : '' }}>
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <img src="{{ asset('images/Gegana.png') }}" width="16">
                     <label>Police Bomb Squad (Gegana)</label>
                 </div>
 
