@@ -208,10 +208,10 @@
                 <small>Air Charter</small>
             </a>
 
-            <!-- <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
+            <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
                 <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
                 <small>Police</small>
-            </a> -->
+            </a>
 
             <!-- Button 7 -->
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
@@ -348,6 +348,43 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+
+                     <div class="class-column" style="margin-left: 50px;">
+                        <div class="class-header class-airport-category">POLICE CLASSIFICATION</div>
+
+                        <div class="airport-list">
+                            <div class="hospital-row" style="flex-direction: column;">
+
+                                <!-- Baris Atas (3) -->
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                                        <small>Kepolisian Negara Republik Indonesia (Mabes Polri)</small>
+                                    </button>
+
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                                        <small>Polda</small>
+                                    </button>
+                                </div>
+
+                                <!-- Baris Bawah (2) -->
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                                        <small>Polres</small>
+                                    </button>
+
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                                        <small>Polsek</small>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                   </div>
                 <div class="card-body p-0">
@@ -1053,7 +1090,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nearbyHospitals = @json($nearbyHospitals);
     const nearbyAirports = @json($nearbyAirports);
     const nearbyPolices = @json($nearbyPolices);
-    let radiusKm = {{ $radius_km }}; // default radius
+    const nearbyEmbassy = @json($nearbyEmbassy);
+    let radiusKm = 100; // default radius
 
     let map, mainMarker, radiusCircle, routingControl = null;
     let nearbyMarkersGroup = L.featureGroup();
@@ -1063,6 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const DEFAULT_AIRPORT_ICON_URL  = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
     const DEFAULT_MAIN_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
     const DEFAULT_POLICE_ICON_URL = 'https://png.pngtree.com/png-vector/20221211/ourmid/pngtree-minimal-location-map-icon-logo-symbol-vector-design-transparent-background-png-image_6520892.png';
+    const DEFAULT_EMBASSY_ICON_URL = '/images/embassy-icon-new.png';
 
     const mainHospitalIcon = new L.Icon({
         iconUrl: DEFAULT_MAIN_HOSPITAL_ICON_URL,
@@ -1136,7 +1175,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
-                // Filter police
+            // Filter police
            if (type === 'Police' && filters.policeCategories?.length > 0) {
                 const categories = (item.category || '')
                     .split(',')
@@ -1147,14 +1186,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
+            const isPolice = type === 'Police';
+
             const icon = L.icon({
-                iconUrl: item.icon || defaultIconUrl, iconSize: [24, 24],
-                iconAnchor: [12, 24], popupAnchor: [0, -20]
+                iconUrl: item.icon || defaultIconUrl,
+                iconSize: isPolice ? [12, 12] : [24, 24], // kecilkan police
+                iconAnchor: isPolice ? [15, 30] : [12, 24],
+                popupAnchor: isPolice ? [0, -25] : [0, -20]
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
-            const name = item.name || item.airport_name || 'N/A';
-            const level = item.facility_level || item.category || 'N/A';
+            const name = item.name || item.airport_name || item.name_embassiees || 'N/A';
+            const level = item.facility_level || item.category || '';
 
             let url = '#';
 
@@ -1164,6 +1207,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 url = `/hospitals/${item.id}`;
             } else if (type === 'Police') {
                 url = `/police/${item.id}/detail`;
+            } else if (type === 'Embassy') {
+                url = `/embassiees/${item.id}/detail`;
             }
 
             marker.bindPopup(`
@@ -1196,42 +1241,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === ROUTING ===
     window.getDirection = function(lat, lng) {
-    if (routingControl) map.removeControl(routingControl);
-
-    routingControl = L.Routing.control({
-        waypoints: [
-            L.latLng(hospitalData.latitude, hospitalData.longitude),
-            L.latLng(lat, lng)
-        ],
-        routeWhileDragging: false,
-        addWaypoints: false,
-        collapsible: true,
-        show: false,
-        createMarker: () => null,
-        lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
-    }).addTo(map);
-
-    // ✅ Kalau route berhasil
-    routingControl.on('routesfound', function(e) {
-        const routes = e.routes;
-        if (!routes || routes.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Route Not Found',
-                text: 'No route could be found to this destination.'
-            });
-        }
-    });
-
-    // ❌ Kalau error (ini yang paling penting)
-    routingControl.on('routingerror', function(e) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Routing Error',
-            text: 'Route is not available.'
-        });
-    });
-};
+        if (routingControl) map.removeControl(routingControl);
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(hospitalData.latitude, hospitalData.longitude),
+                L.latLng(lat, lng)
+            ],
+            routeWhileDragging: false, addWaypoints: false,
+            collapsible: true, show: false,
+            createMarker: () => null,
+            lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
+        }).addTo(map);
+    };
 
     // === FIT MAP ===
     function fitMapToBounds() {
@@ -1250,13 +1271,44 @@ document.addEventListener('DOMContentLoaded', () => {
             addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
         } else if (filterType === 'airport') {
             addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
-        } else if (filterType === 'police') {
+        }  else if (filterType === 'police') {
             addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+        } else if (filterType === 'embassy') {
+            addNearbyMarkers(
+                nearbyEmbassy,
+                DEFAULT_EMBASSY_ICON_URL,
+                'Embassy',
+                filters
+            );
         }
-          else {
-            addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
-            addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
-            addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+        else {
+             addNearbyMarkers(
+                nearbyHospitals,
+                DEFAULT_HOSPITAL_ICON_URL,
+                'Hospital',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyAirports,
+                DEFAULT_AIRPORT_ICON_URL,
+                'Airport',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyPolices,
+                DEFAULT_POLICE_ICON_URL,
+                'Police',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyEmbassy,
+                DEFAULT_EMBASSY_ICON_URL,
+                'Embassy',
+                filters
+            );
         }
 
         fitMapToBounds();
@@ -1281,7 +1333,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Hospitals</option>
-                    <option value="airport">Airports</option>
+                    <option value="airport">Aviation</option>
+                    <option value="police">Police</option>
+                    <option value="embassy">Embassy</option>
                 </select>
 
                 <div id="hospitalFilter" style="display:none;">
@@ -1338,7 +1392,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const selectedHospitalLevels = Array.from(container.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
                 const selectedAirportClasses = Array.from(container.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
                 const selectedPoliceCategories = Array.from(container.querySelectorAll('input[name="policeCategory"]:checked')).map(el => el.value);
-                updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
+                updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
             }
 
             filterSelect.addEventListener('change', () => {
@@ -1359,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hospitalDiv.style.display = 'none';
                 airportDiv.style.display = 'none';
                 policeDiv.style.display = 'none';
-                radiusKm = {{ $radius_km }};
+                radiusKm = 100;
                 radiusSlider.value = radiusKm;
                 radiusLabel.textContent = radiusKm;
                 refresh();
@@ -1374,13 +1428,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedHospitalLevels = Array.from(document.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
         const selectedAirportClasses = Array.from(document.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
         const selectedPoliceCategories = Array.from(document.querySelectorAll('input[name="policeCategory"]:checked')).map(el => el.value);
-        updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses);
+        updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
     }
 
     // === JALANKAN ===
     initializeMap();
     addMainHospitalAndCircle();
-    updateMarkers('all', [], []);
+    updateMarkers('all', [], [], []);
     map.addControl(new FilterControl());
 });
 </script>

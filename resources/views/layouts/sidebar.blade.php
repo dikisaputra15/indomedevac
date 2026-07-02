@@ -62,12 +62,12 @@
                   <p>Embassy</p>
                 </a>
               </li>
-              <!-- <li class="nav-item">
+              <li class="nav-item">
                 <a href="{{ url('policedata') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Police</p>
                 </a>
-              </li> -->
+              </li>
                <li class="nav-item">
                 <a href="{{ url('aircharterdata') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -117,14 +117,14 @@
             </a>
           </li>
 
-           <!-- <li class="nav-item {{ request()->is('police') ? 'menu-open' : '' }}">
+           <li class="nav-item {{ request()->is('police') ? 'menu-open' : '' }}">
             <a href="{{ url('police') }}" class="nav-link">
             <i class="bi bi-person-badge"></i>
               <p>
                 Police
               </p>
             </a>
-          </li> -->
+          </li>
 
         </ul>
       </nav>

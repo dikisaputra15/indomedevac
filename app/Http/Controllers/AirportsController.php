@@ -8,6 +8,7 @@ use App\Models\Hospital;
 use App\Models\Police;
 use App\Models\Provincesregion;
 use App\Models\City;
+use App\Models\Embassiees;
 use Illuminate\Support\Facades\DB;
 use Exception; // Import Exception for better error handling
 
@@ -157,7 +158,33 @@ class AirportsController extends Controller
 
         // Execute the query and return JSON response
         $airports = $query->get();
-        return response()->json($airports);
+        $categoryCounts = [
+            'International' => 0,
+            'Domestic' => 0,
+            'Military' => 0,
+            'Regional' => 0,
+            'Private' => 0,
+        ];
+
+        foreach ($airports as $airport) {
+
+            if (!$airport->category) {
+                continue;
+            }
+
+            $categories = array_map('trim', explode(',', $airport->category));
+
+            foreach ($categories as $cat) {
+                if (isset($categoryCounts[$cat])) {
+                    $categoryCounts[$cat]++;
+                }
+            }
+        }
+
+        return response()->json([
+            'airports' => $airports,
+            'categoryCounts' => $categoryCounts
+        ]);
     }
 
     // Unchanged methods for other functionalities
@@ -227,9 +254,25 @@ class AirportsController extends Controller
             ->orderBy('distance')
             ->get();
 
-        $radius_km = 100; // Radius lingkaran untuk ditampilkan di peta
+         // === NEARBY EMBASSY ===
+        $nearbyEmbassy = Embassiees::selectRaw("
+            id, name_embassiees AS name, latitude, longitude, location, telephone, fax, email, website,
+            ( 6371 * acos(
+                cos( radians(?) )
+                * cos( radians( latitude ) )
+                * cos( radians( longitude ) - radians(?) )
+                + sin( radians(?) )
+                * sin( radians( latitude ) )
+            )) AS distance
+        ", [$airport->latitude, $airport->longitude, $airport->latitude])
+        ->where('embassy_status', true)
+        ->having('distance', '<=', 500)
+        ->orderBy('distance')
+        ->get();
 
-        return view('pages.airports.showdetailemergency', compact('airport', 'nearbyAirports', 'nearbyHospitals', 'radius_km', 'hospital', 'nearbyPolices'));
+        $radius_km = 500; // Radius lingkaran untuk ditampilkan di peta
+
+        return view('pages.airports.showdetailemergency', compact('airport', 'nearbyAirports', 'nearbyHospitals', 'radius_km', 'hospital', 'nearbyPolices', 'nearbyEmbassy'));
     }
 
     public function showairlinesdestination($id)

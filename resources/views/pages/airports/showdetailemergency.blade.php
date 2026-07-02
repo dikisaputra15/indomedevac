@@ -210,10 +210,10 @@
                 <small>Air Charter</small>
             </a>
 
-            <!-- <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
+            <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
                 <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
                 <small>Police</small>
-            </a> -->
+            </a>
 
             <!-- Button 7 -->
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
@@ -350,6 +350,43 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+
+                    <div class="class-column" style="margin-left: 50px;">
+                        <div class="class-header class-airport-category">POLICE CLASSIFICATION</div>
+
+                        <div class="airport-list">
+                            <div class="hospital-row" style="flex-direction: column;">
+
+                                <!-- Baris Atas (3) -->
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                                        <small>Kepolisian Negara Republik Indonesia (Mabes Polri)</small>
+                                    </button>
+
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                                        <small>Polda</small>
+                                    </button>
+                                </div>
+
+                                <!-- Baris Bawah (2) -->
+                                <div class="hospital-item">
+                                    <button class="btn p-1">
+                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                                        <small>Polres</small>
+                                    </button>
+
+                                    <button class="btn p-1">
+                                        <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                                        <small>Polsek</small>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                   </div>
 
@@ -1063,7 +1100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nearbyAirports = @json($nearbyAirports);
     const nearbyHospitals = @json($nearbyHospitals);
     const nearbyPolices = @json($nearbyPolices);
-    let radiusKm = {{ $radius_km }};
+    const nearbyEmbassy = @json($nearbyEmbassy);
+    let radiusKm = 100;
 
     let map, mainAirportMarker, radiusCircle, routingControl = null;
     const nearbyMarkersGroup = L.featureGroup();
@@ -1072,6 +1110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const DEFAULT_HOSPITAL_ICON_URL     = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
     const DEFAULT_AIRPORT_ICON_URL      = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
     const DEFAULT_POLICE_ICON_URL = 'https://png.pngtree.com/png-vector/20221211/ourmid/pngtree-minimal-location-map-icon-logo-symbol-vector-design-transparent-background-png-image_6520892.png';
+    const DEFAULT_EMBASSY_ICON_URL = '/images/embassy-icon-new.png';
 
     const mainAirportIcon = new L.Icon({
         iconUrl: DEFAULT_MAIN_AIRPORT_ICON_URL,
@@ -1147,7 +1186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!airportCategories.some(cat => allowed.includes(cat))) return;
             }
 
-             // Filter police
+            // Filter police
            if (type === 'Police' && filters.policeCategories?.length > 0) {
                 const categories = (item.category || '')
                     .split(',')
@@ -1158,21 +1197,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
+            const isPolice = type === 'Police';
+
             const icon = L.icon({
                 iconUrl: item.icon || defaultIconUrl,
-                iconSize: [24, 24], iconAnchor: [12, 24], popupAnchor: [0, -20]
+                iconSize: isPolice ? [12, 12] : [24, 24], // kecilkan police
+                iconAnchor: isPolice ? [15, 30] : [12, 24],
+                popupAnchor: isPolice ? [0, -25] : [0, -20]
             });
 
             const marker = L.marker([item.latitude, item.longitude], { icon });
             const name = item.name || item.airport_name || item.name_police || 'N/A';
-            const jsName = name
-                        .replace(/\\/g, '\\\\')
-                        .replace(/'/g, "\\'")
-                        .replace(/"/g, '\\"')
-                        .replace(/\n/g, ' ')
-                        .replace(/\r/g, ' ');
             const level = item.facility_level || item.category || item.category || 'N/A';
             const distanceText = `<strong>Distance:</strong> ${distance.toFixed(2)} km`;
+
 
             let detailUrl = '#';
 
@@ -1182,6 +1220,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 detailUrl = `/hospitals/${item.id}`;
             } else if (type === 'Police') {
                 detailUrl = `/police/${item.id}/detail`;
+            } else if (type === 'Embassy') {
+                detailUrl = `/embassiees/${item.id}/detail`;
             }
 
             marker.bindPopup(`
@@ -1189,7 +1229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${detailUrl}" target="_blank">${name}</a><br>
                     ${level}<br>${distanceText}<br>
                     <button class="btn btn-sm btn-primary mt-2"
-                         onclick="getDirection(${item.latitude}, ${item.longitude}, '${jsName}')">
+                        onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
                         Get Direction
                     </button>
                 </div>
@@ -1211,77 +1251,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // === Routing ===
-   window.getDirection = function(lat, lng, name) {
-    if (routingControl) map.removeControl(routingControl);
+    window.getDirection = function(lat, lng, name) {
+        if (routingControl) map.removeControl(routingControl);
 
-    // ✅ Loading dulu
-    Swal.fire({
-        title: 'Finding Route...',
-        text: `Searching route to ${name}`,
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(airportData.latitude, airportData.longitude),
+                L.latLng(lat, lng)
+            ],
+            routeWhileDragging: false,
+            addWaypoints: false,
+            collapsible: true,
+            show: false,
+            createMarker: () => null,
+            lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
+        }).addTo(map);
 
-    routingControl = L.Routing.control({
-        waypoints: [
-            L.latLng(airportData.latitude, airportData.longitude),
-            L.latLng(lat, lng)
-        ],
-        routeWhileDragging: false,
-        addWaypoints: false,
-        collapsible: true,
-        show: false,
-        createMarker: () => null,
-        lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
-    }).addTo(map);
-
-    // ✅ Kalau route ditemukan
-    routingControl.on('routesfound', function(e) {
-        Swal.close();
-
-        const routes = e.routes;
-
-        if (!routes || routes.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Route Not Found',
-                text: `No available route to ${name}`
-            });
-            return;
-        }
-
-        // Biar marker tetap di atas
-        if (mainAirportMarker?.bringToFront) mainAirportMarker.bringToFront();
-        nearbyMarkersGroup.eachLayer(marker => {
-            if (marker.bringToFront) marker.bringToFront();
+        routingControl.on('routesfound', () => {
+            if (mainAirportMarker?.bringToFront) mainAirportMarker.bringToFront();
+            nearbyMarkersGroup.eachLayer(marker => marker.bringToFront && marker.bringToFront());
         });
-    });
-
-    // ❌ Kalau error (ini penting)
-    routingControl.on('routingerror', function(e) {
-        Swal.close();
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Routing Error',
-            text: `Route to ${name} is not available`
-        });
-    });
-};
+    };
 
     function fitMapToBounds() {
         const bounds = L.featureGroup([mainAirportMarker, nearbyMarkersGroup, radiusCircle]).getBounds();
         if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50] });
     }
 
-    function updateMarkers(filterType, hospitalLevels, airportClassifications, policeCategories) {
+    function updateMarkers(filterType, hospitalLevels, airportClassifications) {
         nearbyMarkersGroup.clearLayers();
         if (radiusCircle) map.removeLayer(radiusCircle);
         addMainAirportAndCircle();
 
-        const filters = { hospitalLevels, airportClassifications, policeCategories };
+        const filters = { hospitalLevels, airportClassifications };
 
         if (filterType === 'hospital') {
             addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
@@ -1289,11 +1291,42 @@ document.addEventListener('DOMContentLoaded', () => {
             addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
         } else if (filterType === 'police') {
             addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+        } else if (filterType === 'embassy') {
+            addNearbyMarkers(
+                nearbyEmbassy,
+                DEFAULT_EMBASSY_ICON_URL,
+                'Embassy',
+                filters
+            );
         }
-          else {
-            addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
-            addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
-            addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+        else {
+           addNearbyMarkers(
+                nearbyHospitals,
+                DEFAULT_HOSPITAL_ICON_URL,
+                'Hospital',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyAirports,
+                DEFAULT_AIRPORT_ICON_URL,
+                'Airport',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyPolices,
+                DEFAULT_POLICE_ICON_URL,
+                'Police',
+                filters
+            );
+
+            addNearbyMarkers(
+                nearbyEmbassy,
+                DEFAULT_EMBASSY_ICON_URL,
+                'Embassy',
+                filters
+            );
         }
 
         fitMapToBounds();
@@ -1317,7 +1350,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <select id="mapFilter" class="form-select form-select-sm mb-2">
                     <option value="all">Show All</option>
                     <option value="hospital">Hospitals</option>
-                    <option value="airport">Airports</option>
+                    <option value="airport">Aviations</option>
+                    <option value="police">Police</option>
+                    <option value="embassy">Embassy</option>
                 </select>
 
                 <div id="hospitalFilter" style="display:none;">
@@ -1370,7 +1405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initializeMap();
     addMainAirportAndCircle();
-    updateMarkers('all', [], []);
+    updateMarkers('all', [], [], []);
     map.addControl(new FilterRadiusControl());
 
     // === Event Binding ===
@@ -1401,8 +1436,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('mapFilter').value = 'all';
             document.getElementById('hospitalFilter').style.display = 'none';
             document.getElementById('airportFilter').style.display = 'none';
-            document.getElementById('policeFilter').style.display = 'none';
-            radiusKm = {{ $radius_km }};
+            radiusKm = 100;
             document.getElementById('radiusRange').value = radiusKm;
             document.getElementById('radiusLabel').textContent = radiusKm;
             refreshFilters();

@@ -152,10 +152,10 @@
                 <small>Air Charter</small>
             </a>
 
-            <!-- <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
+            <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
                 <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
                 <small>Police</small>
-            </a> -->
+            </a>
 
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
             <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
@@ -939,7 +939,7 @@ function addHospitalMarkers(data) {
 
         const marker = L.marker([h.latitude, h.longitude], { icon }).addTo(hospitalMarkers);
 
-        marker.bindPopup(`
+         marker.bindPopup(`
             <h5 style="border-bottom:1px solid #ccc;">${h.name || 'N/A'}</h5>
             <strong>Global Classification:</strong> ${h.facility_category || 'N/A'}<br>
             <strong>Country Classification:</strong> ${h.facility_level || 'N/A'}<br>
@@ -947,8 +947,6 @@ function addHospitalMarkers(data) {
                 ${h.address || 'N/A'}
                 ${h.city ? ', ' + h.city : ''}
                 ${h.provinces_region ? ', ' + h.provinces_region : ''}, Indonesia <br>
-            <strong>Coords:</strong> ${h.latitude}, ${h.longitude}<br>
-            <strong>Province:</strong> ${h.provinces_region || 'N/A'}<br>
             ${h.id ? `<a href="/hospitals/${h.id}" class="btn btn-primary btn-sm mt-2" style="color:white;">Read More</a>` : ''}
         `);
     });
@@ -974,7 +972,10 @@ async function applyHospitalFilters() {
         filters.center_lng = lastClickedLocation.lng;
     }
 
-    const hospitals = await fetchHospitalData(filters);
+    const result = await fetchHospitalData(filters);
+
+    const hospitals = result.hospitals;
+    const levelCounts = result.levelCounts;
 
     const filteredHospitals = hospitals.filter(h => {
         if (levels.length === 0) return true;
@@ -985,6 +986,17 @@ async function applyHospitalFilters() {
 
     addHospitalMarkers(filteredHospitals);
     document.getElementById('totalCountDisplay').innerHTML = `<strong>Hospitals:</strong> ${filteredHospitals.length}`;
+
+    Object.keys(levelCounts).forEach(level => {
+
+        const id = level.replace(/\s+/g, '-');
+
+        const el = document.getElementById(`count-${id}`);
+
+        if (el) {
+            el.textContent = levelCounts[level];
+        }
+    });
 }
 
 // === Select2 Inisialisasi ===
@@ -1033,11 +1045,13 @@ const FilterPanel = L.Control.extend({
                 </select>
                 <label>Facility Level:</label>
                 ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)'].map(c => `
-                    <label style="display:block;font-size:13px;">
-                        <input type="checkbox" name="hospitalLevel" value="${c}"> ${c}
-                    </label>`).join('')}
+                <label style="display:block;font-size:13px;margin-bottom:4px;">
+                    <input type="checkbox" name="hospitalLevel" value="${c}">
+                    ${c} (<span id="count-${c.replace(/\s+/g,'-')}">0</span>)
+                </label>
+                `).join('')}
                 <hr>
-                <strong>Province</strong>
+                <strong>Region</strong>
                 <div style="max-height:120px;overflow-y:auto;border:1px solid #ccc;padding:5px;border-radius:5px;margin-top:6px;">
                     @foreach ($provinces as $p)
                         <div class="form-check">

@@ -85,9 +85,9 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+         <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Police Level</label><br>
+                <label>Edit Police Classification (Global)</label><br>
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="level" value="Layer 1"
@@ -115,63 +115,55 @@
             </div>
         </div>
 
-         <div class="col-md-12">
-            <div class="form-group">
-                <label>Edit Police Classification</label><br>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="classification" value="National HQ"
-                        {{ old('National HQ', $police->classification ?? '') == 'National HQ' ? 'checked' : '' }}>
-                    <label class="form-check-label">National HQ</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="classification" value="Regional / Macro Command"
-                        {{ old('Regional / Macro Command', $police->classification ?? '') == 'Regional / Macro Command' ? 'checked' : '' }}>
-                    <label class="form-check-label">Regional / Macro Command</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="classification" value="Provincial / Territorial Command"
-                        {{ old('Provincial / Territorial Command', $police->classification ?? '') == 'Provincial / Territorial Command' ? 'checked' : '' }}>
-                    <label class="form-check-label">Provincial / Territorial Command</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="classification" value="Local Police Station"
-                        {{ old('Local Police Station', $police->classification ?? '') == 'Local Police Station' ? 'checked' : '' }}>
-                    <label class="form-check-label">Local Police Station</label>
-                </div>
-            </div>
-        </div>
-
         <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Police Category</label><br>
+                <label>Edit Police Classification (Country)</label><br>
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="category" value="Kepolisian Negara Republik Indonesia (Mabes Polri)"
-                        {{ old('Kepolisian Negara Republik Indonesia (Mabes Polri)', $police->category ?? '') == 'Kepolisian Negara Republik Indonesia (Mabes Polri)' ? 'checked' : '' }}>
-                    <label class="form-check-label">Kepolisian Negara Republik Indonesia (Mabes Polri)</label>
+                <input type="hidden" name="icon" id="icon" value="{{ $police->icon }}">
+               <div class="form-check form-check-inline police-option {{ $police->category == 'Kepolisian Negara Republik Indonesia (Mabes Polri)' ? 'selected' : '' }}">
+                    <input class="form-check-input category-radio"
+                        type="radio"
+                        name="category"
+                        value="Kepolisian Negara Republik Indonesia (Mabes Polri)"
+                        data-icon="{{ asset('images/dot-blue-ring-royal-papua.png') }}"
+                        {{ $police->category == 'Kepolisian Negara Republik Indonesia (Mabes Polri)' ? 'checked' : '' }}>
+                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" width="16">
+                    <label>Kepolisian Negara Republik Indonesia (Mabes Polri)</label>
                 </div>
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="category" value="Polda"
-                        {{ old('Polda', $police->category ?? '') == 'Polda' ? 'checked' : '' }}>
-                    <label class="form-check-label">Polda</label>
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Polda' ? 'selected' : '' }}">
+                    <input class="form-check-input category-radio"
+                        type="radio"
+                        name="category"
+                        value="Polda"
+                        data-icon="{{ asset('images/dot-red.png') }}"
+                        {{ $police->category == 'Polda' ? 'checked' : '' }}>
+                    <img src="{{ asset('images/dot-red.png') }}" width="16">
+                    <label>Polda</label>
                 </div>
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="category" value="Polres"
-                        {{ old('Polres', $police->category ?? '') == 'Polres' ? 'checked' : '' }}>
-                    <label class="form-check-label">Polres</label>
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Polres' ? 'selected' : '' }}">
+                    <input class="form-check-input category-radio"
+                        type="radio"
+                        name="category"
+                        value="Polres"
+                        data-icon="{{ asset('images/dot-orange-ppc.png') }}"
+                        {{ $police->category == 'Polres' ? 'checked' : '' }}>
+                    <img src="{{ asset('images/dot-orange-ppc.png') }}" width="16">
+                    <label>Polres</label>
                 </div>
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="category" value="Polsek"
-                        {{ old('Polsek', $police->category ?? '') == 'Polsek' ? 'checked' : '' }}>
-                    <label class="form-check-label">Polsek</label>
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Polsek' ? 'selected' : '' }}">
+                    <input class="form-check-input category-radio"
+                        type="radio"
+                        name="category"
+                        value="Polsek"
+                        data-icon="{{ asset('images/dot-green.png') }}"
+                        {{ $police->category == 'Polsek' ? 'checked' : '' }}>
+                    <img src="{{ asset('images/dot-green.png') }}" width="16">
+                    <label>Polsek</label>
                 </div>
+
             </div>
         </div>
 
@@ -270,36 +262,6 @@
           </div>
         </div>
 
-        <div class="col-md-12">
-    <div class="form-group">
-        <label>Icon</label><br>
-
-        @php
-            $icons = [
-                ['url' => asset('images/dot-blue-ring-royal-papua.png'), 'label' => 'Kepolisian Negara Republik Indonesia (Mabes Polri)'],
-                ['url' => asset('images/dot-red.png'), 'label' => 'Polda'],
-                ['url' => asset('images/dot-orange-ppc.png'), 'label' => 'Polres'],
-                ['url' => asset('images/dot-green.png'), 'label' => 'Polsek'],
-            ];
-        @endphp
-
-        @foreach($icons as $icon)
-            <label style="margin-right: 15px; cursor:pointer;">
-                <input
-                    type="radio"
-                    name="icon"
-                    value="{{ $icon['url'] }}"
-                    {{ $police->icon == $icon['url'] ? 'checked' : '' }}
-                >
-
-                <img src="{{ $icon['url'] }}" style="width:17px; height:17px;">
-                {{ $icon['label'] }}
-            </label>
-        @endforeach
-
-    </div>
-</div>
-
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
@@ -317,6 +279,26 @@
     $('#summernote5').summernote()
 
   })
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.category-radio').forEach(radio => {
+
+        radio.addEventListener('change', function () {
+
+            document.getElementById('icon').value = this.dataset.icon;
+
+            document.querySelectorAll('.police-option')
+                .forEach(item => item.classList.remove('selected'));
+
+            this.closest('.police-option')
+                .classList.add('selected');
+        });
+
+    });
+
+});
 </script>
 <script>
     $('#province').on('change', function () {

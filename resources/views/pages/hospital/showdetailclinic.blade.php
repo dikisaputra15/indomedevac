@@ -205,10 +205,10 @@
                 <small>Air Charter</small>
             </a>
 
-            <!-- <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
+            <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
                 <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
                 <small>Police</small>
-            </a> -->
+            </a>
 
             <!-- Button 7 -->
             <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
