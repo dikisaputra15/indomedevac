@@ -359,26 +359,34 @@
                                 <!-- Baris Atas (3) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                        <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
-                                        <small>Kepolisian Negara Republik Indonesia (Mabes Polri)</small>
+                                        <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
+                                        <small>Polri HQ (National)</small>
                                     </button>
 
                                     <button class="btn p-1">
-                                        <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
                                         <small>Polda</small>
+                                    </button>
+
+                                     <button class="btn p-1">
+                                         <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
+                                        <small>Polres</small>
                                     </button>
                                 </div>
 
                                 <!-- Baris Bawah (2) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
-                                        <small>Polres</small>
-                                    </button>
-
-                                    <button class="btn p-1">
-                                        <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
                                         <small>Polsek</small>
+                                    </button>
+                                     <button class="btn p-1">
+                                        <img src="{{ asset('images/Brimob.png') }}" style="width:12px; height:12px;">
+                                        <small>Brimob</small>
+                                    </button>
+                                     <button class="btn p-1">
+                                        <img src="{{ asset('images/Gegana.png') }}" style="width:12px; height:12px;">
+                                        <small>Gegana</small>
                                     </button>
                                 </div>
 
@@ -1357,10 +1365,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div id="policeFilter" style="display:none;margin-top:8px;">
                     <strong>Police Category:</strong><br>
                     ${[
-                        'Kepolisian Negara Republik Indonesia (Mabes Polri)',
-                        'Polda',
-                        'Polres',
-                        'Polsek'
+                        'Indonesian National Police (Polri) HQ',
+                        'Provincial Police (Polda)',
+                        'Municipality Police (Polres)',
+                        'District Police (Polsek)',
+                        'Police Mobile Brigade (Brimob)',
+                        'Police Bomb Squad (Gegana)'
                     ].map(cat => `
                         <label style="display:block;font-size:13px;">
                             <input type="checkbox" name="policeCategory" value="${cat}"> ${cat}

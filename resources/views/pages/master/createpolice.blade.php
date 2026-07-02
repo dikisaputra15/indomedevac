@@ -93,27 +93,27 @@
 
                 <input type="hidden" name="icon" id="icon">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Kepolisian Negara Republik Indonesia (Mabes Polri)" data-icon="{{ asset('images/Layer1.png') }}">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Indonesian National Police (Polri) HQ" data-icon="{{ asset('images/Layer1.png') }}">
                     <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
-                    <label class="form-check-label">Kepolisian Negara Republik Indonesia (Mabes Polri)</label>
+                    <label class="form-check-label">Indonesian National Police (Polri) HQ</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Polda" data-icon="{{ asset('images/Layer2.png') }}">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Provincial Police (Polda)" data-icon="{{ asset('images/Layer2.png') }}">
                     <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
-                    <label class="form-check-label">Polda</label>
+                    <label class="form-check-label">Provincial Police (Polda)</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Polres" data-icon="{{ asset('images/Layer3.png') }}">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Municipality Police (Polres)" data-icon="{{ asset('images/Layer3.png') }}">
                     <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
-                    <label class="form-check-label">Polres</label>
+                    <label class="form-check-label">Municipality Police (Polres)</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Polsek" data-icon="{{ asset('images/Layer4.png') }}">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="District Police (Polsek)" data-icon="{{ asset('images/Layer4.png') }}">
                     <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
-                    <label class="form-check-label">Polsek</label>
+                    <label class="form-check-label">District Police (Polsek)</label>
                 </div>
 
                 <div class="form-check form-check-inline">

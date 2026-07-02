@@ -120,48 +120,48 @@
                 <label>Edit Police Classification (Country)</label><br>
 
                 <input type="hidden" name="icon" id="icon" value="{{ $police->icon }}">
-               <div class="form-check form-check-inline police-option {{ $police->category == 'Kepolisian Negara Republik Indonesia (Mabes Polri)' ? 'selected' : '' }}">
+               <div class="form-check form-check-inline police-option {{ $police->category == 'Indonesian National Police (Polri) HQ' ? 'selected' : '' }}">
                     <input class="form-check-input category-radio"
                         type="radio"
                         name="category"
-                        value="Kepolisian Negara Republik Indonesia (Mabes Polri)"
+                        value="Indonesian National Police (Polri) HQ"
                         data-icon="{{ asset('images/Layer1.png') }}"
-                        {{ $police->category == 'Kepolisian Negara Republik Indonesia (Mabes Polri)' ? 'checked' : '' }}>
+                        {{ $police->category == 'Indonesian National Police (Polri) HQ' ? 'checked' : '' }}>
                     <img src="{{ asset('images/Layer1.png') }}" width="16">
-                    <label>Kepolisian Negara Republik Indonesia (Mabes Polri)</label>
+                    <label>Indonesian National Police (Polri) HQ</label>
                 </div>
 
-                <div class="form-check form-check-inline police-option {{ $police->category == 'Polda' ? 'selected' : '' }}">
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Provincial Police (Polda)' ? 'selected' : '' }}">
                     <input class="form-check-input category-radio"
                         type="radio"
                         name="category"
-                        value="Polda"
+                        value="Provincial Police (Polda)"
                         data-icon="{{ asset('images/Layer2.png') }}"
-                        {{ $police->category == 'Polda' ? 'checked' : '' }}>
+                        {{ $police->category == 'Provincial Police (Polda)' ? 'checked' : '' }}>
                     <img src="{{ asset('images/Layer2.png') }}" width="16">
-                    <label>Polda</label>
+                    <label>Provincial Police (Polda)</label>
                 </div>
 
-                <div class="form-check form-check-inline police-option {{ $police->category == 'Polres' ? 'selected' : '' }}">
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Municipality Police (Polres)' ? 'selected' : '' }}">
                     <input class="form-check-input category-radio"
                         type="radio"
                         name="category"
-                        value="Polres"
+                        value="Municipality Police (Polres)"
                         data-icon="{{ asset('images/Layer3.png') }}"
-                        {{ $police->category == 'Polres' ? 'checked' : '' }}>
+                        {{ $police->category == 'Municipality Police (Polres)' ? 'checked' : '' }}>
                     <img src="{{ asset('images/Layer3.png') }}" width="16">
-                    <label>Polres</label>
+                    <label>Municipality Police (Polres)</label>
                 </div>
 
-                <div class="form-check form-check-inline police-option {{ $police->category == 'Polsek' ? 'selected' : '' }}">
+                <div class="form-check form-check-inline police-option {{ $police->category == 'District Police (Polsek)' ? 'selected' : '' }}">
                     <input class="form-check-input category-radio"
                         type="radio"
                         name="category"
-                        value="Polsek"
+                        value="District Police (Polsek)"
                         data-icon="{{ asset('images/Layer4.png') }}"
-                        {{ $police->category == 'Polsek' ? 'checked' : '' }}>
+                        {{ $police->category == 'District Police (Polsek)' ? 'checked' : '' }}>
                     <img src="{{ asset('images/Layer4.png') }}" width="16">
-                    <label>Polsek</label>
+                    <label>District Police (Polsek)</label>
                 </div>
 
                 <div class="form-check form-check-inline police-option {{ $police->category == 'Police Mobil Brigade (Brimob)' ? 'selected' : '' }}">

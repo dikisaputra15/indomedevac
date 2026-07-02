@@ -401,25 +401,33 @@
                                 <div class="hospital-item">
                                     <button class="btn p-1">
                                         <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
-                                        <small>Kepolisian Negara Republik Indonesia (Mabes Polri)</small>
+                                        <small>Polri HQ (National)</small>
                                     </button>
 
                                     <button class="btn p-1">
                                         <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
                                         <small>Polda</small>
                                     </button>
+
+                                    <button class="btn p-1">
+                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                                        <small>Polres</small>
+                                    </button>
                                 </div>
 
                                 <!-- Baris Bawah (2) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
-                                        <small>Polres</small>
-                                    </button>
-
-                                    <button class="btn p-1">
                                         <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
                                         <small>Polsek</small>
+                                    </button>
+                                     <button class="btn p-1">
+                                        <img src="{{ asset('images/Brimob.png') }}" style="width:12px; height:12px;">
+                                        <small>Brimob</small>
+                                    </button>
+                                     <button class="btn p-1">
+                                        <img src="{{ asset('images/Gegana.png') }}" style="width:12px; height:12px;">
+                                        <small>Gegana</small>
                                     </button>
                                 </div>
 

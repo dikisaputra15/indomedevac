@@ -81,7 +81,7 @@
 
         <div class="d-flex gap-2 ms-auto">
             <!-- Button 2 -->
-            <a href="{{ url('embassiees') }}/{{$police->id}}/detail" class="btn btn-outline-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees/'.$police->id.'/detail') ? 'active' : '' }}">
+            <a href="{{ url('police') }}/{{$police->id}}/detail" class="btn btn-outline-danger d-flex flex-column align-items-center p-3 {{ request()->is('police/'.$police->id.'/detail') ? 'active' : '' }}">
                 <img src="{{ asset('images/icon-menu-general-info.png') }}" style="width: 18px; height: 24px;">
                 <small>General</small>
             </a>

@@ -67,7 +67,7 @@ class PoliceController extends Controller
             // Ensure province IDs are an array and valid integers
             $provinceIds = array_filter((array) $request->input('provinces'), 'is_numeric');
             if (!empty($provinceIds)) {
-                $q->whereIn('province_id', $provinceIds);
+                $q->whereIn('police.province_id', $provinceIds);
             }
         });
 
@@ -151,10 +151,12 @@ class PoliceController extends Controller
         // Execute the query and return JSON response
         $polices = $query->get();
         $categoryCounts = [
-            'Kepolisian Negara Republik Indonesia (Mabes Polri)' => 0,
-            'Polda' => 0,
-            'Polres' => 0,
-            'Polsek' => 0,
+            'Indonesian National Police (Polri) HQ' => 0,
+            'Provincial Police (Polda)' => 0,
+            'Municipality Police (Polres)' => 0,
+            'District Police (Polsek)' => 0,
+            'Police Mobile Brigade (Brimob)' => 0,
+            'Police Bomb Squad (Gegana)' => 0,
         ];
 
         foreach ($polices as $police) {

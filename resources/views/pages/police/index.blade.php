@@ -157,23 +157,33 @@
                 <span class="fw-bold me-2">Map Legend:</span>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                    <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:15px; height:15px;">
-                    <small>Kepolisian Negara Republik Indonesia (Mabes Polri)</small>
+                    <img src="{{ asset('images/Layer1.png') }}" style="width:15px; height:15px;">
+                    <small>Polri HQ (National)</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
-                    <img src="{{ asset('images/dot-red.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/Layer2.png') }}" style="width:15px; height:15px;">
                     <small>Polda</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
-                    <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/Layer3.png') }}" style="width:15px; height:15px;">
                     <small>Polres</small>
                 </button>
 
                 <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
-                    <img src="{{ asset('images/dot-green.png') }}" style="width:15px; height:15px;">
+                    <img src="{{ asset('images/Layer4.png') }}" style="width:15px; height:15px;">
                     <small>Polsek</small>
+                </button>
+
+                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                    <img src="{{ asset('images/Brimob.png') }}" style="width:15px; height:15px;">
+                    <small>Brimob</small>
+                </button>
+
+                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                    <img src="{{ asset('images/Gegana.png') }}" style="width:15px; height:15px;">
+                    <small>Gegana</small>
                 </button>
 
             </div>
@@ -541,10 +551,12 @@ const FilterPanel = L.Control.extend({
                 <label>Category:</label>
 
                 ${[
-                    'Kepolisian Negara Republik Indonesia (Mabes Polri)',
-                    'Polda',
-                    'Polres',
-                    'Polsek',
+                    'Indonesian National Police (Polri) HQ',
+                    'Provincial Police (Polda)',
+                    'Municipality Police (Polres)',
+                    'District Police (Polsek)',
+                    'Police Mobile Brigade (Brimob)',
+                    'Police Bomb Squad (Gegana)'
                 ].map(c => `
                 <label style="display:block;font-size:13px;margin-bottom:4px;">
                     <input type="checkbox" name="policeCategory" value="${c}">
