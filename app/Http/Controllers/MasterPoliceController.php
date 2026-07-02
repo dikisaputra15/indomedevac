@@ -56,7 +56,7 @@ class MasterPoliceController extends Controller
 
      public function create()
     {
-         $provinces = Provincesregion::all();
+        $provinces = Provincesregion::all();
         return view('pages.master.createpolice', [
             'provinces' => $provinces
         ]);
@@ -91,8 +91,8 @@ class MasterPoliceController extends Controller
      public function edit($id)
     {
         $police = Police::findOrFail($id);
-        $provinces = Provincesregion::all();
-        $cities = City::all();
+        $provinces = Provincesregion::orderByRaw('LOWER(provinces_region) ASC')->get();
+        $cities = City::where('province_id', $police->province_id)->orderByRaw('LOWER(city) ASC')->get();
         return view('pages.master.editpolice', [
             'police' => $police,
             'provinces' => $provinces,
