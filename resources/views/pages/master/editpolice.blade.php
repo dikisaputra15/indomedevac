@@ -22,7 +22,7 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Region</label>
+                <label>Province</label>
                 <select class="form-control" name="province_id" id="city">
                     <?php
                         foreach ($provinces as $prov) {
@@ -44,7 +44,7 @@
 
         <div class="col-md-12">
             <div class="form-group">
-                <label>Edit Township</label>
+                <label>Edit Regency / City</label>
                 <select class="form-control" name="city" id="city">
                     <?php
                         foreach ($cities as $city) {
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'GET',
                 success: function (data) {
                     $('#city').empty();
-                    $('#city').append('<option value="">-- Choosse Township --</option>');
+                    $('#city').append('<option value="">-- Choosse Regency / City --</option>');
                     $.each(data, function (key, city) {
                         $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
                     });
@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         } else {
             $('#city').empty();
-            $('#city').append('<option value="">-- Choosse Township  --</option>');
+            $('#city').append('<option value="">-- Choosse Regency / City  --</option>');
         }
     });
 </script>

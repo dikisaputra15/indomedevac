@@ -21,9 +21,9 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label>Region</label>
+                <label>Province</label>
                 <select class="form-control" name="province_id" id="province">
-                        <option value="0">-Choosse Region-</option>
+                        <option value="0">-Choosse Province-</option>
                     @foreach($provinces as $prov)
                         <option value="{{$prov->id}}">{{$prov->provinces_region}}</option>
                     @endforeach
@@ -33,9 +33,9 @@
 
          <div class="col-md-12">
             <div class="form-group">
-                <label for="city">Township</label>
+                <label for="city">Regency / City</label>
                 <select name="city" id="city" class="form-control">
-                    <option value="">-Choose Township-</option>
+                    <option value="">-Choose Regency / City-</option>
                 </select>
             </div>
         </div>
@@ -244,7 +244,7 @@ document.querySelectorAll('.category-radio').forEach(radio => {
                 type: 'GET',
                 success: function (data) {
                     $('#city').empty();
-                    $('#city').append('<option value="">-- Choosse Township --</option>');
+                    $('#city').append('<option value="">-- Choosse Regency / City --</option>');
                     $.each(data, function (key, city) {
                         $('#city').append('<option value="' + city.id + '">' + city.city + '</option>');
                     });
@@ -252,7 +252,7 @@ document.querySelectorAll('.category-radio').forEach(radio => {
             });
         } else {
             $('#city').empty();
-            $('#city').append('<option value="">-- Choosse Township  --</option>');
+            $('#city').append('<option value="">-- Choosse Regency / City  --</option>');
         }
     });
 </script>
