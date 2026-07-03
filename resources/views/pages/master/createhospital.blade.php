@@ -790,6 +790,24 @@
           </div>
         </div>
 
+         <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Emergency Hotline
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote12" name="travel_agent">
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header">
@@ -837,24 +855,6 @@
             <div class="card-body">
 
                 <textarea id="summernote2" name="nearest_airfield">
-                </textarea>
-
-            </div>
-
-          </div>
-        </div>
-
-          <div class="col-md-12">
-          <div class="card card-outline card-info">
-            <div class="card-header">
-              <h3 class="card-title">
-                Travel Agent
-              </h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-
-                <textarea id="summernote12" name="travel_agent">
                 </textarea>
 
             </div>
