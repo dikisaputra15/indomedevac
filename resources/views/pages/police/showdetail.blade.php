@@ -142,7 +142,7 @@
                 <div class="card-body overflow-auto">
                     <p>
                         <strong>Address:</strong>
-                        {{ $police->address }},
+                        {{ $police->location }},
                         {{ $city->city }},
                         {{ $province->provinces_region }}, Indonesia
                     </p>

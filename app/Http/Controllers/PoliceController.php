@@ -194,7 +194,7 @@ class PoliceController extends Controller
      public function showdetailemergency($id)
     {
         $police = Police::findOrFail($id);
-        $hospital = Hospital::select('medical_support_website')->first();
+        $hospital = Hospital::select('medical_support_website','travel_agent')->first();
 
           // --- Ambil Bandara Terdekat ---
         $nearbyAirports = Airport::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$police->latitude, $police->longitude, $police->latitude])
