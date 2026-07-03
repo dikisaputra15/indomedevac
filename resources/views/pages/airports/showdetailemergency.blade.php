@@ -410,9 +410,16 @@
 
         <div class="col-sm-4 d-flex flex-column gap-3">
             <div class="card">
-                <div class="card-header fw-bold"><img src="https://concord-consulting.com/static/img/cmt/icon/radar-icon.png" style="width: 24px; height: 24px;"> Nearest Airfields and Medical Facilities</div>
+                <div class="card-header fw-bold"><img src="https://concord-consulting.com/static/img/cmt/icon/radar-icon.png" style="width: 24px; height: 24px;"> Nearest Support Facilities</div>
                 <div class="card-body overflow-auto">
                     <?php echo $airport->nearest_medical_facility; ?>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header fw-bold"><img src="{{ asset('images/hotlines-icon.png') }}" style="width: 24px; height: 24px;"> Emergency Hotline</div>
+                <div class="card-body">
+                    <?php echo $hospital->travel_agent; ?>
                 </div>
             </div>
 

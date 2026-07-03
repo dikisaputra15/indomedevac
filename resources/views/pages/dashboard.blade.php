@@ -400,17 +400,17 @@
                                 <!-- Baris Atas (3) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                        <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
                                         <small>Polri HQ (National)</small>
                                     </button>
 
                                     <button class="btn p-1">
-                                        <img src="{{ asset('images/dot-red.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
                                         <small>Polda</small>
                                     </button>
 
                                     <button class="btn p-1">
-                                         <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:12px; height:12px;">
+                                         <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
                                         <small>Polres</small>
                                     </button>
                                 </div>
@@ -418,7 +418,7 @@
                                 <!-- Baris Bawah (2) -->
                                 <div class="hospital-item">
                                     <button class="btn p-1">
-                                        <img src="{{ asset('images/dot-green.png') }}" style="width:12px; height:12px;">
+                                        <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
                                         <small>Polsek</small>
                                     </button>
                                      <button class="btn p-1">
