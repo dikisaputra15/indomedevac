@@ -126,6 +126,7 @@ Route::middleware(['web', 'jwt.login'])->group(function () {
 
         Route::resource('police', PoliceController::class);
         Route::get('/police/{id}/detail', [PoliceController::class, 'showdetail']);
+        Route::get('/police/{id}/emergency', [PoliceController::class, 'showdetailemergency']);
 
         // === DEPENDENCY ===
         Route::get('/get-cities/{province_id}', [MasterembessyController::class, 'getCities']);
