@@ -84,6 +84,8 @@ class MasterembessyController extends Controller
         $embassy->website = $request->input('website');
         $embassy->latitude = $request->input('latitude');
         $embassy->longitude = $request->input('longitude');
+        $embassy->nearest_medical_facility = $request->input('nearest_medical_facility');
+        $embassy->nearest_accommodation = $request->input('nearest_accommodation');
 
         $embassy->save();
         return redirect()->route('embessydata.index')->with('success', 'Data Succesfully Save');
@@ -132,6 +134,8 @@ class MasterembessyController extends Controller
             'website' => $request->input('website'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
+            'nearest_medical_facility' => $request->input('nearest_medical_facility'),
+            'nearest_accommodation' => $request->input('nearest_accommodation'),
         ];
 
          if ($request->hasFile('image')) {

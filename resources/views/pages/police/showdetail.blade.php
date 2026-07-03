@@ -173,6 +173,13 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-header fw-bold"><img src="{{ asset('images/icon-nearest-accomodation.png') }}" style="width: 24px; height: 18px;"> Accommodation Search</div>
+                <div class="card-body overflow-auto">
+                    <?php echo $police->nearest_accommodation; ?>
+                </div>
+            </div>
+
         </div>
 
         <div class="col-md-8">

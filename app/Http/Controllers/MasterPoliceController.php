@@ -79,6 +79,7 @@ class MasterPoliceController extends Controller
         $police->website = $request->input('website');
         $police->hrs_of_operation = $request->input('hrs_of_operation');
         $police->nearest_medical_facility = $request->input('nearest_medical_facility');
+        $police->nearest_accommodation = $request->input('nearest_accommodation');
         $police->latitude = $request->input('latitude');
         $police->longitude = $request->input('longitude');
         $police->icon = $request->input('icon');
@@ -120,6 +121,7 @@ class MasterPoliceController extends Controller
             'website' => $request->input('website'),
             'hrs_of_operation' => $request->input('hrs_of_operation'),
             'nearest_medical_facility' => $request->input('nearest_medical_facility'),
+            'nearest_accommodation' => $request->input('nearest_accommodation'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
             'icon' => $request->input('icon'),

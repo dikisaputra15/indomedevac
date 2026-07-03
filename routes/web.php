@@ -106,6 +106,7 @@ Route::middleware(['web', 'jwt.login'])->group(function () {
 
         Route::resource('embassiees', EmbassieesController::class);
         Route::get('/embassiees/{id}/detail', [EmbassieesController::class, 'showdetail']);
+        Route::get('/embassiees/{id}/emergency', [EmbassieesController::class, 'showdetailemergency']);
 
         Route::resource('airports', AirportsController::class);
         Route::get('/airports/{id}/detail', [AirportsController::class, 'showdetail']);

@@ -133,6 +133,42 @@
           </div>
         </div>
 
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Nearest Airfields, Medical Facilities, Police, and Embassies
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote5" name="nearest_medical_facility">
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Accommodation Search
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote6" name="nearest_accommodation">
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
          <div class="col-md-12">
             <div class="form-group">
                 <label>Image</label>
@@ -154,6 +190,8 @@
     $('#summernote2').summernote()
     $('#summernote3').summernote()
     $('#summernote4').summernote()
+    $('#summernote5').summernote()
+    $('#summernote6').summernote()
 
   })
 </script>

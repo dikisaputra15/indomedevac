@@ -162,6 +162,44 @@
         </div>
 
          <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Edit Nearest Airfields, Medical Facilities, Police, and Embassies
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote5" name="nearest_medical_facility">
+                    <?php echo $embassy->nearest_medical_facility; ?>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+         <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Edit Accommodation Search
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <textarea id="summernote6" name="nearest_accommodation">
+                    <?php echo $embassy->nearest_accommodation; ?>
+                </textarea>
+
+            </div>
+
+          </div>
+        </div>
+
+         <div class="col-md-12">
             <div class="form-group">
                 <label>Image</label>
                 <input type="file" class="form-control" name="image">
@@ -182,6 +220,8 @@
     $('#summernote2').summernote()
     $('#summernote3').summernote()
     $('#summernote4').summernote()
+    $('#summernote5').summernote()
+    $('#summernote6').summernote()
 
   })
 </script>
