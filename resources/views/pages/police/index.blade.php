@@ -205,41 +205,51 @@
 </div>
 
 <div class="modal fade" id="level1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
              <img src="{{ asset('images/Gegana.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Gegana</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Bomb Squad / Special Police Force — Pasukan Gegana</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+            <p class="p-modal text-justify">
+                Gegana is a specialized force under Korbrimob Polri responsible for bomb disposal. Gegana can be described as Polri’s specialist Brimob unit for bomb disposal and high-risk special police operations. Bomb disposal is only one of its core capabilities, Gegana has a wider special police role covering counter-terrorism, hostage rescue, armed high-risk incidents, bomb disposal, tactical technical support, and response to chemical, biological, radiological, and nuclear threats.
+            </p>
       </div>
     </div>
   </div>
 </div>
 
 <div class="modal fade" id="level2Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
              <img src="{{ asset('images/Brimob.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Brimob</h5>
+            <h5 class="modal-title" id="disclaimerLabel">Mobile Brigade Corps — Korps Brigade Mobil / Brimob</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+            <p class="p-modal text-justify">
+                The Mobile Brigade Corps, or Brimob, is Polri’s national paramilitary-style tactical police force for high-intensity internal security operations. It is deployed when regular territorial police units require heavier tactical capability, including riot control, armed criminal threats, counter-insurgency support, counter-terrorism support, disaster response, and other major security disturbances.
+            </p>
+            <p class="p-modal text-justify">
+               Brimob is part of the Indonesian National Police, not the Indonesian Armed Forces. It remains a police force, but it is trained, equipped, and organized for high-risk operations that require rapid deployment, disciplined formations, tactical weapons capability, and specialist field support.
+            </p>
+             <p class="p-modal text-justify">
+               Brimob has its own command structure separate from territorial police layered commands. At the national level, Brimob is organized under Korbrimob Polri. At the regional level, Brimob capability is represented by Satuan brimob Polda.
+            </p>
       </div>
     </div>
   </div>
 </div>
 
 <div class="modal fade" id="level3Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
@@ -249,14 +259,28 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+             <p class="p-modal text-justify">
+                <strong>Command level:</strong> Frontline police command
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Head rank:</strong> Depends on Polsek classification. Type A is usually led by AKBP, Type B by Kompol, Type C by AKP, and Type D by a Police Inspector-level officer.
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Administrative equivalent:</strong> District / kecamatan
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Commander:</strong> Kapolsek
+            </p>
+            <p class="p-modal text-justify">
+                Polsek is the main frontline police command at district level. It handles direct community-facing policing, first response, incident reporting, local investigation support, patrol, public assistance, local public-order control, and coordination with subdistrict authorities.
+            </p>
       </div>
     </div>
   </div>
 </div>
 
 <div class="modal fade" id="level4Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
@@ -266,14 +290,24 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+             <p class="p-modal text-justify">
+                <strong>Command level:</strong> Regency, city, or metropolitan police command
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Head position and rank:</strong> Kapolres / Kapolresta / Kapolrestabes / Kapolres Metro (Komisaris Besar Polisi / Ajun Komisaris Besar Polisi)
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Administrative equivalent:</strong> Regency, city, large city, or major metropolitan police area
+                Polres is the main district-level police command below Polda. It supervises Polsek and provides law enforcement, investigation, public-order management, traffic policing, emergency response, and public service at regency or city level.
+                Polres-level territorial commands are classified into Type A, Type B, Type C, and Type D. The classification reflects urban scale, population, operational complexity, threat level, administrative importance, and workload.
+            </p>
       </div>
     </div>
   </div>
 </div>
 
 <div class="modal fade" id="level5Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
@@ -283,14 +317,41 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+            <p class="p-modal text-justify">
+                <strong>Command level:</strong> Top territorial police command
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Head rank:</strong> Usually Inspektur Jenderal Polisi for Type A Polda; Brigadir Jenderal Polisi for Type B Polda
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Administrative equivalent:</strong> Province or police area
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Commander:</strong> Kepala Polda (Kapolda)
+            </p>
+            <p class="p-modal text-justify">
+                Polda is the main territorial police command under Mabes Polri. It carries out Polri duties in its assigned police area. A Polda supervises Municipality Police (Polres/Polresta/Polrestabes/Polres Metro), specialist directorates, Police Mobile Brigade (Brimob) units, traffic units, intelligence units, investigation units, and public-security elements.
+            </p>
+            <p class="p-modal text-justify">
+                Primary responsibilities include:
+            </p>
+            <ul>
+                <li>Regional law enforcement</li>
+                <li>Public-security and public-order control</li>
+                <li>Criminal investigation support</li>
+                <li>Intelligence and early warning</li>
+                <li>Traffic policing</li>
+                <li>Community policing</li>
+                <li>Regional patrol and emergency response</li>
+                <li>Coordination with governors, regional military commands, prosecutors, courts, and local agencies</li>
+            </ul>
       </div>
     </div>
   </div>
 </div>
 
 <div class="modal fade" id="level6Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
@@ -300,7 +361,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+            <p class="p-modal text-justify">
+                <strong>Command level:</strong> National headquarters
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Location:</strong> Jakarta
+            </p>
+            <p class="p-modal text-justify">
+                <strong>Head rank:</strong> Police General (Jenderal Polisi) at Kapolri level
+            </p>
+            <p class="p-modal text-justify">
+                Subordinate senior leadership: Komisaris Jenderal, Inspektur Jenderal, Brigadir Jenderal, and senior commissioner-level officers
+            </p>
+            <p class="p-modal text-justify">
+                Mabes Polri is the national command, planning, administrative, operational, and coordination center of Polri. It supports Kapolri and Wakapolri in controlling the full police institution, from national-level operational corps to Polda, Polres, and Polsek.
+            </p>
       </div>
     </div>
   </div>
