@@ -171,12 +171,12 @@
                     <small>Polsek</small>
                 </button>
 
-                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
                     <img src="{{ asset('images/Brimob.png') }}" style="width:15px; height:15px;">
                     <small>Brimob</small>
                 </button>
 
-                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
                     <img src="{{ asset('images/Gegana.png') }}" style="width:15px; height:15px;">
                     <small>Gegana</small>
                 </button>
@@ -204,13 +204,47 @@
   </div>
 </div>
 
+<div class="modal fade" id="level1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+             <img src="{{ asset('images/Gegana.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Gegana</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="level2Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+             <img src="{{ asset('images/Brimob.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Brimob</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="level3Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-             <img src="{{ asset('images/dot-green.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Police Station</h5>
+             <img src="{{ asset('images/Layer4.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Polsek</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -226,8 +260,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('images/dot-orange-ppc.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Provincial Police Command (PPC)</h5>
+            <img src="{{ asset('images/Layer3.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Polres</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -243,8 +277,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('images/dot-red.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Divisional Command</h5>
+            <img src="{{ asset('images/Layer2.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Polda</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -260,8 +294,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('images/dot-blue-ring-royal-papua.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Royal Papua New Guinea Constabulary (Commissioner HQ)</h5>
+            <img src="{{ asset('images/Layer1.png') }}" style="width:15px; height:15px;">
+            <h5 class="modal-title" id="disclaimerLabel">Polri HQ (National)</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
