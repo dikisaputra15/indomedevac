@@ -54,8 +54,12 @@ class PoliceController extends Controller
             $q->where(function ($sub) use ($categories) {
 
                 foreach ($categories as $category) {
-
-                    $sub->orWhere('category', 'LIKE', "%{$category}%");
+                    if ($category === 'Police Mobile Brigade (Brimob)') {
+                        $sub->orWhere('category', 'LIKE', "%Police Mobil Brigade (Brimob)%")
+                            ->orWhere('category', 'LIKE', "%Police Mobile Brigade (Brimob)%");
+                    } else {
+                        $sub->orWhere('category', 'LIKE', "%{$category}%");
+                    }
                 }
             });
         });
@@ -171,6 +175,10 @@ class PoliceController extends Controller
             $cats = array_map('trim', explode(',', $police->category));
 
             foreach ($cats as $cat) {
+                if ($cat === 'Police Mobil Brigade (Brimob)') {
+                    $cat = 'Police Mobile Brigade (Brimob)';
+                }
+
                 if (isset($categoryCounts[$cat])) {
                     $categoryCounts[$cat]++;
                 }
