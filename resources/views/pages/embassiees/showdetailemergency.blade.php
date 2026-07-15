@@ -5,10 +5,6 @@
 
 @push('styles')
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
     #map {
         height: 600px;
@@ -153,6 +149,32 @@
       height: 16px;
       object-fit: contain;
     }
+
+    .legend-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        width: 100%;
+        align-items: start;
+    }
+
+    .legend-grid-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        width: 100%;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .legend-grid-item img {
+        flex-shrink: 0;
+    }
+
+    .legend-grid-item small {
+        text-align: left;
+    }
 </style>
 
 @endpush
@@ -235,104 +257,86 @@
                       <!-- Airport -->
                       <div class="class-column">
                         <div class="class-header class-airport-category">Airfield Classification</div>
-                        <div class="hospital-list">
-                          <div class="hospital-row" style="flex-direction: column;">
-                            <!-- Airport row 1 -->
-                            <div class="hospital-item">
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level6Modal">
+                        <div class="airport-list" style="align-items:start;">
+                          <div class="hospital-row legend-grid">
+
+                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level6Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
                                   <small>International</small>
                               </button>
 
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level5Modal">
+                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level5Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-airport.png" style="width:18px; height:18px;">
                                   <small>Domestic</small>
                               </button>
 
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level4Modal">
+                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level4Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
                                   <small>Regional</small>
                               </button>
-                            </div>
-                            <!-- Airport row 2 -->
-                            <div class="hospital-item">
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level2Modal">
+
+                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level2Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
                                   <small>Civil-Military</small>
                               </button>
 
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level3Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
                                   <small>Military</small>
                               </button>
 
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level1Modal">
+                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level1Modal">
                                   <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
                                   <small>Private</small>
                               </button>
-                            </div>
-                          </div>
 
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     <!-- Hospital Classification -->
                     <div class="classification" style="flex-direction: column; width:100%;">
-                      <div class="class-header class-medical-classification">Medical Facility Classification</div>
+                      <div class="class-header class-medical-classification" style="text-align:left;">Medical Facility Classification</div>
                       <div class="classification">
                         <!-- Advanced -->
-                        <div class="class-column">
+                        <div class="class-column" style="align-items: flex-start; text-align: left;">
                           <div class="class-header class-advanced">Advanced</div>
-                          <div class="hospital-list">
-                            <div class="hospital-item">
-                              <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level66Modal">
+                          <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
+                              <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level66Modal">
                                 <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24px; height:24px;">
                                 <small>Class A</small>
                               </button>
-                            </div>
                           </div>
                         </div>
 
                         <!-- Intermediate -->
-                        <div class="class-column">
+                        <div class="class-column" style="align-items: flex-start; text-align: left;">
                           <div class="class-header class-intermediate">Intermediate</div>
-                          <div class="hospital-list">
-                            <div class="hospital-row">
-                              <div class="hospital-item">
-                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level55Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
-                                  <small>Class B</small>
-                                </button>
-                              </div>
-                              <div class="hospital-item">
-                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level44Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
-                                  <small>Class C</small>
-                                </button>
-                              </div>
-                            </div>
+                          <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
+                              <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level55Modal">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
+                                <small>Class B</small>
+                              </button>
+                              <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level44Modal">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
+                                <small>Class C</small>
+                              </button>
                           </div>
                         </div>
 
                         <!-- Basic -->
-                        <div class="class-column">
+                        <div class="class-column" style="align-items: flex-start; text-align: left;">
                           <div class="class-header class-basic">Basic</div>
-                          <div class="hospital-list">
-                            <div class="hospital-row">
-                              <div class="hospital-item">
-                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level33Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
-                                  <small>Class D</small>
-                                </button>
-                              </div>
-                              <div class="hospital-item">
-                                <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#level11Modal">
-                                    <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
-                                    <small>PUSKESMAS</small>
-                                </button>
-                              </div>
-                            </div>
+                          <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
+                              <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level33Modal">
+                                <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
+                                <small>Class D</small>
+                              </button>
+                              <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level11Modal">
+                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
+                                  <small>PUSKESMAS</small>
+                              </button>
                           </div>
                         </div>
                       </div>
@@ -341,46 +345,38 @@
                     <div class="class-column" style="margin-left: 50px;">
                         <div class="class-header class-airport-category">POLICE CLASSIFICATION</div>
 
-                        <div class="airport-list">
-                            <div class="hospital-row" style="flex-direction: column;">
+                        <div class="airport-list" style="align-items:start;">
+                            <div class="hospital-row legend-grid">
 
-                                <!-- Baris Atas (3) -->
-                                <div class="hospital-item">
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police6Modal">
-                                        <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
-                                        <small>Polri HQ (National)</small>
-                                    </button>
+                                <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police6Modal">
+                                    <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
+                                    <small>Polri HQ (National)</small>
+                                </button>
 
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police5Modal">
-                                        <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
-                                        <small>Polda</small>
-                                    </button>
+                                <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police5Modal">
+                                    <img src="{{ asset('images/Layer2.png') }}" style="width:12px; height:12px;">
+                                    <small>Polda</small>
+                                </button>
 
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police4Modal">
-                                         <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
-                                        <small>Polres</small>
-                                    </button>
-                                </div>
+                                <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police4Modal">
+                                    <img src="{{ asset('images/Layer3.png') }}" style="width:12px; height:12px;">
+                                    <small>Polres</small>
+                                </button>
 
-                                <!-- Baris Bawah (2) -->
-                                <div class="hospital-item">
+                                <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police3Modal">
+                                    <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
+                                    <small>Polsek</small>
+                                </button>
 
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police3Modal">
-                                        <img src="{{ asset('images/Layer4.png') }}" style="width:12px; height:12px;">
-                                        <small>Polsek</small>
-                                    </button>
+                                <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police2Modal">
+                                    <img src="{{ asset('images/Brimob.png') }}" style="width:12px; height:12px;">
+                                    <small>Brimob</small>
+                                </button>
 
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police2Modal">
-                                        <img src="{{ asset('images/Brimob.png') }}" style="width:12px; height:12px;">
-                                        <small>Brimob</small>
-                                    </button>
-
-                                    <button class="btn p-1" data-bs-toggle="modal" data-bs-target="#police1Modal">
-                                        <img src="{{ asset('images/Gegana.png') }}" style="width:12px; height:12px;">
-                                        <small>Gegana</small>
-                                    </button>
-
-                                </div>
+                                <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police1Modal">
+                                    <img src="{{ asset('images/Gegana.png') }}" style="width:12px; height:12px;">
+                                    <small>Gegana</small>
+                                </button>
 
                             </div>
                         </div>
@@ -1253,10 +1249,8 @@
 
 @push('service')
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd-WVlGgZFJwAtPZkbAEca2Np6OI7CBTM&libraries=places,geometry"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -1266,76 +1260,112 @@ document.addEventListener('DOMContentLoaded', () => {
         'name'      => $embassy->name_embassiees,
         'latitude'  => $embassy->latitude,
         'longitude' => $embassy->longitude,
-        'image'      => $embassy->image ?? '',
-        'location'   => $embassy->location ?? '',
+        'image'     => $embassy->image ?? '',
+        'location'  => $embassy->location ?? '',
         'telephone' => $embassy->telephone ?? '',
         'website'   => $embassy->website ?? '',
     ]) !!};
 
-    const nearbyAirports = @json($nearbyAirports);
     const nearbyHospitals = @json($nearbyHospitals);
+    const nearbyAirports = @json($nearbyAirports);
     const nearbyPolices = @json($nearbyPolices);
     const nearbyEmbassy = @json($nearbyEmbassy);
-    let radiusKm = 100;
+    let radiusKm = 100; // default radius
 
-    let map, mainAirportMarker, radiusCircle, routingControl = null;
-    const nearbyMarkersGroup = L.featureGroup();
+    let map, mainMarker, radiusCircle, directionsService, directionsRenderer;
+    let nearbyMarkersGroup = [];
+    let searchLocation = null;
+    let searchMarker = null;
 
-    const DEFAULT_MAIN_AIRPORT_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
-    const DEFAULT_HOSPITAL_ICON_URL     = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
-    const DEFAULT_AIRPORT_ICON_URL      = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+    // === ICON DEFAULT ===
+    const DEFAULT_HOSPITAL_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
+    const DEFAULT_AIRPORT_ICON_URL  = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png';
+    const DEFAULT_MAIN_EMBASSY_ICON_URL = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';
     const DEFAULT_POLICE_ICON_URL = 'https://png.pngtree.com/png-vector/20221211/ourmid/pngtree-minimal-location-map-icon-logo-symbol-vector-design-transparent-background-png-image_6520892.png';
     const DEFAULT_EMBASSY_ICON_URL = '/images/embassy-icon-new.png';
 
-    const mainAirportIcon = new L.Icon({
-        iconUrl: DEFAULT_MAIN_AIRPORT_ICON_URL,
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41], iconAnchor: [12, 41],
-        popupAnchor: [1, -34], shadowSize: [41, 41]
-    });
-
-    // === Inisialisasi Peta ===
+    // === INISIALISASI PETA ===
     function initializeMap() {
-        map = L.map('map')
-            .setView([embassyData.latitude, embassyData.longitude], 11);
-
-        const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+        const center = new google.maps.LatLng(embassyData.latitude, embassyData.longitude);
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: center,
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: true,
+            fullscreenControl: true,
+            streetViewControl: false
         });
 
-        const satelliteLayer = L.tileLayer(
-            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-            { attribution: 'Tiles © Esri', maxZoom: 19 }
-        ).addTo(map);
+        const directionsPanel = document.createElement('div');
+        directionsPanel.id = 'directionsPanel';
+        directionsPanel.style.width = '350px';
+        directionsPanel.style.maxHeight = '400px';
+        directionsPanel.style.overflowY = 'auto';
+        directionsPanel.style.backgroundColor = 'white';
+        directionsPanel.style.display = 'none';
+        directionsPanel.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+        directionsPanel.style.borderRadius = '8px';
+        directionsPanel.style.margin = '10px';
+        directionsPanel.style.padding = '10px';
+        directionsPanel.style.fontSize = '13px';
 
-       L.control.layers(
-            { "Street Map": osmLayer, "Satellite Map": satelliteLayer },
-            null,
-            { position: 'topleft' }
-        ).addTo(map);
+        google.maps.event.addDomListener(directionsPanel, 'click', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'dblclick', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'mousedown', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'touchstart', e => e.stopPropagation());
+        google.maps.event.addDomListener(directionsPanel, 'wheel', e => e.stopPropagation());
 
-        L.control.fullscreen({ position: 'topleft' }).addTo(map);
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(directionsPanel);
 
-        // === Styling posisi kontrol ===
-        const style = document.createElement('style');
-        style.textContent = `
-        .leaflet-top.leaflet-left .leaflet-control-layers { margin-top: 5px !important; }
-        .leaflet-top.leaflet-left .leaflet-control-zoom { margin-top: 10px !important; }
-        `;
-        document.head.appendChild(style);
-
-        nearbyMarkersGroup.addTo(map);
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer({
+            map: map,
+            panel: directionsPanel,
+            suppressMarkers: true,
+            polylineOptions: {
+                strokeColor: 'red',
+                strokeOpacity: 0.7,
+                strokeWeight: 4
+            }
+        });
     }
 
-    // === Tambahkan Marker Utama + Radius ===
-    function addMainAirportAndCircle() {
-        mainAirportMarker = L.marker([embassyData.latitude, embassyData.longitude], { icon: mainAirportIcon })
-            .addTo(map)
-            .bindPopup(`<b>${embassyData.name}</b><br>This is the main airport.`);
+    function addMainEmbassyAndCircle() {
+        mainMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(embassyData.latitude, embassyData.longitude),
+            map: map,
+            icon: {
+                url: DEFAULT_MAIN_EMBASSY_ICON_URL,
+                scaledSize: new google.maps.Size(25, 41)
+            },
+            title: embassyData.name
+        });
 
-        radiusCircle = L.circle([embassyData.latitude, embassyData.longitude], {
-            color: 'red', fillColor: '#f03', fillOpacity: 0.1, radius: radiusKm * 1000
-        }).addTo(map);
+        const infoWindow = new google.maps.InfoWindow({
+            content: `<b>${embassyData.name}</b><br>This is the main embassy.`
+        });
+
+        mainMarker.addListener('click', () => {
+            infoWindow.open(map, mainMarker);
+        });
+
+        radiusCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.1,
+            map: map,
+            center: { lat: parseFloat(embassyData.latitude), lng: parseFloat(embassyData.longitude) },
+            radius: radiusKm * 1000
+        });
+    }
+
+    function clearNearbyMarkers() {
+        for (let i = 0; i < nearbyMarkersGroup.length; i++) {
+            nearbyMarkersGroup[i].setMap(null);
+        }
+        nearbyMarkersGroup = [];
     }
 
     // === Tambahkan Marker Sekitar ===
@@ -1347,70 +1377,67 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             if (distance > radiusKm) return;
 
-            // Filter hospital by facility level
+            // Filter hospital
             if (type === 'Hospital' && filters.hospitalLevels?.length > 0) {
-                const itemLevel = (item.facility_level || '').toLowerCase();
+                const level = (item.facility_level || '').toLowerCase();
                 const allowed = filters.hospitalLevels.map(l => l.toLowerCase());
-                if (!allowed.includes(itemLevel)) return;
+                if (!allowed.includes(level)) return;
             }
 
-            // Filter airport by category
+            // Filter airport
             if (type === 'Airport' && filters.airportClassifications?.length > 0) {
-                const airportCategories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
+                const categories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
                 const allowed = filters.airportClassifications.map(c => c.toLowerCase());
-                if (!airportCategories.some(cat => allowed.includes(cat))) return;
+                if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
             // Filter police
-           if (type === 'Police' && filters.policeCategories?.length > 0) {
-                const categories = (item.category || '')
-                    .split(',')
-                    .map(c => c.trim().toLowerCase());
-
+            if (type === 'Police' && filters.policeCategories?.length > 0) {
+                const categories = (item.category || '').split(',').map(c => c.trim().toLowerCase());
                 const allowed = filters.policeCategories.map(c => c.toLowerCase());
-
                 if (!categories.some(cat => allowed.includes(cat))) return;
             }
 
             const isPolice = type === 'Police';
+            const iconSize = isPolice ? new google.maps.Size(12, 12) : new google.maps.Size(24, 24);
 
-            const icon = L.icon({
-                iconUrl: item.icon || defaultIconUrl,
-                iconSize: isPolice ? [12, 12] : [24, 24], // kecilkan police
-                iconAnchor: isPolice ? [15, 30] : [12, 24],
-                popupAnchor: isPolice ? [0, -25] : [0, -20]
+            const marker = new google.maps.Marker({
+                position: { lat: parseFloat(item.latitude), lng: parseFloat(item.longitude) },
+                map: map,
+                icon: {
+                    url: item.icon || defaultIconUrl,
+                    scaledSize: iconSize
+                }
             });
 
-            const marker = L.marker([item.latitude, item.longitude], { icon });
-            const name = item.name || item.airport_name || item.name_police || 'N/A';
-            const level = item.facility_level || item.category || item.category || 'N/A';
-            const distanceText = `<strong>Distance:</strong> ${distance.toFixed(2)} km`;
+            const name = item.name || item.airport_name || item.name_police || item.name_embassiees || 'N/A';
+            const level = item.facility_level || item.category || '';
 
+            let url = '#';
+            if (type === 'Airport') url = `/airports/${item.id}/detail`;
+            else if (type === 'Hospital') url = `/hospitals/${item.id}`;
+            else if (type === 'Police') url = `/police/${item.id}/detail`;
+            else if (type === 'Embassy') url = `/embassiees/${item.id}/detail`;
 
-            let detailUrl = '#';
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="font-size:13px;">
+                        <a href="${url}" target="_blank">${name}</a><br>
+                        ${level}<br>
+                        <strong>Distance:</strong> ${distance.toFixed(2)} km<br>
+                        <button class="btn btn-sm btn-primary mt-2"
+                            onclick="getDirection(${item.latitude}, ${item.longitude})">
+                            Get Direction
+                        </button>
+                    </div>
+                `
+            });
 
-            if (type === 'Airport') {
-                detailUrl = `/airports/${item.id}/detail`;
-            } else if (type === 'Hospital') {
-                detailUrl = `/hospitals/${item.id}`;
-            } else if (type === 'Police') {
-                detailUrl = `/police/${item.id}/detail`;
-            } else if (type === 'Embassy') {
-                detailUrl = `/embassiees/${item.id}/detail`;
-            }
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+            });
 
-            marker.bindPopup(`
-                <div style="font-size:13px;">
-                    <a href="${detailUrl}" target="_blank">${name}</a><br>
-                    ${level}<br>${distanceText}<br>
-                    <button class="btn btn-sm btn-primary mt-2"
-                        onclick="getDirection(${item.latitude}, ${item.longitude}, '${name}')">
-                        Get Direction
-                    </button>
-                </div>
-            `);
-
-            nearbyMarkersGroup.addLayer(marker);
+            nearbyMarkersGroup.push(marker);
         });
     }
 
@@ -1425,41 +1452,194 @@ document.addEventListener('DOMContentLoaded', () => {
         return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-    // === Routing ===
-    window.getDirection = function(lat, lng, name) {
-        if (routingControl) map.removeControl(routingControl);
+    // === NEARBY HOTELS (shown once a location is searched) ===
+    let categoryMarkers   = [];
+    let activeCategoryBtn = null;
+    let categoryBar       = null;
 
-        routingControl = L.Routing.control({
-            waypoints: [
-                L.latLng(embassyData.latitude, embassyData.longitude),
-                L.latLng(lat, lng)
-            ],
-            routeWhileDragging: false,
-            addWaypoints: false,
-            collapsible: true,
-            show: false,
-            createMarker: () => null,
-            lineOptions: { styles: [{ color: 'red', opacity: 0.7, weight: 4 }] }
-        }).addTo(map);
+    function resetCategoryBtn(btn) {
+        btn.style.background  = '#fff';
+        btn.style.color       = '#222';
+        btn.style.borderColor = 'rgba(0,0,0,0.12)';
+    }
 
-        routingControl.on('routesfound', () => {
-            if (mainAirportMarker?.bringToFront) mainAirportMarker.bringToFront();
-            nearbyMarkersGroup.eachLayer(marker => marker.bringToFront && marker.bringToFront());
+    function clearCategoryMarkers() {
+        categoryMarkers.forEach(m => m.setMap(null));
+        categoryMarkers = [];
+    }
+
+    function showNearbyCategory(type, label) {
+        if (!searchLocation) return;
+        clearCategoryMarkers();
+
+        const center  = new google.maps.LatLng(searchLocation.lat, searchLocation.lng);
+        const service = new google.maps.places.PlacesService(map);
+
+        const iconColors = { lodging: '#1a73e8' };
+        const color = iconColors[type] || '#555';
+
+        function makeSvgIcon(col) {
+            const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='32' height='40' viewBox='0 0 32 40'>`
+                      + `<path d='M16 0C7.16 0 0 7.16 0 16c0 12 16 24 16 24S32 28 32 16C32 7.16 24.84 0 16 0z' fill='${col}'/>`
+                      + `<circle cx='16' cy='16' r='7' fill='#fff'/>`
+                      + `</svg>`;
+            return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+
+        service.nearbySearch({ location: center, radius: 5000, type }, (results, status) => {
+            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                if (status === 'ZERO_RESULTS') {
+                    alert(`No ${label.toLowerCase()} found within 5 km.`);
+                } else {
+                    alert(`Failed to load ${label.toLowerCase()}. Error status: ${status}. Please ensure "Places API" is enabled and billing is active.`);
+                    console.error('PlacesService nearbySearch failed with status:', status);
+                }
+                return;
+            }
+            if (!results.length) return;
+
+            results.forEach(place => {
+                if (!place.geometry?.location) return;
+
+                const marker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map,
+                    title: place.name,
+                    icon: { url: makeSvgIcon(color), scaledSize: new google.maps.Size(32, 40) },
+                    animation: google.maps.Animation.DROP
+                });
+
+                const dist     = google.maps.geometry.spherical.computeDistanceBetween(center, place.geometry.location);
+                const distText = dist >= 1000 ? (dist / 1000).toFixed(1) + ' km' : Math.round(dist) + ' m';
+                const rating   = place.rating ? `⭐ ${place.rating.toFixed(1)}` : '';
+                const destLat  = place.geometry.location.lat();
+                const destLng  = place.geometry.location.lng();
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="font-size:13px;min-width:190px;">
+                            <h5 style="border-bottom:1px solid #ccc;margin:0 0 6px;font-size:14px;">${place.name}</h5>
+                            <div style="color:#666;font-size:12px;margin-bottom:3px;">${label}</div>
+                            ${rating  ? `<div style="font-size:12px;">${rating}</div>` : ''}
+                            <div style="margin-top:4px;font-size:12px;color:#555;"> ${distText} from search location</div>
+                            <button class="btn btn-sm btn-primary mt-2"
+                                onclick="getDirection(${destLat}, ${destLng})">
+                                Get Direction
+                            </button>
+                        </div>`
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                categoryMarkers.push(marker);
+            });
+        });
+    }
+
+    function setupNearbyCategoryBar() {
+        categoryBar = document.createElement('div');
+        categoryBar.id = 'nearbyCategBar';
+        Object.assign(categoryBar.style, {
+            display:       'none',
+            background:    'transparent',
+            padding:       '8px 10px 0',
+            gap:           '8px',
+            flexWrap:      'nowrap',
+            overflowX:     'auto',
+            maxWidth:      '90vw',
+            scrollbarWidth:'none'
+        });
+
+        const nearbyCategories = [
+            { label: 'Hotels', icon: '🏨', type: 'lodging' }
+        ];
+
+        nearbyCategories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.textContent = cat.icon + ' ' + cat.label;
+            Object.assign(btn.style, {
+                display:      'inline-flex',
+                alignItems:   'center',
+                gap:          '4px',
+                padding:      '6px 14px',
+                borderRadius: '20px',
+                border:       '1px solid rgba(0,0,0,0.12)',
+                background:   '#fff',
+                color:        '#222',
+                fontSize:     '13px',
+                fontWeight:   '500',
+                cursor:       'pointer',
+                whiteSpace:   'nowrap',
+                boxShadow:    '0 1px 4px rgba(0,0,0,0.15)',
+                transition:   'all 0.15s'
+            });
+
+            btn.addEventListener('click', () => {
+                if (activeCategoryBtn === btn) {
+                    clearCategoryMarkers();
+                    resetCategoryBtn(btn);
+                    activeCategoryBtn = null;
+                    return;
+                }
+                if (activeCategoryBtn) resetCategoryBtn(activeCategoryBtn);
+                activeCategoryBtn = btn;
+                btn.style.background = '#1a73e8';
+                btn.style.color      = '#fff';
+                btn.style.borderColor= '#1a73e8';
+                showNearbyCategory(cat.type, cat.label);
+            });
+
+            categoryBar.appendChild(btn);
+        });
+
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(categoryBar);
+    }
+
+    // === ROUTING ===
+    window.getDirection = function(lat, lng) {
+        const origin = searchLocation
+            ? new google.maps.LatLng(searchLocation.lat, searchLocation.lng)
+            : new google.maps.LatLng(embassyData.latitude, embassyData.longitude);
+
+        directionsService.route({
+            origin: origin,
+            destination: new google.maps.LatLng(lat, lng),
+            travelMode: 'DRIVING'
+        }, (response, status) => {
+            if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+                const panel = document.getElementById('directionsPanel');
+                if(panel) panel.style.display = 'block';
+            } else {
+                console.error('Directions request failed due to ' + status);
+            }
         });
     };
 
     function fitMapToBounds() {
-        const bounds = L.featureGroup([mainAirportMarker, nearbyMarkersGroup, radiusCircle]).getBounds();
-        if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50] });
+        const bounds = new google.maps.LatLngBounds();
+        bounds.extend(new google.maps.LatLng(embassyData.latitude, embassyData.longitude));
+        if (searchLocation) {
+            bounds.extend(new google.maps.LatLng(searchLocation.lat, searchLocation.lng));
+        }
+        nearbyMarkersGroup.forEach(m => bounds.extend(m.getPosition()));
+
+        const circleBounds = radiusCircle.getBounds();
+        if(circleBounds) {
+            bounds.union(circleBounds);
+        }
+
+        map.fitBounds(bounds);
     }
 
-    function updateMarkers(filterType, hospitalLevels, airportClassifications) {
-        nearbyMarkersGroup.clearLayers();
-        if (radiusCircle) map.removeLayer(radiusCircle);
-        addMainAirportAndCircle();
+    function updateMarkers(filterType, hospitalLevels, airportClassifications, policeCategories) {
+        clearNearbyMarkers();
+        if (radiusCircle) radiusCircle.setMap(null);
+        addMainEmbassyAndCircle();
 
-        const filters = { hospitalLevels, airportClassifications };
-
+        const filters = { hospitalLevels, airportClassifications, policeCategories };
         if (filterType === 'hospital') {
             addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
         } else if (filterType === 'airport') {
@@ -1467,110 +1647,150 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (filterType === 'police') {
             addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
         } else if (filterType === 'embassy') {
-            addNearbyMarkers(
-                nearbyEmbassy,
-                DEFAULT_EMBASSY_ICON_URL,
-                'Embassy',
-                filters
-            );
-        }
-        else {
-           addNearbyMarkers(
-                nearbyHospitals,
-                DEFAULT_HOSPITAL_ICON_URL,
-                'Hospital',
-                filters
-            );
-
-            addNearbyMarkers(
-                nearbyAirports,
-                DEFAULT_AIRPORT_ICON_URL,
-                'Airport',
-                filters
-            );
-
-            addNearbyMarkers(
-                nearbyPolices,
-                DEFAULT_POLICE_ICON_URL,
-                'Police',
-                filters
-            );
-
-            addNearbyMarkers(
-                nearbyEmbassy,
-                DEFAULT_EMBASSY_ICON_URL,
-                'Embassy',
-                filters
-            );
+            addNearbyMarkers(nearbyEmbassy, DEFAULT_EMBASSY_ICON_URL, 'Embassy', filters);
+        } else {
+            addNearbyMarkers(nearbyHospitals, DEFAULT_HOSPITAL_ICON_URL, 'Hospital', filters);
+            addNearbyMarkers(nearbyAirports, DEFAULT_AIRPORT_ICON_URL, 'Airport', filters);
+            addNearbyMarkers(nearbyPolices, DEFAULT_POLICE_ICON_URL, 'Police', filters);
+            addNearbyMarkers(nearbyEmbassy, DEFAULT_EMBASSY_ICON_URL, 'Embassy', filters);
         }
 
         fitMapToBounds();
     }
 
-    // === Gabungan Filter + Radius ===
-    const FilterRadiusControl = L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function() {
-            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control p-2 bg-white rounded');
-            div.style.width = '260px';
-            div.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-            div.style.maxHeight = '85vh';
-            div.style.overflowY = 'auto';
+    // === FILTER CONTROL ===
+    function setupFilterControl() {
+        const container = document.createElement('div');
+        container.className = 'p-2 bg-white rounded';
+        container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+        container.style.width = '220px';
+        container.style.maxHeight = '420px';
+        container.style.overflowY = 'auto';
+        container.style.marginRight = '10px';
+        container.style.marginTop = '10px';
+        container.style.cursor = 'default';
 
-            div.innerHTML = `
-                <h6 style="text-align:center;">Map Filters</h6>
-                <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label><br>
-                <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2"><br>
+        container.innerHTML = `
+            <h6><strong>Filter</strong></h6>
+            <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
+            <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2">
 
-                <select id="mapFilter" class="form-select form-select-sm mb-2">
-                    <option value="all">Show All</option>
-                    <option value="hospital">Hospitals</option>
-                    <option value="airport">Aviations</option>
-                    <option value="police">Police</option>
+            <select id="mapFilter" class="form-select form-select-sm mb-2">
+                <option value="all">Show All</option>
+                <option value="hospital">Hospitals</option>
+                <option value="airport">Aviation</option>
+                <option value="police">Police</option>
                     <option value="embassy">Embassy</option>
                 </select>
 
-                <div id="hospitalFilter" style="display:none;">
-                    <strong>Facility Level:</strong><br>
-                    ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)']
-                        .map(lvl => `
-                        <label style="display:block;font-size:13px;">
-                            <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
-                        </label>`).join('')}
-                </div>
+            <div id="hospitalFilter" style="display:none;">
+                <strong>Facility Level:</strong><br>
+                ${['Class A','Class B','Class C','Class D','Public Health Center (PUSKESMAS)']
+                    .map(lvl => `<label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="hospitalLevel" value="${lvl}"> ${lvl}
+                    </label>`).join('')}
+            </div>
 
-                <div id="airportFilter" style="display:none;margin-top:8px;">
-                    <strong>Category:</strong><br>
-                    ${['International','Domestic','Military','Regional','Private']
-                        .map(cls => `
-                        <label style="display:block;font-size:13px;">
-                            <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
-                        </label>`).join('')}
-                </div>
+            <div id="airportFilter" style="display:none;margin-top:8px;">
+                <strong>Category:</strong><br>
+                ${['International','Domestic','Military','Regional','Private']
+                    .map(cls => `<label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="airportClass" value="${cls}"> ${cls}
+                    </label>`).join('')}
+            </div>
 
-                <div id="policeFilter" style="display:none;margin-top:8px;">
-                    <strong>Police Category:</strong><br>
-                    ${[
-                        'Indonesian National Police (Polri) HQ',
-                        'Provincial Police (Polda)',
-                        'Municipality Police (Polres)',
-                        'District Police (Polsek)',
-                        'Police Mobile Brigade (Brimob)',
-                        'Police Bomb Squad (Gegana)'
-                    ].map(cat => `
-                        <label style="display:block;font-size:13px;">
-                            <input type="checkbox" name="policeCategory" value="${cat}"> ${cat}
-                        </label>
-                    `).join('')}
-                </div>
+            <div id="policeFilter" style="display:none;margin-top:8px;">
+                <strong>Police Category:</strong><br>
+                ${[
+                    'Indonesian National Police (Polri) HQ',
+                    'Provincial Police (Polda)',
+                    'Municipality Police (Polres)',
+                    'District Police (Polsek)',
+                    'Police Mobile Brigade (Brimob)',
+                    'Police Bomb Squad (Gegana)'
+                ].map(cat => `
+                    <label style="display:block;font-size:13px;">
+                        <input type="checkbox" name="policeCategory" value="${cat}"> ${cat}
+                    </label>
+                `).join('')}
+            </div>
 
-                <button id="resetFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset All</button>
-            `;
+            <button id="resetFilter" class="btn btn-sm btn-secondary mt-3 w-100">Reset Filter</button>
+        `;
 
-            L.DomEvent.disableClickPropagation(div);
-            return div;
+        // Prevent events from passing to the map
+        google.maps.event.addDomListener(container, 'click', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'dblclick', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'mousedown', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'touchstart', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'wheel', e => e.stopPropagation());
+
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(container);
+
+        const radiusSlider = container.querySelector('#radiusRange');
+        const radiusLabel = container.querySelector('#radiusLabel');
+        radiusSlider.addEventListener('input', () => {
+            radiusKm = parseInt(radiusSlider.value);
+            radiusLabel.textContent = radiusKm;
+            refreshFilters();
+        });
+
+        const filterSelect = container.querySelector('#mapFilter');
+        const hospitalDiv = container.querySelector('#hospitalFilter');
+        const airportDiv = container.querySelector('#airportFilter');
+        const policeDiv = container.querySelector('#policeFilter');
+        const resetBtn = container.querySelector('#resetFilter');
+
+        function refresh() {
+            const selectedType = filterSelect.value;
+            const selectedHospitalLevels = Array.from(container.querySelectorAll('input[name="hospitalLevel"]:checked')).map(el => el.value);
+            const selectedAirportClasses = Array.from(container.querySelectorAll('input[name="airportClass"]:checked')).map(el => el.value);
+            const selectedPoliceCategories = Array.from(container.querySelectorAll('input[name="policeCategory"]:checked')).map(el => el.value);
+            updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
         }
-    });
+
+        filterSelect.addEventListener('change', () => {
+            const val = filterSelect.value;
+            hospitalDiv.style.display = val === 'hospital' ? 'block' : 'none';
+            airportDiv.style.display = val === 'airport' ? 'block' : 'none';
+            policeDiv.style.display = val === 'police' ? 'block' : 'none';
+            refresh();
+        });
+
+        container.querySelectorAll('input[name="hospitalLevel"]').forEach(chk => chk.addEventListener('change', refresh));
+        container.querySelectorAll('input[name="airportClass"]').forEach(chk => chk.addEventListener('change', refresh));
+        container.querySelectorAll('input[name="policeCategory"]').forEach(chk => chk.addEventListener('change', refresh));
+
+        resetBtn.addEventListener('click', () => {
+            container.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+            filterSelect.value = 'all';
+            hospitalDiv.style.display = 'none';
+            airportDiv.style.display = 'none';
+            policeDiv.style.display = 'none';
+            radiusKm = 100;
+            radiusSlider.value = radiusKm;
+            radiusLabel.textContent = radiusKm;
+
+            const gmInput = document.getElementById('gmSearchInput');
+            if(gmInput) gmInput.value = '';
+
+            if (searchMarker) {
+                searchMarker.setMap(null);
+                searchMarker = null;
+            }
+            searchLocation = null;
+
+            if (categoryBar) categoryBar.style.display = 'none';
+            clearCategoryMarkers();
+            if (activeCategoryBtn) { resetCategoryBtn(activeCategoryBtn); activeCategoryBtn = null; }
+
+            directionsRenderer.setDirections({routes: []});
+            const panel = document.getElementById('directionsPanel');
+            if(panel) panel.style.display = 'none';
+
+            refresh();
+        });
+    }
 
     function refreshFilters() {
         const selectedType = document.querySelector('#mapFilter')?.value || 'all';
@@ -1580,45 +1800,133 @@ document.addEventListener('DOMContentLoaded', () => {
         updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
     }
 
+    // === GOOGLE MAPS STYLE SEARCH CONTROL ===
+    function setupSearchControl() {
+        const container = document.createElement('div');
+        container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+        container.style.borderRadius = '8px';
+        container.style.backgroundColor = '#fff';
+        container.style.width = '350px';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.marginTop = '10px';
+        container.style.marginLeft = '10px';
+        container.style.cursor = 'text';
+
+        container.innerHTML = `
+            <div style="display:flex; align-items:center; padding: 0 10px; height: 48px; position:relative;">
+                <i class="fas fa-search" style="color:#5f6368; font-size: 18px; margin-right:10px;"></i>
+                <input type="text" id="gmSearchInput"
+                    style="border:none; outline:none; width:100%; height:100%; font-size:15px; color:#202124;"
+                    placeholder="Search Google Maps..." autocomplete="off">
+                <i class="fas fa-times" id="gmClearBtn" style="color:#70757a; font-size: 18px; cursor:pointer; display:none; padding:5px;"></i>
+            </div>
+        `;
+
+        map.controls[google.maps.ControlPosition.LEFT_TOP].push(container);
+
+        const input = container.querySelector('#gmSearchInput');
+        const clearBtn = container.querySelector('#gmClearBtn');
+
+        // Prevent dragging on the map when interacting with the search box
+        google.maps.event.addDomListener(container, 'click', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'dblclick', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'mousedown', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'touchstart', e => e.stopPropagation());
+        google.maps.event.addDomListener(container, 'wheel', e => e.stopPropagation());
+
+        input.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') e.preventDefault();
+        });
+
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        input.addEventListener('input', (e) => {
+            if (e.target.value.length > 0) {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            clearBtn.style.display = 'none';
+            input.focus();
+
+            if (searchMarker) {
+                searchMarker.setMap(null);
+                searchMarker = null;
+            }
+            searchLocation = null;
+
+            if (categoryBar) categoryBar.style.display = 'none';
+            clearCategoryMarkers();
+            if (activeCategoryBtn) { resetCategoryBtn(activeCategoryBtn); activeCategoryBtn = null; }
+
+            directionsRenderer.setDirections({routes: []});
+            const panel = document.getElementById('directionsPanel');
+            if(panel) panel.style.display = 'none';
+        });
+
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            if (!place.geometry || !place.geometry.location) {
+                return;
+            }
+
+            if (searchMarker) searchMarker.setMap(null);
+
+            searchMarker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location,
+                icon: {
+                    url: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    scaledSize: new google.maps.Size(25, 41)
+                }
+            });
+
+            const lat = place.geometry.location.lat();
+            const lon = place.geometry.location.lng();
+            searchLocation = { lat: lat, lng: lon };
+
+            if (categoryBar) categoryBar.style.display = 'flex';
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="font-size:13px;">
+                        <b>${place.name}</b><br>
+                        <small>Lat: ${lat.toFixed(5)}, Lng: ${lon.toFixed(5)}</small><br>
+                        <button class="btn btn-sm btn-primary mt-2"
+                            onclick="getDirection(${embassyData.latitude}, ${embassyData.longitude})">
+                            Get Direction to Main Embassy
+                        </button>
+                    </div>
+                `
+            });
+
+            infoWindow.open(map, searchMarker);
+            searchMarker.addListener('click', () => {
+                infoWindow.open(map, searchMarker);
+            });
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(14);
+            }
+        });
+    }
+
+    // === JALANKAN ===
     initializeMap();
-    addMainAirportAndCircle();
+    addMainEmbassyAndCircle();
     updateMarkers('all', [], [], []);
-    map.addControl(new FilterRadiusControl());
-
-    // === Event Binding ===
-    document.addEventListener('input', e => {
-        if (e.target.id === 'radiusRange') {
-            radiusKm = parseInt(e.target.value);
-            document.getElementById('radiusLabel').textContent = radiusKm;
-            refreshFilters();
-        }
-    });
-
-    document.addEventListener('change', e => {
-        if (e.target.id === 'mapFilter') {
-            const val = e.target.value;
-            document.getElementById('hospitalFilter').style.display = val === 'hospital' ? 'block' : 'none';
-            document.getElementById('airportFilter').style.display = val === 'airport' ? 'block' : 'none';
-            document.getElementById('policeFilter').style.display = val === 'police' ? 'block' : 'none';
-            refreshFilters();
-        }
-        if (e.target.name === 'hospitalLevel' || e.target.name === 'airportClass' || e.target.name === 'policeCategory') {
-            refreshFilters();
-        }
-    });
-
-    document.addEventListener('click', e => {
-        if (e.target.id === 'resetFilter') {
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            document.getElementById('mapFilter').value = 'all';
-            document.getElementById('hospitalFilter').style.display = 'none';
-            document.getElementById('airportFilter').style.display = 'none';
-            radiusKm = 100;
-            document.getElementById('radiusRange').value = radiusKm;
-            document.getElementById('radiusLabel').textContent = radiusKm;
-            refreshFilters();
-        }
-    });
+    setupFilterControl();
+    setupSearchControl();
+    setupNearbyCategoryBar();
 });
 </script>
 

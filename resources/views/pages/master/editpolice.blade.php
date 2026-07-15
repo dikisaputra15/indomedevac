@@ -164,15 +164,15 @@
                     <label>District Police (Polsek)</label>
                 </div>
 
-                <div class="form-check form-check-inline police-option {{ $police->category == 'Police Mobil Brigade (Brimob)' ? 'selected' : '' }}">
+                <div class="form-check form-check-inline police-option {{ $police->category == 'Police Mobile Brigade (Brimob)' || $police->category == 'Police Mobil Brigade (Brimob)' ? 'selected' : '' }}">
                     <input class="form-check-input category-radio"
                         type="radio"
                         name="category"
-                        value="Police Mobil Brigade (Brimob)"
+                        value="Police Mobile Brigade (Brimob)"
                         data-icon="{{ asset('images/Brimob.png') }}"
-                        {{ $police->category == 'Police Mobil Brigade (Brimob)' ? 'checked' : '' }}>
+                        {{ $police->category == 'Police Mobile Brigade (Brimob)' || $police->category == 'Police Mobil Brigade (Brimob)' ? 'checked' : '' }}>
                     <img src="{{ asset('images/Brimob.png') }}" width="16">
-                    <label>Police Mobil Brigade (Brimob)</label>
+                    <label>Police Mobile Brigade (Brimob)</label>
                 </div>
 
                 <div class="form-check form-check-inline police-option {{ $police->category == 'Police Bomb Squad (Gegana)' ? 'selected' : '' }}">

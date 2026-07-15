@@ -117,9 +117,9 @@
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Mobil Brigade (Brimob)" data-icon="{{ asset('images/Brimob.png') }}">
+                    <input class="form-check-input category-radio" type="radio" name="category" value="Police Mobile Brigade (Brimob)" data-icon="{{ asset('images/Brimob.png') }}">
                     <img src="{{ asset('images/Brimob.png') }}" style="width:12px; height:12px;">
-                    <label class="form-check-label">Police Mobil Brigade (Brimob)</label>
+                    <label class="form-check-label">Police Mobile Brigade (Brimob)</label>
                 </div>
 
                 <div class="form-check form-check-inline">
