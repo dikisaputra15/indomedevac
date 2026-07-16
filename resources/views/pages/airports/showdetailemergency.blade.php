@@ -175,6 +175,162 @@
     .legend-grid-item small {
         text-align: left;
     }
+
+    /* ====== DIRECTIONS PANEL - Modern Styling ====== */
+    #directionsPanel {
+        font-family: 'Segoe UI', Roboto, -apple-system, sans-serif !important;
+        scrollbar-width: thin;
+        scrollbar-color: #c1c1c1 transparent;
+    }
+    #directionsPanel::-webkit-scrollbar { width: 5px; }
+    #directionsPanel::-webkit-scrollbar-thumb {
+        background: #c1c1c1; border-radius: 10px;
+    }
+    #directionsPanel .dp-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        background: linear-gradient(135deg, #1a73e8, #4285f4);
+        border-radius: 8px 8px 0 0;
+        margin: 0;
+        color: #fff;
+    }
+    #directionsPanel .dp-header-title {
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    #directionsPanel .dp-header-title i { color: #fff !important; font-size: 16px; }
+    #directionsPanel .dp-close-btn {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: #fff;
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        transition: background 0.2s;
+    }
+    #directionsPanel .dp-close-btn:hover { background: rgba(255,255,255,0.35); }
+    #directionsPanel .dp-close-btn i { color: #fff !important; }
+
+    /* Google-generated table overrides */
+    #directionsPanel table { border: none !important; width: 100%; }
+    #directionsPanel td {
+        border: none !important;
+        padding: 6px 4px !important;
+        font-size: 13px;
+        vertical-align: top;
+    }
+    #directionsPanel .adp-directions { margin: 0 !important; }
+
+    /* Route summary (origin → destination bar) */
+    #directionsPanel .adp-placemark {
+        background: #f0f4ff;
+        border-radius: 8px;
+        margin-bottom: 8px !important;
+        overflow: hidden;
+    }
+    #directionsPanel .adp-placemark td {
+        padding: 10px 12px !important;
+        font-weight: 600;
+        color: #1a3c6e;
+        font-size: 13px;
+    }
+    #directionsPanel .adp-placemark img {
+        filter: hue-rotate(200deg) saturate(1.5);
+    }
+
+    /* Summary bar (distance & time) */
+    #directionsPanel .adp-summary {
+        background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+        border-radius: 8px;
+        padding: 10px 14px !important;
+        margin: 8px 0 !important;
+        font-size: 13px;
+        color: #1a3c6e;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Step list */
+    #directionsPanel .adp-listsel,
+    #directionsPanel .adp-list {
+        border: none !important;
+    }
+    #directionsPanel .adp-listinfo {
+        border: none !important;
+        background: transparent !important;
+    }
+
+    /* Individual step rows */
+    #directionsPanel .adp-step {
+        border-bottom: 1px solid #eef1f5 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        transition: background 0.15s;
+        border-radius: 6px;
+        margin-bottom: 2px;
+    }
+    #directionsPanel .adp-step:hover {
+        background: #f5f8ff !important;
+    }
+    #directionsPanel .adp-step:last-child {
+        border-bottom: none !important;
+    }
+
+    /* Step icon cell */
+    #directionsPanel .adp-step .adp-stepicon {
+        padding: 8px 4px 8px 8px !important;
+    }
+    #directionsPanel .adp-step .adp-stepicon .adp-maneuver {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Step text */
+    #directionsPanel .adp-step .adp-substep {
+        padding: 8px 12px 8px 4px !important;
+        color: #333;
+        line-height: 1.5;
+        font-size: 12.5px;
+    }
+    #directionsPanel .adp-step .adp-substep b {
+        color: #1a73e8;
+        font-weight: 600;
+    }
+    /* Step distance */
+    #directionsPanel .adp-step td:last-child {
+        color: #5f6368;
+        font-size: 12px;
+        white-space: nowrap;
+        padding-right: 10px !important;
+    }
+
+    /* Warning / legal */
+    #directionsPanel .adp-warnbox,
+    #directionsPanel .adp-legal {
+        font-size: 11px;
+        color: #888;
+        padding: 6px 12px !important;
+        border: none !important;
+    }
+    #directionsPanel .adp-legal a { color: #1a73e8; }
+
+    /* Highlighted / selected step */
+    #directionsPanel .adp-listsel {
+        background: #e8f0fe !important;
+        border-radius: 6px;
+    }
 </style>
 
 @endpush
@@ -1312,16 +1468,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const directionsPanel = document.createElement('div');
         directionsPanel.id = 'directionsPanel';
-        directionsPanel.style.width = '350px';
-        directionsPanel.style.maxHeight = '400px';
+        directionsPanel.style.width = '370px';
+        directionsPanel.style.maxHeight = '450px';
         directionsPanel.style.overflowY = 'auto';
         directionsPanel.style.backgroundColor = 'white';
         directionsPanel.style.display = 'none';
-        directionsPanel.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-        directionsPanel.style.borderRadius = '8px';
+        directionsPanel.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+        directionsPanel.style.borderRadius = '12px';
         directionsPanel.style.margin = '10px';
-        directionsPanel.style.padding = '10px';
+        directionsPanel.style.padding = '0';
         directionsPanel.style.fontSize = '13px';
+
+        // Header
+        const dpHeader = document.createElement('div');
+        dpHeader.className = 'dp-header';
+        dpHeader.innerHTML = `
+            <div class="dp-header-title">
+                <i class="fas fa-route"></i> Route Directions
+            </div>
+            <button class="dp-close-btn" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        directionsPanel.appendChild(dpHeader);
+
+        // Content area (Google renders steps here)
+        const dpContent = document.createElement('div');
+        dpContent.style.padding = '10px';
+        directionsPanel.appendChild(dpContent);
+
+        // Close button handler
+        dpHeader.querySelector('.dp-close-btn').addEventListener('click', () => {
+            directionsPanel.style.display = 'none';
+            directionsRenderer.setDirections({routes: []});
+        });
 
         google.maps.event.addDomListener(directionsPanel, 'click', e => e.stopPropagation());
         google.maps.event.addDomListener(directionsPanel, 'dblclick', e => e.stopPropagation());
@@ -1334,12 +1514,12 @@ document.addEventListener('DOMContentLoaded', () => {
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer({
             map: map,
-            panel: directionsPanel,
+            panel: dpContent,
             suppressMarkers: true,
             polylineOptions: {
-                strokeColor: 'red',
-                strokeOpacity: 0.7,
-                strokeWeight: 4
+                strokeColor: '#1a73e8',
+                strokeOpacity: 0.8,
+                strokeWeight: 5
             }
         });
     }
@@ -1627,7 +1807,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const panel = document.getElementById('directionsPanel');
                 if(panel) panel.style.display = 'block';
             } else {
-                console.error('Directions request failed due to ' + status);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Route Not Found',
+                    text: status === 'ZERO_RESULTS'
+                        ? 'No driving route could be found between these two locations.'
+                        : 'Directions request failed (' + status + ').',
+                    confirmButtonColor: '#d33'
+                });
             }
         });
     };
@@ -1678,7 +1865,7 @@ document.addEventListener('DOMContentLoaded', () => {
         container.className = 'p-2 bg-white rounded';
         container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
         container.style.width = '220px';
-        container.style.maxHeight = '420px';
+        container.style.maxHeight = '75vh';
         container.style.overflowY = 'auto';
         container.style.marginRight = '10px';
         container.style.marginTop = '10px';
@@ -1686,10 +1873,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = `
             <h6><strong>Filter</strong></h6>
-            <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
-            <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2">
 
-            <select id="mapFilter" class="form-select form-select-sm mb-2">
+            <strong style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#555;">Search Location</strong>
+            <div style="position:relative;margin-top:5px;">
+                <input type="text" id="gmSearchInput" class="form-control form-control-sm"
+                    placeholder="Search Location..." autocomplete="off" style="padding-right:28px;">
+                <i class="fas fa-times" id="gmClearBtn"
+                    style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:#70757a;font-size:13px;cursor:pointer;display:none;"></i>
+            </div>
+
+            <label><strong>Radius:</strong> <span id="radiusLabel">${radiusKm}</span> km</label>
+            <input type="range" id="radiusRange" min="10" max="500" step="10" value="${radiusKm}" class="form-range mb-2" style="display:block;width:100%;">
+
+            <select id="mapFilter" class="form-select form-select-sm mb-2" style="display:block;width:100%;">
                 <option value="all">Show All</option>
                 <option value="hospital">Hospitals</option>
                 <option value="airport">Aviation</option>
@@ -1785,7 +1981,7 @@ document.addEventListener('DOMContentLoaded', () => {
             radiusSlider.value = radiusKm;
             radiusLabel.textContent = radiusKm;
 
-            const gmInput = document.getElementById('gmSearchInput');
+            const gmInput = container.querySelector('#gmSearchInput');
             if(gmInput) gmInput.value = '';
 
             if (searchMarker) {
@@ -1804,6 +2000,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             refresh();
         });
+
+        return container;
     }
 
     function refreshFilters() {
@@ -1814,40 +2012,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateMarkers(selectedType, selectedHospitalLevels, selectedAirportClasses, selectedPoliceCategories);
     }
 
-    // === GOOGLE MAPS STYLE SEARCH CONTROL ===
-    function setupSearchControl() {
-        const container = document.createElement('div');
-        container.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-        container.style.borderRadius = '8px';
-        container.style.backgroundColor = '#fff';
-        container.style.width = '350px';
-        container.style.display = 'flex';
-        container.style.flexDirection = 'column';
-        container.style.marginTop = '10px';
-        container.style.marginLeft = '10px';
-        container.style.cursor = 'text';
-
-        container.innerHTML = `
-            <div style="display:flex; align-items:center; padding: 0 10px; height: 48px; position:relative;">
-                <i class="fas fa-search" style="color:#5f6368; font-size: 18px; margin-right:10px;"></i>
-                <input type="text" id="gmSearchInput"
-                    style="border:none; outline:none; width:100%; height:100%; font-size:15px; color:#202124;"
-                    placeholder="Search Google Maps..." autocomplete="off">
-                <i class="fas fa-times" id="gmClearBtn" style="color:#70757a; font-size: 18px; cursor:pointer; display:none; padding:5px;"></i>
-            </div>
-        `;
-
-        map.controls[google.maps.ControlPosition.LEFT_TOP].push(container);
-
-        const input = container.querySelector('#gmSearchInput');
-        const clearBtn = container.querySelector('#gmClearBtn');
-
-        // Prevent dragging on the map when interacting with the search box
-        google.maps.event.addDomListener(container, 'click', e => e.stopPropagation());
-        google.maps.event.addDomListener(container, 'dblclick', e => e.stopPropagation());
-        google.maps.event.addDomListener(container, 'mousedown', e => e.stopPropagation());
-        google.maps.event.addDomListener(container, 'touchstart', e => e.stopPropagation());
-        google.maps.event.addDomListener(container, 'wheel', e => e.stopPropagation());
+    // === SEARCH LOCATION CONTROL (now part of the filter panel) ===
+    function setupSearchControl(filterContainer) {
+        const input = filterContainer.querySelector('#gmSearchInput');
+        const clearBtn = filterContainer.querySelector('#gmClearBtn');
+        if (!input || !clearBtn) return;
 
         input.addEventListener('keydown', (e) => {
             if(e.key === 'Enter') e.preventDefault();
@@ -1855,6 +2024,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
+
+        // The input lives inside a custom map control, so Google's ".pac-container"
+        // dropdown (appended to <body> with position:absolute) ends up clipped/
+        // hidden behind the map's own control panes. Force position:fixed and keep
+        // re-applying it, since Google resets the container's inline style on every
+        // prediction update (a one-shot fix gets silently overwritten).
+        let pacContainer = null;
+
+        function fixPacPosition() {
+            if (!pacContainer) return;
+            if (pacContainer.parentElement !== document.body) {
+                document.body.appendChild(pacContainer);
+            }
+            const rect = input.getBoundingClientRect();
+            pacContainer.style.position = 'fixed';
+            pacContainer.style.zIndex = '2147483647';
+            pacContainer.style.top = (rect.bottom + 2) + 'px';
+            pacContainer.style.left = rect.left + 'px';
+            pacContainer.style.width = rect.width + 'px';
+            pacContainer.style.visibility = 'visible';
+            pacContainer.style.opacity = '1';
+            pacContainer.style.pointerEvents = 'auto';
+        }
+
+        function claimPacContainer() {
+            if (pacContainer) return true;
+            pacContainer = document.querySelector('.pac-container');
+            if (pacContainer) {
+                fixPacPosition();
+                new MutationObserver(fixPacPosition).observe(
+                    pacContainer, { attributes: true, attributeFilter: ['style'] }
+                );
+                return true;
+            }
+            return false;
+        }
+
+        const pacObserver = new MutationObserver(() => claimPacContainer());
+        pacObserver.observe(document.body, { childList: true, subtree: true });
+
+        // Fallback in case Google created ".pac-container" before the observer
+        // above started watching (a MutationObserver only reports *future*
+        // mutations, so a container created earlier would otherwise be missed).
+        if (!claimPacContainer()) {
+            const pollId = setInterval(() => {
+                if (claimPacContainer()) clearInterval(pollId);
+            }, 200);
+            setTimeout(() => clearInterval(pollId), 10000);
+        }
+
+        window.addEventListener('scroll', fixPacPosition, true);
+        window.addEventListener('resize', fixPacPosition);
+        input.addEventListener('focus', fixPacPosition);
+        input.addEventListener('input', fixPacPosition);
 
         input.addEventListener('input', (e) => {
             if (e.target.value.length > 0) {
@@ -1868,6 +2091,7 @@ document.addEventListener('DOMContentLoaded', () => {
             input.value = '';
             clearBtn.style.display = 'none';
             input.focus();
+            if (pacContainer) pacContainer.style.display = 'none';
 
             if (searchMarker) {
                 searchMarker.setMap(null);
@@ -1938,8 +2162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeMap();
     addMainAirportAndCircle();
     updateMarkers('all', [], [], []);
-    setupFilterControl();
-    setupSearchControl();
+    const filterContainer = setupFilterControl();
+    setupSearchControl(filterContainer);
     setupNearbyCategoryBar();
 });
 </script>
