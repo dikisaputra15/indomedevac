@@ -357,7 +357,14 @@
                 <img src="{{ asset('images/icon-emergency-support-white.png') }}" style="width: 24px; height: 24px;">
                 <small>Emergency</small>
             </a>
-             <!-- Button 5 -->
+
+            <!-- Button 6 -->
+            <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
+                <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
+                <small>Air Charter</small>
+            </a>
+
+            <!-- Button 5 -->
             <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
                  <img src="{{ asset('images/icon-medical.png') }}" style="width: 24px; height: 24px;">
                 <small>Medical</small>
@@ -368,21 +375,9 @@
                 <small>Airports</small>
             </a>
 
-            <!-- Button 6 -->
-            <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
-                <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
-                <small>Air Charter</small>
-            </a>
-
             <a href="{{ url('police') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('police') ? 'active' : '' }}">
                 <i class="bi bi-person-badge" style="width: 24px; height: 24px;"></i>
                 <small>Police</small>
-            </a>
-
-            <!-- Button 7 -->
-            <a href="{{ url('embassiees') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('embassiees') ? 'active' : '' }}">
-            <img src="{{ asset('images/icon-embassy.png') }}" style="width: 24px; height: 24px;">
-                <small>Embassies</small>
             </a>
 
         </div>

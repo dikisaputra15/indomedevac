@@ -1562,12 +1562,7 @@ document.addEventListener('change', function(e) {
     });
 
     const nearbyCategories = [
-        { label: 'Hotels',      icon: '🏨', type: 'lodging' },
-        { label: 'Restaurants', icon: '🍴', type: 'restaurant' },
-        { label: 'Pharmacies',  icon: '💊', type: 'pharmacy' },
-        { label: 'ATMs',        icon: '🏧', type: 'atm' },
-        { label: 'Parking',     icon: '🅿️', type: 'parking' },
-        { label: 'Cafes',       icon: '☕', type: 'cafe' }
+        { label: 'Hotels', icon: '🏨', type: 'lodging' }
     ];
 
     nearbyCategories.forEach(cat => {
@@ -1649,10 +1644,13 @@ document.addEventListener('change', function(e) {
             return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
         }
 
-        service.nearbySearch({ location: center, radius: 5000, type }, (results, status) => {
+        const searchRadiusM  = 20000; // 20 km
+        const searchRadiusKm = searchRadiusM / 1000;
+
+        service.nearbySearch({ location: center, radius: searchRadiusM, type }, (results, status) => {
             if (status !== google.maps.places.PlacesServiceStatus.OK) {
                 if (status === 'ZERO_RESULTS') {
-                    alert(`No ${label.toLowerCase()} found within 5 km.`);
+                    alert(`No ${label.toLowerCase()} found within ${searchRadiusKm} km.`);
                 } else {
                     alert(`Failed to load ${label.toLowerCase()}. Error status: ${status}. Please ensure "Places API" is enabled and billing is active.`);
                     console.error('PlacesService nearbySearch failed with status:', status);
