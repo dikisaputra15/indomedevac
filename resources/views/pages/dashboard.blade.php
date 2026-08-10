@@ -6,9 +6,9 @@
 
 @push('styles')
 
-    
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
+
     <style>
         #map {
             height: 700px;
@@ -350,7 +350,7 @@
 
                 <!-- Airport -->
                       <div class="class-column" style="margin-right: 100px;">
-                      
+
                         <div class="airport-list" style="align-items:start;">
 
                           <div class="class-header class-airport-category">Airfield Classification</div>
@@ -479,7 +479,7 @@
 
     </div>
 </div>
-                        
+
                     </div>
 
                 </div>
@@ -489,14 +489,9 @@
             <div class="d-flex justify-content-end p-3">
                 <div class="d-flex gap-2 mt-2">
 
-                    <a href="{{ url('home') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('home') ? 'active' : '' }}">
-                        <i class="bi bi-house-door-fill fs-3"></i>
-                        <small>Home</small>
-                    </a>
-
                     <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('airports') ? 'active' : '' }}">
                         <i class="bi bi-airplane fs-3"></i>
-                        <small>Airports</small>
+                        <small>Aviation</small>
                     </a>
 
                     <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('hospital') ? 'active' : '' }}">
@@ -1447,7 +1442,7 @@ document.addEventListener('click', (e) => {
     const provinceSelectInput = e.target.closest('#provinceSelect .select-input');
     const provinceDropdown = document.querySelector('#provinceSelect .select-dropdown');
     const provinceSearch = document.getElementById('provinceSearch');
-    
+
     if (provinceSelectInput) {
         if (provinceDropdown) provinceDropdown.classList.toggle('show');
     } else {
@@ -1874,7 +1869,7 @@ document.addEventListener('change', function(e) {
         if (!isDrawingPolygon) return;
         polygonLatLngs.push(e.latLng);
         activePolyline.setPath(polygonLatLngs);
-        
+
         if (polygonLatLngs.length === 1) {
             startMarker = new google.maps.Marker({
                 position: e.latLng,
@@ -1950,7 +1945,7 @@ document.addEventListener('change', function(e) {
                     await refreshCurrentFilters();
                 }
             };
-            
+
             google.maps.event.addListener(activePolygon.getPath(), 'set_at', updatePolygonFilter);
             google.maps.event.addListener(activePolygon.getPath(), 'insert_at', updatePolygonFilter);
             google.maps.event.addListener(activePolygon.getPath(), 'remove_at', updatePolygonFilter);
@@ -2194,7 +2189,7 @@ document.addEventListener('change', function(e) {
             if (!item || !item.latitude || !item.longitude) return;
 
             let iconSize = new google.maps.Size(24, 24);
-            
+
             // Police icon lebih kecil
             if (item.name_police) {
                 iconSize = new google.maps.Size(12, 12);
