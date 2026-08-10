@@ -99,14 +99,14 @@
         <div class="d-flex gap-2 ms-auto">
              <!-- Button 5 -->
 
-            <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3">
-                <i class="bi bi-airplane fs-3"></i>
-                <small>Airports</small>
+            <a href="{{ url('home') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('home') ? 'active' : '' }}">
+                <i class="bi bi-house-door-fill fs-3"></i>
+                <small>Home</small>
             </a>
 
-            <a href="{{ url('aircharter') }}" class="btn btn-danger d-flex flex-column align-items-center p-3 {{ request()->is('aircharter') ? 'active' : '' }}">
-                  <img src="{{ asset('images/icon-air-charter.png') }}" style="width: 48px; height: 24px;">
-                <small>Air Charter</small>
+            <a href="{{ url('airports') }}" class="btn btn-danger d-flex flex-column align-items-center p-3">
+                <i class="bi bi-airplane fs-3"></i>
+                <small>Aviation</small>
             </a>
 
             <a href="{{ url('hospital') }}" class="btn btn-danger d-flex flex-column align-items-center p-3">
