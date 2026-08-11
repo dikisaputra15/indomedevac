@@ -2347,20 +2347,12 @@ document.addEventListener('change', function(e) {
         totalPolice = 0;
         totalEmbassies = 0;
 
-        // jika tidak ada checkbox dipilih => tampilkan semua
-        const showAllFacilities = facilities.length === 0;
-
-        const showHospital =
-            showAllFacilities || facilities.includes('hospital');
-
-        const showAirport =
-            showAllFacilities || facilities.includes('airport');
-
-        const showPolice =
-            showAllFacilities || facilities.includes('police');
-
-        const showEmbassy =
-            showAllFacilities || facilities.includes('embassy');
+        // hanya facility yang dicentang yang ditampilkan
+        // (checkbox "All" mencentang semuanya sekaligus)
+        const showHospital = facilities.includes('hospital');
+        const showAirport = facilities.includes('airport');
+        const showPolice = facilities.includes('police');
+        const showEmbassy = facilities.includes('embassy');
 
          // === HOSPITALS ===
         if (showHospital) {
@@ -2476,12 +2468,17 @@ document.addEventListener('change', function(e) {
     }
 
     function updateTotalCountDisplay() {
-        document.getElementById('airportCount').textContent = totalAirports;
-        document.getElementById('hospitalCount').textContent = totalHospitals;
-        document.getElementById('policeCount').textContent = totalPolice;
-        document.getElementById('embassyCount').textContent = totalEmbassies;
+        // Panel filter di-attach oleh Google Maps secara async,
+        // jadi elemen counter bisa belum ada saat load pertama.
+        const setCount = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
 
-        const el = document.getElementById('totalCountDisplay');
+        setCount('airportCount', totalAirports);
+        setCount('hospitalCount', totalHospitals);
+        setCount('policeCount', totalPolice);
+        setCount('embassyCount', totalEmbassies);
     }    // === COMBINED PANEL ===
     const combinedPanelDiv = document.createElement('div');
     combinedPanelDiv.id = 'combinedPanelDiv';
@@ -2540,6 +2537,13 @@ document.addEventListener('change', function(e) {
             <div style="padding-top:8px;">
             <strong style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#555;">Facilities</strong>
                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="all" id="facilityAll">
+                        <label class="form-check-label" for="facilityAll">
+                            <strong>All</strong>
+                        </label>
+                    </div>
+
+                    <div class="form-check">
                         <input class="form-check-input facility-checkbox" type="checkbox" value="hospital" id="facilityHospital">
                         <label class="form-check-label" for="facilityHospital">
                             Medical (<span id="hospitalCount">0</span>)
@@ -2547,7 +2551,7 @@ document.addEventListener('change', function(e) {
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input facility-checkbox" type="checkbox" value="airport" id="facilityAirport">
+                        <input class="form-check-input facility-checkbox" type="checkbox" value="airport" id="facilityAirport" checked>
                         <label class="form-check-label" for="facilityAirport">
                             Aviation (<span id="airportCount">0</span>)
                         </label>
@@ -2622,6 +2626,31 @@ document.addEventListener('change', function(e) {
             google.maps.event.addDomListener(combinedPanelDiv, 'touchstart', e => e.stopPropagation());
             google.maps.event.addDomListener(combinedPanelDiv, 'wheel', e => e.stopPropagation());
             map.controls[google.maps.ControlPosition.RIGHT_TOP].push(combinedPanelDiv);
+
+    // === FACILITIES "ALL" CHECKBOX SYNC ===
+    // Didaftarkan pada fase capture SEBELUM listener filter di bawah,
+    // supaya state checkbox sudah tersinkron saat filter dibaca.
+    function syncFacilityAllCheckbox() {
+        const all = document.getElementById('facilityAll');
+        if (!all) return;
+        const boxes = [...document.querySelectorAll('.facility-checkbox')];
+        all.checked = boxes.length > 0 && boxes.every(cb => cb.checked);
+    }
+
+    document.addEventListener('change', e => {
+        if (!e.target) return;
+
+        if (e.target.id === 'facilityAll') {
+            document.querySelectorAll('.facility-checkbox').forEach(cb => {
+                cb.checked = e.target.checked;
+            });
+            return;
+        }
+
+        if (e.target.classList && e.target.classList.contains('facility-checkbox')) {
+            syncFacilityAllCheckbox();
+        }
+    }, true);
 
     // === INIT SELECT2 ===
     setTimeout(() => {
@@ -2723,8 +2752,11 @@ document.addEventListener('click', async (e) => {
 
     // RESET ALL FILTERS (tombol Reset All)
     if (e.target.id === 'resetMapFilter') {
-        // 1) UI reset
+        // 1) UI reset (default: hanya Aviation yang aktif)
         document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+        const defaultFacility = document.getElementById('facilityAirport');
+        if (defaultFacility) defaultFacility.checked = true;
+        syncFacilityAllCheckbox();
         const provinceSearch = document.getElementById('provinceSearch');
         if (provinceSearch) provinceSearch.value = '';
         const provinceSearchInput = document.getElementById('provinceSearchInput');
@@ -2791,8 +2823,8 @@ document.addEventListener('click', async (e) => {
         totalEmbassies = 0;
         updateTotalCountDisplay();
 
-        // 6) Re-fetch semua data
-        await applyFiltersWithMapControl([], [], [], [], 0, '', '');
+        // 6) Re-fetch data sesuai default (Aviation)
+        await applyFiltersWithMapControl(['airport'], [], [], [], 0, '', '');
 
         e.stopPropagation();
         e.preventDefault();
@@ -2837,7 +2869,15 @@ setTimeout(() => {
 }, 350);
 
     // --- Initial Load ---
-    refreshCurrentFilters();
+    // Tunggu sampai panel filter benar-benar ter-attach ke DOM oleh Google Maps,
+    // supaya default checkbox (Aviation) terbaca oleh getCurrentFiltersFromUI().
+    (function initialLoad() {
+        if (!document.getElementById('facilityAirport')) {
+            setTimeout(initialLoad, 100);
+            return;
+        }
+        refreshCurrentFilters();
+    })();
 </script>
 
 @endpush
