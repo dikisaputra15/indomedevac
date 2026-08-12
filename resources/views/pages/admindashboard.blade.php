@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 5px 6px;
+            padding: 1px 6px;
             border-radius: 5px;
             transition: background-color .15s ease;
         }
@@ -1612,7 +1612,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="modal fade" id="level1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

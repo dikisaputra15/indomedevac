@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 5px 6px;
+            padding: 1px 6px;
             border-radius: 5px;
             transition: background-color .15s ease;
         }
