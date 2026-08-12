@@ -75,7 +75,7 @@
 <div class="card">
 
     <div class="d-flex justify-content-between p-3" style="background-color: #dfeaf1;">
-        <div class="d-flex gap-2 align-items-center">
+        <div class="d-flex flex-column gap-1">
             <h2 class="fw-bold">{{ $police->name_police }}</h2>
             <span class="fw-bold"><b>Police Classification (Global):</b> {{ $police->level }} | <b>Police Classification (Country):</b> {{ $police->category }}</span>
         </div>
