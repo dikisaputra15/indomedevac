@@ -672,7 +672,7 @@
 
                                 <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police6Modal">
                                     <img src="{{ asset('images/Layer1.png') }}" style="width:12px; height:12px;">
-                                    <small>Polri HQ (National)</small>
+                                    <small>National Police HQ (POLRI)</small>
                                 </button>
 
                                 <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police5Modal">
@@ -1390,45 +1390,648 @@
   </div>
 </div>
 
-<div class="modal fade" id="police1Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
+<div class="modal fade" id="police1Modal" tabindex="-1" aria-labelledby="geganaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered info-modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="d-flex align-items-center">
-             <img src="{{ asset('images/Gegana.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Bomb Squad / Special Police Force — Pasukan Gegana</h5>
+        <div class="d-flex align-items-center gap-2">
+            <img src="{{ asset('images/Gegana.png') }}" style="width:18px; height:18px;">
+            <h5 class="modal-title mb-0" id="geganaLabel">Bomb Squad / Special Police Force &mdash; Pasukan Gegana</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-            <p class="p-modal text-justify">
-                Gegana is a specialized force under Korbrimob Polri responsible for bomb disposal. Gegana can be described as Polri’s specialist Brimob unit for bomb disposal and high-risk special police operations. Bomb disposal is only one of its core capabilities, Gegana has a wider special police role covering counter-terrorism, hostage rescue, armed high-risk incidents, bomb disposal, tactical technical support, and response to chemical, biological, radiological, and nuclear threats.
-            </p>
+
+      <ul class="nav nav-tabs info-modal-tabs px-3 pt-2" id="geganaTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="gegana-definition-tab" data-bs-toggle="tab" data-bs-target="#gegana-definition"
+                type="button" role="tab" aria-controls="gegana-definition" aria-selected="true">Definition &amp; Purpose</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gegana-commander-tab" data-bs-toggle="tab" data-bs-target="#gegana-commander"
+                type="button" role="tab" aria-controls="gegana-commander" aria-selected="false">Commander</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gegana-structure-tab" data-bs-toggle="tab" data-bs-target="#gegana-structure"
+                type="button" role="tab" aria-controls="gegana-structure" aria-selected="false">Gegana Unit Classification</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gegana-roles-tab" data-bs-toggle="tab" data-bs-target="#gegana-roles"
+                type="button" role="tab" aria-controls="gegana-roles" aria-selected="false">Responsibilities/Roles/Function</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gegana-geographic-tab" data-bs-toggle="tab" data-bs-target="#gegana-geographic"
+                type="button" role="tab" aria-controls="gegana-geographic" aria-selected="false">Operational Distribution</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gegana-equivalent-tab" data-bs-toggle="tab" data-bs-target="#gegana-equivalent"
+                type="button" role="tab" aria-controls="gegana-equivalent" aria-selected="false">Police &ndash; Civil &ndash; Military Equivalent</button>
+        </li>
+      </ul>
+
+      <div class="modal-body info-modal-body">
+        <div class="tab-content info-modal-content" id="geganaTabContent">
+            <div class="tab-pane fade show active" id="gegana-definition" role="tabpanel" aria-labelledby="gegana-definition-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    <strong>Definition:</strong> Gegana is the specialized high-risk operational force of the Indonesian National Police (Polri) under the Mobile Brigade Corps (Korps Brigade Mobil &ndash; Korbrimob Polri). At the national level, Pasukan Gegana Korbrimob Polri is one of the main operational elements under the Commander of Korbrimob (Dankorbrimob Polri). Gegana is responsible for responding to high-intensity public-security threats involving firearms, explosives, terrorism, hostage situations, and Chemical, Biological, Radiological and Nuclear (CBRN/KBRN) hazards.
+                </p>
+                <p class="p-modal text-justify">
+                    Unlike Polda, Polres, and Polsek, Gegana is not a territorial police command and does not administer a permanent geographic police jurisdiction. It is a specialized operational capability that can be deployed according to nature and level of threat. At the national level, Pasukan Gegana provides strategic capability, reinforcement, technical assistance, training, standardization, and functional supervision. At the regional level, Gegana function is maintained through Detasemen Gegana of the Polda&rsquo;s Satuan Brimob (Satbrimob).
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Purpose:</strong> Gegana provides Polri with specialized tactical capabilities for high-risk incidents that exceed conventional policing capacity. Its purpose is to rapidly neutralize armed and terrorist threats, render explosives safe, respond to CBRN hazards, rescue hostages, provide specialized technical support, and reinforce police operations during high-intensity security incidents.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Command Level: National specialized operational command under Korbrimob Polri</strong>
+                </p>
+                <p class="p-modal text-justify">
+                    Pasukan Gegana is a national-level operational element of Korbrimob Polri rather than a territorial command. Its forces may be deployed throughout Indonesia and may provide technical assistance for activities of national or international scale. The national force also exercises functional development and supervision over Gegana elements in Satbrimob Polda.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="gegana-commander" role="tabpanel" aria-labelledby="gegana-commander-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    <strong>Pasukan Gegana Korbrimob Polri:</strong> Led by the Commander of Pasukan Gegana (Komandan Pasukan Gegana &ndash; Danpas Gegana). The position is held at Brigadier General level (Brigadir Jenderal Polisi &ndash; Brigjen Pol), bearing the insignia of one (1) gold star. Danpas Gegana is subordinate to and receives operational direction from Dankorbrimob Polri.
+                </p>
+                <p class="p-modal text-justify">
+                    Danpas Gegana is responsible for commanding, supervising and controlling the units under Pasukan Gegana; developing personnel capability and operational readiness; and deploying Gegana forces under the direction of Dankorbrimob Polri. The official organizational staffing structure allocates one Brigjen Pol position to Pasukan Gegana.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Regional Gegana:</strong> At Polda level, the Gegana element is organized as Detasemen Gegana under Satbrimob Polda and is led by a Komandan Detasemen Gegana (Danden Gegana). The commander rank is not uniform nationally and may vary according to the organizational structure and classification of the respective Satbrimob/Polda. Operational examples show Danden Gegana positions held by Kompol or AKBP.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="gegana-structure" role="tabpanel" aria-labelledby="gegana-structure-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Pasukan Gegana is organized according to specialist operational capability rather than geographic jurisdiction. The current national structure contains four principal operational units: Satuan Wanteror, Satuan Jibom, Satuan KBRN, and Satuan Bantek. These units collectively provide tactical counter-terrorism, bomb disposal, CBRN response and specialized technical support capabilities.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="unit-class-table">
+                        <thead>
+                            <tr>
+                                <th style="width:17%;">Unit Type</th>
+                                <th style="width:23%;">Classification</th>
+                                <th style="width:27%;">Head Position &amp; Typical Rank</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Pasukan Gegana Korbrimob Polri</th>
+                                <td>National Gegana Command</td>
+                                <td>Danpas Gegana &ndash; Brigjen Pol, one-star police general</td>
+                                <td>National command, operational deployment, capability development, technical assistance and functional supervision of Gegana.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Satuan Wanteror</th>
+                                <td>Counter-Terrorism / Tactical Assault</td>
+                                <td>Dansat Wanteror &ndash; typically senior police officer at Kombes Pol level</td>
+                                <td>Armed counter-terrorism operations, high-risk tactical intervention and hostage rescue.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Satuan Jibom</th>
+                                <td>Bomb Disposal / EOD</td>
+                                <td>Dansat Jibom &ndash; typically Kombes Pol</td>
+                                <td>Detection, identification, neutralization and disposal of bombs, explosives and explosive threats.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Satuan KBRN</th>
+                                <td>Chemical, Biological, Radiological and Nuclear (CBRN) Response</td>
+                                <td>Dansat KBRN &ndash; typically Kombes Pol</td>
+                                <td>Response to Chemical, Biological, Radiological and Nuclear threats and hazardous contamination.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Satuan Bantek</th>
+                                <td>Technical Support</td>
+                                <td>Dansat Bantek &ndash; typically Kombes Pol</td>
+                                <td>Tactical and technical support for Gegana operations, specialist technology, reconnaissance and capability development.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Detasemen Gegana Satbrimob Polda</th>
+                                <td>Regional Gegana Element</td>
+                                <td>Danden Gegana &ndash; commonly Kompol/AKBP, depending on organizational structure</td>
+                                <td>Provides Gegana capability at Polda level and supports regional police operations.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-modal-note">
+                    <p class="mb-2"><strong>Note:</strong> Pasukan Gegana&rsquo;s national operational structure consists of:</p>
+                    <ul class="mb-2">
+                        <li><strong>Counter-Terrorism Unit &ndash; Satuan Wanteror</strong> &rarr; Detachment A, Detachment B and Detachment C Wanteror</li>
+                        <li><strong>Bomb Disposal Unit &ndash; Satuan Jibom</strong> &rarr; Detachment A, Detachment B and Detachment C Jibom</li>
+                        <li><strong>Chemical, Biological, Radiological and Nuclear (CBRN) Unit &ndash; Satuan KBRN</strong> &rarr; Detachment A, Detachment B and Detachment C KBRN</li>
+                        <li><strong>Technical Support Unit &ndash; Satuan Bantek</strong> &rarr; Tactical Support Detachment &ndash; Detasemen Bantuan Taktis (Den Bantis) and Development Detachment &ndash; Detasemen Pengembangan (Denbang)</li>
+                    </ul>
+                    <p class="mb-0">This gives the four national operational units a total of 11 subordinate Detasemen.</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="gegana-roles" role="tabpanel" aria-labelledby="gegana-roles-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Pasukan Gegana is a main specialized operational force under Korbrimob Polri. It is responsible for addressing high-intensity security and public-order threats (Gangguan Kamtibmas Intensitas Tinggi&mdash;GKIT) requiring specialist tactical, explosive-ordnance, CBRN or technical capabilities. It also develops and supervises Gegana capability in Satbrimob Polda.
+                </p>
+                <p class="p-modal"><strong>Responsibilities</strong></p>
+                <ul>
+                    <li><strong>Counter-Terrorism and High-Risk Tactical Operations:</strong> Conduct tactical intervention against organized armed threats and terrorist resistance requiring specialist assault capabilities.</li>
+                    <li><strong>Hostage Rescue:</strong> Conduct high-risk intervention and hostage-release operations involving armed or terrorist offenders through the Wanteror capability.</li>
+                    <li><strong>Bomb Disposal and Explosive Threat Response (Jibom):</strong> Detect, identify, secure, neutralize and dispose of bombs, improvised explosive devices, military ordnance and other explosive hazards.</li>
+                    <li><strong>Explosive-Site Sterilization:</strong> Conduct preventive bomb sweeps and security sterilization of designated facilities, major events, strategic locations and locations assessed as vulnerable to explosive threats. Regional Gegana Jibom units regularly perform this function in support of Polda and Polres operations.</li>
+                    <li><strong>CBRN/KBRN Response:</strong> Respond to incidents involving Chemical, Biological, Radiological and Nuclear hazards, including detection, identification, containment, technical assessment and specialist response measures.</li>
+                    <li><strong>Technical Support (Bantek):</strong> Provide specialized technical support to Gegana operations, including tactical reconnaissance, technical intelligence support, specialist information technology, operational equipment and capability development.</li>
+                    <li><strong>National Rapid-Response Capability:</strong> Maintain operational personnel, specialist equipment and support resources capable of rapid deployment to security incidents throughout Indonesia. Pasukan Gegana maintains on-call operational elements capable of assignment across the Republic of Indonesia.</li>
+                </ul>
+            </div>
+
+            <div class="tab-pane fade" id="gegana-geographic" role="tabpanel" aria-labelledby="gegana-geographic-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Unlike territorial units, Gegana does not follow Indonesia&rsquo;s civilian administrative boundaries as an independent territorial command. Its organization combines a national centralized force with regional Gegana elements embedded in Satbrimob Polda.
+                </p>
+
+                <p class="p-modal"><strong>National Level &ndash; Pasukan Gegana Korbrimob Polri</strong></p>
+                <p class="p-modal text-justify">
+                    National level Gegana headquarters is located at Cimanggis, Depok, West Java, as part of the Korbrimob Polri complex. National Gegana units constitute a strategic operational capability that may be deployed anywhere in Indonesia according to operational requirements.
+                </p>
+                <p class="p-modal">National Gegana force contains:</p>
+                <div class="brimob-command-flow my-3">
+                    <strong>Pasukan Gegana Korbrimob Polri</strong>
+                    <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                    <strong>Satuan Wanteror</strong>
+                    <strong>Satuan Jibom</strong>
+                    <strong>Satuan KBRN</strong>
+                    <strong>Satuan Bantek</strong>
+                </div>
+                <p class="p-modal text-justify">
+                    National Gegana units provide strategic reinforcement and specialist capability when a regional incident exceeds available Polda resources or requires specific national-level expertise.
+                </p>
+
+                <p class="p-modal"><strong>Regional Level &ndash; Detasemen Gegana Satbrimob Polda</strong></p>
+                <p class="p-modal text-justify">
+                    At regional level, the Gegana function is organized under the Satuan Brimob Polda (Satbrimob Polda). The regional element is generally designated Detasemen Gegana Satbrimob Polda and responds primarily to incidents occurring in the respective Polda&rsquo;s operational area. Current Polri reporting confirms Detasemen Gegana operations under Satbrimob in multiple Polda, including Bali, Central Sulawesi, DIY and other regions.
+                </p>
+                <p class="p-modal">Regional Gegana elements provide immediate specialist response for:</p>
+                <ul>
+                    <li>Bomb threats and suspicious objects</li>
+                    <li>Explosive ordnance and Unexploded Ordnance (UXO)</li>
+                    <li>Bomb sterilization</li>
+                    <li>Armed high-risk incidents</li>
+                    <li>Terrorist contingencies</li>
+                    <li>CBRN incidents</li>
+                    <li>Specialist tactical support</li>
+                    <li>Reinforcement of Polda and Polres operations</li>
+                </ul>
+                <p class="p-modal text-justify">
+                    When complexity, scale or operational risk exceeds regional capability, Pasukan Gegana Korbrimob may provide additional personnel, equipment, technical expertise or national-level operational reinforcement.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="gegana-equivalent" role="tabpanel" aria-labelledby="gegana-equivalent-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Because Gegana is a specialist operational capability rather than a territorial command, there is no direct civil or military administrative equivalent comparable to the Province&ndash;Kodam&ndash;Polda relationship.
+                </p>
+                <ul>
+                    <li><strong>Civil Government:</strong> No direct equivalent. Civil emergency, disaster, health, nuclear/radiological and hazardous-material agencies may perform related technical or emergency functions, but they do not exercise Gegana&rsquo;s police tactical and law-enforcement authority.</li>
+                    <li><strong>TNI:</strong> No single direct equivalent. Comparable specialist military capabilities are distributed among TNI counter-terrorism, explosive-ordnance, CBRN and special-operations elements according to military service and mission.</li>
+                    <li><strong>Polri &ndash; Gegana:</strong> Specialized police operational capability for high-intensity threats involving armed resistance, terrorism, hostage situations, explosives, CBRN hazards and specialist technical response.</li>
+                </ul>
+                <div class="info-modal-note">
+                    <strong>Note:</strong> Gegana should therefore be classified as a specialized national and regional operational capability of Korbrimob Polri, not as a territorial police layer equivalent to Polda, Polres or Polsek. Its authority and deployment are determined primarily by threat type, operational complexity and required specialist capability, rather than by independent administrative jurisdiction.
+                </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="police2Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
+<div class="modal fade" id="police2Modal" tabindex="-1" aria-labelledby="brimobLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered info-modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="d-flex align-items-center">
-             <img src="{{ asset('images/Brimob.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Mobile Brigade Corps — Korps Brigade Mobil / Brimob</h5>
+        <div class="d-flex align-items-center gap-2">
+            <img src="{{ asset('images/Brimob.png') }}" style="width:18px; height:18px;">
+            <h5 class="modal-title mb-0" id="brimobLabel">Mobile Brigade Corps &mdash; Korps Brigade Mobil / Brimob</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-            <p class="p-modal text-justify">
-                The Mobile Brigade Corps, or Brimob, is Polri’s national paramilitary-style tactical police force for high-intensity internal security operations. It is deployed when regular territorial police units require heavier tactical capability, including riot control, armed criminal threats, counter-insurgency support, counter-terrorism support, disaster response, and other major security disturbances.
-            </p>
-            <p class="p-modal text-justify">
-               Brimob is part of the Indonesian National Police, not the Indonesian Armed Forces. It remains a police force, but it is trained, equipped, and organized for high-risk operations that require rapid deployment, disciplined formations, tactical weapons capability, and specialist field support.
-            </p>
-             <p class="p-modal text-justify">
-               Brimob has its own command structure separate from territorial police layered commands. At the national level, Brimob is organized under Korbrimob Polri. At the regional level, Brimob capability is represented by Satuan brimob Polda.
-            </p>
+
+      <ul class="nav nav-tabs info-modal-tabs px-3 pt-2" id="brimobTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="brimob-definition-tab" data-bs-toggle="tab" data-bs-target="#brimob-definition"
+                type="button" role="tab" aria-controls="brimob-definition" aria-selected="true">Definition &amp; Purpose</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="brimob-commander-tab" data-bs-toggle="tab" data-bs-target="#brimob-commander"
+                type="button" role="tab" aria-controls="brimob-commander" aria-selected="false">Commander</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="brimob-structure-tab" data-bs-toggle="tab" data-bs-target="#brimob-structure"
+                type="button" role="tab" aria-controls="brimob-structure" aria-selected="false">Brimob Structure &amp; Classification</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="brimob-roles-tab" data-bs-toggle="tab" data-bs-target="#brimob-roles"
+                type="button" role="tab" aria-controls="brimob-roles" aria-selected="false">Responsibilities/Roles/Function</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="brimob-geographic-tab" data-bs-toggle="tab" data-bs-target="#brimob-geographic"
+                type="button" role="tab" aria-controls="brimob-geographic" aria-selected="false">Geographic Distribution</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="brimob-equivalent-tab" data-bs-toggle="tab" data-bs-target="#brimob-equivalent"
+                type="button" role="tab" aria-controls="brimob-equivalent" aria-selected="false">Police &ndash; Civil &ndash; Military Equivalent</button>
+        </li>
+      </ul>
+
+      <div class="modal-body info-modal-body">
+        <div class="tab-content info-modal-content" id="brimobTabContent">
+            <div class="tab-pane fade show active" id="brimob-definition" role="tabpanel" aria-labelledby="brimob-definition-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    <strong>Definition:</strong> Korps Brigade Mobil (Korbrimob Polri), commonly known as Brimob, is the principal specialized operational force of the Indonesian National Police (Polri) responsible for responding to high-intensity threats to public security and order. At the national level, Korbrimob is an operational element of Polri at National Police Headquarters (Mabes Polri) level and is capable of deploying personnel and specialized capabilities throughout Indonesia.
+                </p>
+                <p class="p-modal text-justify">
+                    Unlike Territorial units, Korbrimob is not a territorial police command and does not exercise general policing authority over a defined civilian administrative area. Its forces are organized as specialized tactical units that reinforce territorial police commands when incidents exceed normal policing capability or require specialist Brimob capabilities.
+                </p>
+                <p class="p-modal text-justify">
+                    Korbrimob maintains national-level forces including Pasukan Pelopor, Pasukan Gegana, Pasukan Brimob I, Pasukan Brimob II, and Pasukan Brimob III, supported by operational, intelligence, training, logistics, communications, medical, and administrative elements. Pasukan Brimob I, II, and III provide strategically positioned reinforcement capacity for western, central, and eastern Indonesia.
+                </p>
+                <p class="p-modal text-justify">
+                    At regional level, Satuan Brigade Mobil Polda (Satbrimob Polda) operates as the Brimob unit of a Polda and is an operational element under the Kapolda. Satbrimob provides specialized tactical support to Polda and subordinate territorial police units.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Purpose:</strong> Korbrimob provides Polri with a highly trained, rapidly deployable, and specialized force capable of responding to security situations requiring greater tactical capability, specialized equipment, unit discipline, mobility, and operational strength than conventional territorial policing.
+                </p>
+                <p class="p-modal text-justify">
+                    Its purpose is to reinforce Polri in maintaining internal security, restore public order during high-intensity disturbances, counter armed and specialized threats, provide bomb-disposal and CBRN capability, support counterterrorism operations, conduct search and rescue, and provide tactical reinforcement during major emergencies and national police operations.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Command Level:</strong> National specialized operational command &ndash; Mabes Polri level. Korbrimob Polri is a national-level operational force rather than a territorial layer comparable to Polda, Polres, or Polsek.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="brimob-commander" role="tabpanel" aria-labelledby="brimob-commander-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    <strong>Mobile Brigade Corps Commander &ndash; Komandan Korps Brigade Mobil (Dankorbrimob):</strong> Korbrimob Polri is led by Dankorbrimob, a senior police general holding the rank of Police Commissioner General (Komisaris Jenderal Polisi &ndash; Komjen Pol) with the insignia of three (3) gold stars.
+                </p>
+                <p class="p-modal text-justify">
+                    Dankorbrimob leads, develops, prepares, and controls Korbrimob capabilities and directs the deployment of Brimob forces in accordance with Polri operational requirements.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Mobile Brigade Corps Deputy Commander &ndash; Wakil Komandan Korps Brigade Mobil (Wadankorbrimob):</strong> Dankorbrimob is assisted by Wadankorbrimob, holding the rank of Police Inspector General (Inspektur Jenderal Polisi &ndash; Irjen Pol) with two (2) gold stars.
+                </p>
+                <p class="p-modal text-justify">
+                    Wadankorbrimob assists the Dankorbrimob in organizational command, supervision, operational readiness, force development, and internal coordination.
+                </p>
+                <p class="p-modal"><strong>Commanders of Main Brimob Forces</strong></p>
+                <p class="p-modal text-justify">
+                    Major national operational forces under Korbrimob are generally commanded by Komandan Pasukan (Danpas) holding the rank of Police Brigadier General (Brigadir Jenderal Polisi&mdash;Brigjen Pol) with one (1) gold star. This includes commanders of Pasukan Pelopor, Pasukan Gegana, and the regional Pasukan Brimob I, II, and III.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="brimob-structure" role="tabpanel" aria-labelledby="brimob-structure-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Brimob is not classified in the same manner as territorial police commands. Its organization is based primarily on command level, operational function, specialization, and geographic reinforcement responsibility.
+                </p>
+                <p class="p-modal text-justify">
+                    At national level, Korbrimob maintains centralized specialist and tactical formations. At regional level, Satbrimob Polda structures are adjusted according to the organizational type of their respective Polda. Current regulations continue to distinguish Satbrimob structures for Polda Type A-Khusus, Type A, and Type B.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="unit-class-table">
+                        <thead>
+                            <tr>
+                                <th style="width:14%;">Unit Type</th>
+                                <th style="width:21%;">Classification</th>
+                                <th style="width:27%;">Head Position &amp; Typical Rank</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Korbrimob Polri</th>
+                                <td>National Brimob Command</td>
+                                <td>Dankorbrimob &mdash; Komjen Pol, three-star police general</td>
+                                <td>National command, capability development, readiness, reinforcement, and deployment of Brimob forces.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pasukan Pelopor</th>
+                                <td>National Tactical Force</td>
+                                <td>Danpas Pelopor &mdash; Brigjen Pol, one-star police general</td>
+                                <td>High-intensity public-order, armed-threat, and large-scale police-operation capability.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pasukan Gegana</th>
+                                <td>National Specialist Tactical Force</td>
+                                <td>Danpas Gegana &mdash; Brigjen Pol, one-star police general</td>
+                                <td>Bomb disposal, counterterror tactical capability, CBRN response, and specialist technical operations.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pasukan Brimob I</th>
+                                <td>Western Regional Reinforcement Force</td>
+                                <td>Danpas Brimob I &mdash; Brigjen Pol</td>
+                                <td>Strategic Brimob reinforcement for the western operational sector, principally Sumatra.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pasukan Brimob II</th>
+                                <td>Central Regional Reinforcement Force</td>
+                                <td>Danpas Brimob II &mdash; Brigjen Pol</td>
+                                <td>Strategic reinforcement covering Nusa Tenggara, Kalimantan, and Sulawesi.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pasukan Brimob III</th>
+                                <td>Eastern Regional Reinforcement Force</td>
+                                <td>Danpas Brimob III &mdash; Brigjen Pol</td>
+                                <td>Strategic reinforcement covering Maluku and Papua.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Satbrimob Polda</th>
+                                <td>Regional Brimob Unit</td>
+                                <td>Dansatbrimob &mdash; Kombes Pol in current operational Polda</td>
+                                <td>Provides Brimob capability to the Polda and reinforces territorial police operations.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="p-modal text-justify">
+                    The geographic responsibilities of Pasukan Brimob I, II, and III were established to accelerate the movement and deployment of Brimob forces across Indonesia rather than concentrating national reinforcement capability primarily at Korbrimob Headquarters.
+                </p>
+                <p class="p-modal"><strong>Satbrimob Polda Type Classification</strong></p>
+                <p class="p-modal text-justify">
+                    The internal force structure of Satbrimob Polda is related to the classification and operational requirements of the parent Polda.
+                </p>
+                <ul>
+                    <li><strong>Polda Type A-Khusus Satbrimob:</strong> Maintains a larger organizational structure, including Detasemen Gegana and Batalyon A, B, C, and D.</li>
+                    <li><strong>Polda Type A Satbrimob:</strong> May include Detasemen Gegana and Batalyon A, B, C, and D.</li>
+                    <li><strong>Polda Type B Satbrimob:</strong> May include Detasemen Gegana and Batalyon A, B, and C.</li>
+                </ul>
+                <p class="p-modal text-justify">
+                    The additional Batalyon D for Type A and Batalyon C for Type B may be established based on organizational requirements through approval by Kapolri following a proposal from the relevant Kapolda.
+                </p>
+                <div class="info-modal-note">
+                    <strong>Note:</strong> This classification describes the regional Satbrimob organizational structure, not separate categories of Korbrimob operational capability. The actual number, location, and composition of battalions and companies can vary according to security conditions, force development, geographic requirements, and organizational approval.
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="brimob-roles" role="tabpanel" aria-labelledby="brimob-roles-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Korbrimob is Polri&rsquo;s primary specialized force for dealing with high-intensity disturbances to public security and order and providing tactical reinforcement to territorial and functional police units. Its official functions include operational planning, force preparation, specialist training, Gegana operations, Pelopor operations, intelligence management, nationwide force deployment, and other Polri internal-security tasks.
+                </p>
+
+                <p class="p-modal"><strong>Korbrimob Main Operational Functions</strong></p>
+                <p class="p-modal text-justify"><strong>Pelopor:</strong> Provides the principal general tactical-force capability of Brimob. Its responsibilities include:</p>
+                <ul>
+                    <li>High-intensity public-order operations</li>
+                    <li>Riot and violent-disturbance response</li>
+                    <li>Armed law-enforcement reinforcement</li>
+                    <li>Tactical security operations</li>
+                    <li>High-risk area security</li>
+                    <li>Search and rescue</li>
+                    <li>Disaster response</li>
+                    <li>Tactical patrol and deployment</li>
+                    <li>Reinforcement of territorial police operations</li>
+                </ul>
+                <p class="p-modal text-justify">
+                    Korbrimob identifies Pelopor as its principal function for responding to high-intensity disturbances to public security and order.
+                </p>
+
+                <p class="p-modal text-justify"><strong>Gegana:</strong> Provides Brimob&rsquo;s specialist tactical and technical capability. Its principal capabilities include:</p>
+                <ul>
+                    <li><strong>Penjinakan Bom (Jibom):</strong> Bomb Disposal</li>
+                    <li><strong>Perlawanan Teror (Wanteror):</strong> Counterterror Tactical Operations</li>
+                    <li><strong>KBRN/CBRN:</strong> Chemical, Biological, Radiological and Nuclear Response</li>
+                    <li>Specialist technical support</li>
+                </ul>
+                <p class="p-modal text-justify">
+                    The national Pasukan Gegana operates as a principal operational element under Korbrimob, while regional Satbrimob normally maintain Detasemen Gegana to provide specialist capability at Polda level.
+                </p>
+
+                <p class="p-modal"><strong>Responsibilities</strong></p>
+                <ul>
+                    <li>
+                        <strong>High-Intensity Public Security Operations</strong>
+                        <ul>
+                            <li>Respond to serious security disturbances beyond normal territorial police capability.</li>
+                            <li>Restore security during major riots, violent unrest, armed disturbances, and other high-risk incidents.</li>
+                            <li>Reinforce Polda and other Polri units during major security operations.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Tactical Police Reinforcement</strong>
+                        <ul>
+                            <li>Provide trained and equipped tactical personnel to support Polda, Polres, and other Polri units.</li>
+                            <li>Provide additional tactical capability and force protection during high-risk operations.</li>
+                            <li>Deploy personnel outside their home jurisdiction through Bawah Kendali Operasi (BKO) or other operational arrangements.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Public-Order and Riot Response</strong>
+                        <ul>
+                            <li>Control violent mass disturbances and serious public-order incidents.</li>
+                            <li>Reinforce conventional police units when normal crowd-control capability is insufficient.</li>
+                            <li>Support restoration of public order and security.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Armed and High-Risk Law-Enforcement Support</strong>
+                        <ul>
+                            <li>Support operations against armed, organized, or high-risk threats.</li>
+                            <li>Conduct containment, tactical movement, area security, and armed reinforcement.</li>
+                            <li>Support high-risk arrests and stabilization of security-threat areas.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Bomb Disposal &ndash; Penjinakan Bom (Jibom)</strong>
+                        <ul>
+                            <li>Detect, assess, secure, neutralize, and dispose of explosive threats.</li>
+                            <li>Respond to bomb threats, suspicious objects, and explosive incidents.</li>
+                            <li>Provide bomb-disposal security for major events and sensitive locations.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Counterterror Tactical Capability</strong>
+                        <ul>
+                            <li>Provide specialized tactical response to terrorism and other high-risk threats.</li>
+                            <li>Support Polri counterterrorism operations requiring Brimob tactical capability.</li>
+                            <li>Complement the investigative and counterterrorism role of Densus 88 AT Polri.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Chemical, Biological, Radiological and Nuclear (CBRN) Response</strong>
+                        <ul>
+                            <li>Detect and identify chemical, biological, radiological, and nuclear (CBRN/KBRN) threats.</li>
+                            <li>Contain hazardous areas and conduct specialist intervention.</li>
+                            <li>Support decontamination and other CBRN emergency operations.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Search and Rescue (SAR)</strong>
+                        <ul>
+                            <li>Conduct land and water search-and-rescue operations.</li>
+                            <li>Provide evacuation, first aid, vertical rescue, and accident rescue.</li>
+                            <li>Support emergency operations during floods, earthquakes, landslides, fires, and other disasters.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Disaster and Humanitarian Operations</strong>
+                        <ul>
+                            <li>Conduct search and rescue and evacuation.</li>
+                            <li>Secure disaster-affected areas.</li>
+                            <li>Provide emergency logistics and field kitchens.</li>
+                            <li>Support water treatment and distribution.</li>
+                            <li>Provide emergency communications.</li>
+                            <li>Support medical and ambulance operations.</li>
+                            <li>Protect humanitarian assistance activities.</li>
+                            <li>Maintain and restore public order in disaster areas.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Specialized Operational Readiness</strong>
+                        <ul>
+                            <li>Maintain personnel, vehicles, weapons, communications, and specialist equipment at operational readiness.</li>
+                            <li>Maintain tactical units capable of rapid deployment.</li>
+                            <li>Conduct continuous technical, tactical, and unit training.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Brimob Intelligence Support</strong>
+                        <ul>
+                            <li>Collect and process intelligence supporting Brimob operations.</li>
+                            <li>Conduct threat assessment and operational analysis.</li>
+                            <li>Provide intelligence support to deployed Brimob units.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Security of Major National Activities</strong>
+                        <ul>
+                            <li>Provide tactical and public-order security for national and regional elections, major demonstrations, international conferences, state ceremonies, major religious events, large public gatherings, high-risk government activities, and other major Polri operations.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Protection of Strategic Locations</strong>
+                        <ul>
+                            <li>Reinforce security at critical infrastructure and strategic facilities.</li>
+                            <li>Protect government installations and other high-risk locations.</li>
+                            <li>Provide tactical capability when routine police protection is insufficient.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Regional Reinforcement</strong>
+                        <ul>
+                            <li>Deploy Korbrimob forces to reinforce Polda facing major security disturbances.</li>
+                            <li>Deploy Satbrimob personnel across police jurisdictions when additional forces are required.</li>
+                            <li>Use Pasukan Brimob I, II, and III as strategic reinforcement forces for western, central, and eastern Indonesia.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-pane fade" id="brimob-geographic" role="tabpanel" aria-labelledby="brimob-geographic-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Korbrimob uses a combination of national centralized forces, regional strategic forces, and Polda-level Brimob units.
+                </p>
+
+                <p class="p-modal"><strong>Korbrimob Headquarters</strong></p>
+                <p class="p-modal text-justify">
+                    Korbrimob headquarters is located at Kelapa Dua, Depok, West Java, and serves as the national command and principal organizational center of the Mobile Brigade Corps.
+                </p>
+
+                <p class="p-modal"><strong>Strategic Regional Forces</strong></p>
+                <p class="p-modal text-justify">Korbrimob distributes national reinforcement capability through three principal regional commands:</p>
+                <ul>
+                    <li><strong>Pasukan Brimob I &ndash; Western Sector:</strong> principally responsible for reinforcement in Sumatra.</li>
+                    <li><strong>Pasukan Brimob II &ndash; Central Sector:</strong> principally responsible for Nusa Tenggara, Kalimantan, and Sulawesi.</li>
+                    <li><strong>Pasukan Brimob III &ndash; Eastern Sector:</strong> principally responsible for Maluku and Papua.</li>
+                </ul>
+                <p class="p-modal text-justify">
+                    These formations are intended to shorten deployment time and provide strategically positioned Brimob forces closer to potential operational areas.
+                </p>
+
+                <p class="p-modal"><strong>Satbrimob Polda</strong></p>
+                <p class="p-modal text-justify">
+                    At regional level, Polda maintain Satuan Brimob Polda (Satbrimob Polda) to provide immediately available Brimob capability in their police jurisdiction.
+                </p>
+                <p class="p-modal text-justify">
+                    Satbrimob personnel and facilities are commonly distributed across several locations rather than concentrated entirely at the Polda headquarters. Batalyon Pelopor, companies, and Gegana elements may therefore be positioned in strategically important areas according to population, geography, security threats, infrastructure, operational history, and reinforcement requirements.
+                </p>
+                <p class="p-modal text-justify">
+                    Unlike Polda territorial jurisdictions, Brimob deployment boundaries are not rigid administrative boundaries. Brimob personnel can be deployed across provincial and regional boundaries when required by national or inter-regional police operations.
+                </p>
+
+                <p class="p-modal"><strong>Command and Operational Distribution</strong></p>
+                <p class="p-modal text-justify">Brimob operates through two interconnected organizational systems:</p>
+
+                <div class="table-responsive">
+                    <table class="brimob-structure-table">
+                        <thead>
+                            <tr>
+                                <th>National Brimob Structure</th>
+                                <th>Regional Brimob Structure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="brimob-command-flow">
+                                        <strong>Kapolri</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Dankorbrimob Polri</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Korbrimob Headquarters and National Operational Forces</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Pasukan Pelopor / Pasukan Gegana / Pasukan Brimob I / Pasukan Brimob II / Pasukan Brimob III</strong>
+                                    </div>
+                                    <p class="structure-description">
+                                        Korbrimob provides national force development, capability standardization, operational readiness, specialist training, strategic reinforcement, and nationwide deployment capability.
+                                    </p>
+                                </td>
+                                <td>
+                                    <div class="brimob-command-flow">
+                                        <strong>Kapolda</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Dansatbrimob Polda</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Satbrimob Polda</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Batalyon Pelopor / Detasemen Gegana</strong>
+                                        <div class="flow-arrow" aria-hidden="true">&darr;</div>
+                                        <strong>Kompi / Detasemen or subordinate tactical elements</strong>
+                                    </div>
+                                    <p class="structure-description">
+                                        Satbrimob is formally an operational element at Polda level and operates under the Kapolda.
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="brimob-equivalent" role="tabpanel" aria-labelledby="brimob-equivalent-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Brimob does not have a direct civil administrative equivalent because it is a specialized operational force rather than a territorial government or police-administration layer.
+                </p>
+
+                <p class="p-modal"><strong>National Level</strong></p>
+                <ul>
+                    <li><strong>Civil:</strong> No direct equivalent</li>
+                    <li><strong>TNI:</strong> No exact organizational equivalent; specialized operational/strategic military formations may perform broadly comparable high-readiness roles under a fundamentally different defense mandate</li>
+                    <li><strong>Polri:</strong> <strong>Korbrimob Polri</strong> &ndash; national specialized high-intensity police operational force</li>
+                </ul>
+
+                <p class="p-modal"><strong>Regional Level</strong></p>
+                <ul>
+                    <li><strong>Civil Province:</strong> Provincial administrative authority</li>
+                    <li><strong>Kodam:</strong> Regional TNI AD territorial command</li>
+                    <li><strong>Polda:</strong> Regional Polri territorial command</li>
+                    <li><strong>Satbrimob Polda:</strong> Specialized tactical force <strong>under the Polda</strong>, not a territorial command equivalent to the province, Kodam, or Polda</li>
+                </ul>
+
+                <div class="info-modal-note">
+                    <strong>Note:</strong> Brimob should not be treated as the police equivalent of a TNI combat command. Polri and TNI operate under different constitutional, statutory, command, and operational mandates. Brimob remains an integral part of the Indonesian National Police and exercises police powers in support of law enforcement, public order, internal security, emergency response, and other Polri responsibilities.
+                </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2163,32 +2766,221 @@
   </div>
 </div>
 
-<div class="modal fade" id="police6Modal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:800px;">
+<div class="modal fade" id="police6Modal" tabindex="-1" aria-labelledby="polriHqLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered info-modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="d-flex align-items-center">
-            <img src="{{ asset('images/Layer1.png') }}" style="width:15px; height:15px;">
-            <h5 class="modal-title" id="disclaimerLabel">Polri HQ (National)</h5>
+        <div class="d-flex align-items-center gap-2">
+            <img src="{{ asset('images/Layer1.png') }}" style="width:18px; height:18px;">
+            <h5 class="modal-title mb-0" id="polriHqLabel">National Police HQ (POLRI)</h5>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-            <p class="p-modal text-justify">
-                <strong>Command level:</strong> National headquarters
-            </p>
-            <p class="p-modal text-justify">
-                <strong>Location:</strong> Jakarta
-            </p>
-            <p class="p-modal text-justify">
-                <strong>Head rank:</strong> Police General (Jenderal Polisi) at Kapolri level
-            </p>
-            <p class="p-modal text-justify">
-                Subordinate senior leadership: Komisaris Jenderal, Inspektur Jenderal, Brigadir Jenderal, and senior commissioner-level officers
-            </p>
-            <p class="p-modal text-justify">
-                Mabes Polri is the national command, planning, administrative, operational, and coordination center of Polri. It supports Kapolri and Wakapolri in controlling the full police institution, from national-level operational corps to Polda, Polres, and Polsek.
-            </p>
+
+      <ul class="nav nav-tabs info-modal-tabs px-3 pt-2" id="polriHqTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="polri-hq-definition-tab" data-bs-toggle="tab" data-bs-target="#polri-hq-definition"
+                type="button" role="tab" aria-controls="polri-hq-definition" aria-selected="true">Definition &amp; Purpose</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="polri-hq-commander-tab" data-bs-toggle="tab" data-bs-target="#polri-hq-commander"
+                type="button" role="tab" aria-controls="polri-hq-commander" aria-selected="false">Commander</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="polri-hq-roles-tab" data-bs-toggle="tab" data-bs-target="#polri-hq-roles"
+                type="button" role="tab" aria-controls="polri-hq-roles" aria-selected="false">Responsibilities/Roles/Function</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="polri-hq-geographic-tab" data-bs-toggle="tab" data-bs-target="#polri-hq-geographic"
+                type="button" role="tab" aria-controls="polri-hq-geographic" aria-selected="false">Geographic Distribution</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="polri-hq-equivalent-tab" data-bs-toggle="tab" data-bs-target="#polri-hq-equivalent"
+                type="button" role="tab" aria-controls="polri-hq-equivalent" aria-selected="false">Civil &ndash; TNI AD (Army) &ndash; Police Equivalent</button>
+        </li>
+      </ul>
+
+      <div class="modal-body info-modal-body">
+        <div class="tab-content info-modal-content" id="polriHqTabContent">
+
+            <div class="tab-pane fade show active" id="polri-hq-definition" role="tabpanel" aria-labelledby="polri-hq-definition-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    <strong>Definition:</strong> Polri is Indonesia&rsquo;s national police institution and the highest police authority responsible for maintaining public security and order, enforcing the law, and providing protection, assistance, and services to the public throughout the territory of the Republic of Indonesia.
+                </p>
+                <p class="p-modal text-justify">
+                    Polri is legally established as national police force operating as one unified organization. Its jurisdiction extends throughout Indonesia, with the national territory divided into police jurisdictions according to operational requirements. Polri is directly under the President of the Republic of Indonesia and is led by the Chief of the Indonesian National Police (Kepala Kepolisian Negara Republik Indonesia &ndash; Kapolri) who is responsible to the President.
+                </p>
+                <p class="p-modal text-justify">
+                    The principal legal basis remains Law No. 2 of 2002 on the Indonesian National Police, most recently amended by Law No. 5 of 2026, which entered into force on 17 June 2026. The current law reinforces Kapolri&rsquo;s authority to establish, implement, and control technical police policy and to lead national police operations, capability development, and the management of specialized police equipment.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Purpose:</strong> Polri maintains public security and order, enforces the law, protects and serves the population, prevents and responds to crime and security threats, and maintains the domestic security environment necessary for national stability, public safety, and the rule of law.
+                </p>
+                <p class="p-modal text-justify">
+                    <strong>Command Level:</strong> National police command &ndash; highest police command in Indonesia.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="polri-hq-commander" role="tabpanel" aria-labelledby="polri-hq-commander-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    <strong>Chief of the Indonesian National Police (Kapolri):</strong> Polri is led by the Kapolri, the highest-ranking police officer in the Indonesian National Police. The position is held by a Police General (Jenderal Polisi) bearing the insignia of four (4) gold stars.
+                </p>
+                <p class="p-modal text-justify">
+                    Kapolri leads Polri nationally and is directly responsible to the President of the Republic of Indonesia. Kapolri establishes, implements, and controls national technical police policy and exercises command over police operations, organizational capability development, and national police resources.
+                </p>
+                <p class="p-modal text-justify">
+                    Kapolri is appointed and dismissed by the President with the approval of the House of Representatives (Dewan Perwakilan Rakyat&mdash;DPR RI), providing a constitutional and legislative mechanism for appointment of the national police chief.
+                </p>
+                <p class="p-modal text-justify">
+                    The Kapolri is assisted by the Deputy Chief of the Indonesian National Police (Wakapolri) and the principal leadership, staff, operational, and supporting elements of National Police Headquarters (Mabes Polri).
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="polri-hq-roles" role="tabpanel" aria-labelledby="polri-hq-roles-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Polri is the national institution responsible for exercising police functions throughout Indonesia. Its three statutory core duties are to maintain public security and order, enforce the law, and provide protection, assistance, and services to the public. These responsibilities are implemented through Mabes Polri, national specialized units, Polda, and subordinate territorial police organizations.
+                </p>
+
+                <p class="p-modal"><strong>Responsibilities</strong></p>
+                <ul>
+                    <li><strong>National Public Security and Order (Kamtibmas):</strong> Maintain public security and order throughout Indonesia, prevent disturbances, protect public activities, and support a safe and stable domestic security environment.</li>
+                    <li><strong>National Law Enforcement:</strong> Enforce criminal law and other applicable legislation through investigation, arrest, evidence gathering, criminal intelligence, specialized enforcement operations, and coordination with prosecutors, courts, and other law-enforcement institutions.</li>
+                    <li><strong>Protection, Assistance and Public Service:</strong> Provide police protection, assistance, emergency response, public reporting services, licensing and administrative police services, and other policing services required by the population.</li>
+                    <li><strong>Crime Prevention &amp; Community Policing (Polmas):</strong> Develop preventive policing, community engagement, patrol activities, early intervention, public-security partnerships, and community policing to reduce crime and prevent social disturbances.</li>
+                    <li><strong>National Police Command and Control:</strong> Establish national policing policy, strategic priorities, operational standards, and command direction for all Polri organizations and territorial police commands.</li>
+                    <li><strong>Criminal Investigation and Strategic Law Enforcement:</strong> Conduct and supervise investigations into serious, organized, interregional, transnational, economic, financial, narcotics, cyber, corruption, and other strategically significant crimes.</li>
+                    <li><strong>Police Intelligence and Early Warning:</strong> Collect, assess, and develop security intelligence to identify threats to public security, political and social stability, major events, government activities, and national interests.</li>
+                    <li><strong>Traffic &amp; Public Safety (Polantas):</strong> Maintain road traffic security, safety, order, and smooth movement; enforce traffic law; conduct accident response and investigation; support traffic engineering; and provide national traffic-related police services.</li>
+                    <li><strong>Public Order and High-Risk Security Operations:</strong> Maintain public order during demonstrations, mass gatherings, major national events, elections, and other activities requiring coordinated security operations.</li>
+                    <li><strong>High-Intensity Crime Response:</strong> Deploy specialized capabilities, particularly Korps Brimob Polri, against armed threats, terrorism-related contingencies, riots, major public disorder, explosives threats, and other high-risk law-enforcement situations.</li>
+                    <li><strong>Counterterrorism:</strong> Conduct prevention, intelligence development, investigation, enforcement, and operational response against terrorism through specialized national counterterrorism capabilities, principally Detachment 88 Anti-Terror (Densus 88 AT Polri).</li>
+                    <li><strong>Corruption Crime Enforcement:</strong> Conduct prevention, investigation, asset tracing, and enforcement against corruption and associated money laundering through Kortastipidkor and other authorized investigative elements. Kortastipidkor is an operational element directly under Kapolri.</li>
+                    <li><strong>Protection of Vital &amp; Strategic Objects (Obvitnas):</strong> Protect nationally important infrastructure, government facilities, transportation systems, industrial facilities, energy infrastructure, economic assets, and other designated vital objects.</li>
+                    <li><strong>Maritime and Air Police Support:</strong> Conduct water and air policing, maritime patrol, law-enforcement support, transportation security, surveillance, mobility, evacuation, and operational support through Polairud and related capabilities.</li>
+                    <li><strong>National and Transnational Crime Control:</strong> Coordinate responses to organized crime, narcotics trafficking, human trafficking, cybercrime, financial crime, smuggling, terrorism, and other offences operating across provincial or international boundaries.</li>
+                </ul>
+
+                <p class="p-modal"><strong>National Command and Control</strong></p>
+                <ul>
+                    <li><strong>National Policing Authority:</strong> Exercise command and organizational control across Polri, including Mabes Polri elements, national specialized units, and territorial police organizations.</li>
+                    <li><strong>National Operational Planning:</strong> Formulate policing strategies and security operations based on national threat assessments, intelligence, crime patterns, population, geographic conditions, critical infrastructure, and national strategic priorities.</li>
+                    <li><strong>Territorial Command Supervision:</strong> Supervise Polda and ensure national policies, operational standards, law-enforcement requirements, and organizational directives are implemented consistently throughout police jurisdictions.</li>
+                    <li><strong>National Mobilization of Police Resources:</strong> Reinforce regional commands with specialized personnel, Brimob, investigative capabilities, traffic units, air and maritime support, medical resources, K9 units, logistics, and other national assets when operational requirements exceed local capability.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Criminal Investigation and Law Enforcement</strong></p>
+                <ul>
+                    <li><strong>National Investigation Coordination:</strong> Direct and coordinate criminal investigation policy and provide national-level support for serious or complex investigations.</li>
+                    <li><strong>Cross-Jurisdictional Cases:</strong> Coordinate cases involving multiple Polda, international criminal networks, or offences that exceed the operational capability or jurisdiction of a single regional police command.</li>
+                    <li><strong>Strategic Case Handling:</strong> Handle criminal cases affecting national security, major state interests, critical infrastructure, the national economy, or other strategically important sectors.</li>
+                    <li><strong>Specialized Investigation:</strong> Maintain specialized capabilities for general crime, special crime, narcotics, cybercrime, corruption, terrorism, forensic investigation, fingerprints and identification, and other technical investigative disciplines.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Public Order and Security Management</strong></p>
+                <ul>
+                    <li><strong>National Event Security:</strong> Plan and coordinate security for presidential and state activities, national elections, international summits, major sporting events, religious events, demonstrations, and other large-scale activities.</li>
+                    <li><strong>Public Disorder Management:</strong> Coordinate police responses to riots, widespread disturbances, communal conflict, violent demonstrations, and other incidents that may require reinforcement across territorial jurisdictions.</li>
+                    <li><strong>Strategic Security Operations:</strong> Establish national police operations or task forces where threats extend across several Polda or require specialized centralized command.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Traffic Management and Public Services</strong></p>
+                <ul>
+                    <li><strong>National Traffic Policy:</strong> Establish national traffic-policing policy and coordinate traffic enforcement, road safety, accident management, and traffic operations through Korlantas Polri and territorial traffic units.</li>
+                    <li><strong>Public Service Standards:</strong> Establish and supervise national standards for police services, including police reports, identification-related police services, licensing, traffic administration, emergency assistance, and public complaints.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Sociopolitical Stability</strong></p>
+                <ul>
+                    <li><strong>Election Security:</strong> Coordinate national police security for presidential, legislative, and regional elections in cooperation with election authorities, government institutions, TNI where legally authorized, and regional governments.</li>
+                    <li><strong>Conflict Prevention and Mitigation:</strong> Identify, prevent, and respond to communal conflict, political violence, mass disturbances, and other threats to public security through intelligence, preventive policing, mediation, and law enforcement.</li>
+                    <li><strong>National Stability Support:</strong> Maintain the public-security environment required for government functions, economic activity, public services, transportation, and normal community life.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Disaster and Emergency Operations</strong></p>
+                <ul>
+                    <li><strong>Disaster Response Support:</strong> Deploy police personnel and specialized resources to secure disaster areas, regulate access and traffic, support evacuation, protect victims and relief supplies, and maintain public order.</li>
+                    <li><strong>Search and Rescue Support:</strong> Maintain police SAR-related capabilities through Brimob, Polairud, Sabhara/Samapta, K9, traffic, medical, aviation, and other specialized elements. These capabilities allow Polri to conduct rescue and evacuation activities and to support national search-and-rescue operations.</li>
+                    <li><strong>Disaster Victim Identification (DVI):</strong> Conduct forensic identification of disaster victims through Polri medical and forensic capabilities and coordinate with relevant national and international institutions.</li>
+                    <li><strong>Humanitarian Assistance:</strong> Provide security, medical assistance, evacuation support, logistics, public information, and community assistance during emergencies and disaster recovery.</li>
+                </ul>
+                <div class="info-modal-note">
+                    <strong>Note:</strong> Polri possesses formal SAR and disaster-response capabilities, but Indonesia&rsquo;s national search-and-rescue system is led by the National Search and Rescue Agency (Badan Nasional Pencarian dan Pertolongan&mdash;Basarnas). Polri therefore performs both independent police emergency functions and supporting/inter-agency SAR functions according to the nature of the incident.
+                </div>
+
+                <p class="p-modal"><strong>International and Transnational Cooperation</strong></p>
+                <ul>
+                    <li><strong>International Police Cooperation:</strong> Coordinate police cooperation with foreign law-enforcement agencies, INTERPOL mechanisms, international organizations, and Indonesian diplomatic missions through Divhubinter Polri and related units.</li>
+                    <li><strong>Transnational Crime Coordination:</strong> Exchange intelligence and coordinate investigations involving terrorism, cybercrime, narcotics trafficking, trafficking in persons, organized crime, fugitives, and other cross-border offences.</li>
+                    <li><strong>International Peacekeeping:</strong> Provide police personnel for authorized international peacekeeping and international policing missions.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Organizational Capability and National Support</strong></p>
+                <ul>
+                    <li><strong>Personnel Development:</strong> Establish national recruitment, education, training, career development, professional standards, and human-resource policies.</li>
+                    <li><strong>Education and Training:</strong> Develop professional police education and specialized operational training through Polri education institutions and training commands.</li>
+                    <li><strong>Logistics and Equipment:</strong> Plan, procure, maintain, distribute, and manage police equipment, vehicles, weapons, communications systems, specialized technology, and other operational resources. Law No. 5 of 2026 expressly places responsibility for planning, procurement, maintenance, and repair of specialized police equipment under Kapolri&rsquo;s national leadership responsibilities.</li>
+                    <li><strong>Technology and Police Information Systems:</strong> Develop national police communications, information technology, data management, command systems, digital policing, and cyber capabilities.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Oversight, Professionalism and Accountability</strong></p>
+                <ul>
+                    <li><strong>Internal Oversight:</strong> Maintain institutional oversight through inspectorate, investigation-supervision, professional, and internal-security functions.</li>
+                    <li><strong>Professional Standards:</strong> Ensure police activities comply with professional, proportionality, transparency, and accountability principles.</li>
+                    <li><strong>Organizational Accountability:</strong> Maintain systems for supervision, investigation control, professional conduct, and internal security. Law No. 5 of 2026 expressly strengthened these principles and allows police oversight systems to use policing technology and scientific capabilities.</li>
+                    <li><strong>External Institutional Oversight:</strong> Cooperate with the National Police Commission (Komisi Kepolisian Nasional&mdash;Kompolnas), which is positioned under and responsible to the President and provides advice concerning Polri policy, institutional development, professional integrity, organizational culture, and performance. Kompolnas is not part of the operational chain of command of Polri.</li>
+                </ul>
+
+                <p class="p-modal"><strong>Coordination with Civil and Security Institutions</strong></p>
+                <ul>
+                    <li><strong>National Government Coordination:</strong> Coordinate with the President, ministries, national agencies, prosecutors, courts, and other state institutions concerning law enforcement, security operations, emergency management, and national policy implementation.</li>
+                    <li><strong>TNI&ndash;Polri Coordination:</strong> Coordinate with the Indonesian National Armed Forces (Tentara Nasional Indonesia&mdash;TNI) where military assistance, joint security arrangements, border security, emergency support, or other legally authorized cooperation is required.</li>
+                    <li><strong>National Emergency Coordination:</strong> Coordinate with Basarnas, BNPB, the Ministry of Health, Ministry of Transportation, regional governments, and other institutions during major disasters and national emergencies.</li>
+                    <li><strong>Regional Coordination:</strong> Direct Polda to coordinate with governors, Kodam, prosecutors, courts, local governments, and other regional institutions through applicable regional coordination mechanisms.</li>
+                </ul>
+            </div>
+
+            <div class="tab-pane fade" id="polri-hq-geographic" role="tabpanel" aria-labelledby="polri-hq-geographic-tab" tabindex="0">
+                <p class="p-modal text-justify">
+                    Polri exercises police functions throughout the entire territory of the Republic of Indonesia. National law establishes Polri as a single national police organization, while permitting the national territory to be divided into police jurisdictions according to the requirements of police operations.
+                </p>
+                <p class="p-modal text-justify">
+                    National command is exercised from Mabes Polri, while territorial policing is implemented through Polda and their subordinate organizations.
+                </p>
+                <p class="p-modal"><strong>The general territorial command structure is:</strong></p>
+                <div class="text-center my-3">
+                    <strong>Polri / Mabes Polri</strong>
+                    <div aria-hidden="true">&darr;</div>
+                    <strong>Kepolisian Daerah (Polda)</strong>
+                    <div aria-hidden="true">&darr;</div>
+                    <strong>Polres / Polresta / Polrestabes / Polres Metro</strong>
+                    <div aria-hidden="true">&darr;</div>
+                    <strong>Polsek</strong>
+                    <div aria-hidden="true">&darr;</div>
+                    <strong>Polsubsektor / Pospol and local community-policing presence</strong>
+                </div>
+                <p class="p-modal text-justify">
+                    As of 2026, Polri operates through 36 Polda throughout Indonesia. The territorial police system covers Indonesia&rsquo;s 38 provinces, although police jurisdictions do not always correspond exactly to provincial administrative boundaries. Several Polda continue to cover more than one province or cross provincial boundaries due to metropolitan, geographic, security, historical, or transitional administrative requirements. Official Polri activities in April 2026 continued to identify 36 Polda nationwide.
+                </p>
+                <p class="p-modal text-justify">
+                    This structure allows Polri to function as one centrally governed national police organization while delegating territorial command and operational implementation to regional and local police units.
+                </p>
+            </div>
+
+            <div class="tab-pane fade" id="polri-hq-equivalent" role="tabpanel" aria-labelledby="polri-hq-equivalent-tab" tabindex="0">
+                <div class="info-modal-figure mb-3">
+                    <img src="{{ asset('images/polricivilarmy.png') }}" alt="Civil, TNI, and Polri institutional equivalent at national level">
+                </div>
+                <p class="p-modal text-justify">
+                    At the national level, the closest institutional comparison is:
+                </p>
+                <ul>
+                    <li><strong>Polri / Markas Besar Kepolisian Negara Republik Indonesia (Mabes Polri):</strong> National police command responsible for law enforcement, public security and order, protection, and policing throughout Indonesia.</li>
+                    <li><strong>Central Government / President of the Republic of Indonesia:</strong> National civil executive authority and head of government.</li>
+                    <li><strong>TNI / Markas Besar Tentara Nasional Indonesia (Mabes TNI):</strong> National military command responsible for national defence and military operations.</li>
+                </ul>
+            </div>
+
+        </div>
       </div>
     </div>
   </div>
