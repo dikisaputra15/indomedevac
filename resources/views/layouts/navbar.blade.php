@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="d-flex align-items-center w-100 justify-content-between">
         <a href="/home">
-            <img src="{{ asset('images/tcmt.jpeg') }}" alt="CMT Logo" class="brand-image" style="width: 348px;">
+            <img src="{{ asset('images/Logo-TCMT-black.png') }}" alt="CMT Logo" class="brand-image" style="width: 348px;">
         </a>
 
         <h5 class="mb-0 ml-2" style="font-size:42px; text-transform:uppercase; font-family:arial;">Indonesia</h5>
