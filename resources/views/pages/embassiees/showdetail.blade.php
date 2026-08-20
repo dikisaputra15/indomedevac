@@ -9,6 +9,48 @@
 <style>
     #map {
         height: 600px;
+        width: 100%;
+        min-height: 420px;
+    }
+
+    .embassy-detail-grid {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) minmax(0, 2fr);
+        gap: 12px;
+        width: 100%;
+        padding: 0 7px 7px;
+    }
+
+    .embassy-detail-column,
+    .embassy-map-column,
+    .embassy-detail-column .card,
+    .embassy-map-column .card,
+    .embassy-map-column .card-body {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .embassy-detail-column .card {
+        margin-bottom: 14px;
+    }
+
+    .embassy-detail-column .card-body {
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .embassy-map-column .card-body {
+        padding: 1rem;
+    }
+
+    @media (max-width: 767.98px) {
+        .embassy-detail-grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        #map {
+            height: 450px;
+        }
     }
 
      p{
@@ -133,8 +175,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-4">
+    <div class="embassy-detail-grid">
+        <div class="embassy-detail-column">
            <div class="card">
                 <div class="card-header fw-bold"><img src="{{ asset('images/icon-location.png') }}" style="width: 18px; height: 24px;"> Location</div>
                 <div class="card-body overflow-auto">
@@ -178,7 +220,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="embassy-map-column">
             <div class="card">
                  <div class="card-header fw-bold"><i class="fas fa-map"></i> Map</div>
                   <div class="card-body">
