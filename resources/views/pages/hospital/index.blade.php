@@ -1058,7 +1058,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const sections = {
             overview: document.createDocumentFragment(),
-            capacity: document.createDocumentFragment(),
             services: document.createDocumentFragment(),
             role: document.createDocumentFragment()
         };
@@ -1066,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         Array.from(body.childNodes).forEach(function (node) {
             const heading = (node.textContent || '').trim().replace(/\s+/g, ' ');
-            if (/^Bed Capacity\b/i.test(heading)) currentSection = 'capacity';
+            if (/^Bed Capacity\b/i.test(heading)) currentSection = 'services';
             else if (/^Clinical Services\b/i.test(heading)) currentSection = 'services';
             else if (/^(?:Class [A-D] Hospital|Public Health Center \(PUSKESMAS\)) Role\b/i.test(heading)) currentSection = 'role';
             sections[currentSection].appendChild(node);
@@ -1074,9 +1073,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const tabs = [
             { key: 'overview', label: 'Overview' },
-            { key: 'capacity', label: 'Bed Capacity' },
-            { key: 'services', label: 'Clinical Services' },
-            { key: 'role', label: facility.role }
+            { key: 'role', label: 'Role' },
+            { key: 'services', label: 'Clinical Service' }
         ];
         const nav = document.createElement('ul');
         nav.className = 'nav nav-tabs info-modal-tabs px-3 pt-2';
