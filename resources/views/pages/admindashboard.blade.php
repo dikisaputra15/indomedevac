@@ -3641,7 +3641,23 @@ document.addEventListener('change', function(e) {
     });
 
     map.addListener('click', (e) => {
-        if (!isDrawingPolygon) return;
+        if (!isDrawingPolygon) {
+            if (!e.latLng) return;
+
+            lastClickedLocation = {
+                lat: e.latLng.lat(),
+                lng: e.latLng.lng()
+            };
+            placeLocationPin(lastClickedLocation);
+            setRadiusSectionEnabled(true);
+            categoryBar.style.display = 'flex';
+            if (activeCategoryBtn) showNearbyCategory('lodging', 'Hotels');
+
+            const radius = parseInt(document.getElementById('radiusRangeMap')?.value || 0);
+            updateRadiusCircleAndPin(radius);
+            if (radius > 0) refreshCurrentFilters();
+            return;
+        }
         polygonLatLngs.push(e.latLng);
         activePolyline.setPath(polygonLatLngs);
 
@@ -3768,7 +3784,7 @@ document.addEventListener('change', function(e) {
         }
     }
 
-    // Red pin marker for searched location (separate from radius circle)
+    // Red pin marker for searched or clicked location (separate from radius circle)
     function placeLocationPin(location, label) {
         if (radiusPinMarker) { radiusPinMarker.setMap(null); radiusPinMarker = null; }
         radiusPinMarker = new google.maps.Marker({
@@ -3803,6 +3819,76 @@ document.addEventListener('change', function(e) {
         }
 
         const clearBtn = document.getElementById('locationSearchClear');
+        input.placeholder = 'Search location or lat, lng';
+        input.title = 'Masukkan nama lokasi atau koordinat, contoh: -6.200000, 106.816666. Tekan Enter untuk koordinat.';
+
+        // Capture coordinate submissions before Places handles the Enter key.
+        input.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' || e.isComposing) return;
+            const match = input.value.trim().match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*,\s*([+-]?(?:\d+(?:\.\d*)?|\.\d+))$/);
+            if (!match) return;
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const lat = Number(match[1]);
+            const lng = Number(match[2]);
+            if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                input.setCustomValidity('Latitude harus antara -90 dan 90, longitude antara -180 dan 180.');
+                input.reportValidity();
+                return;
+            }
+
+            input.setCustomValidity('');
+            lastClickedLocation = { lat, lng };
+            const label = `${lat}, ${lng}`;
+            input.value = label;
+            map.panTo(lastClickedLocation);
+            map.setZoom(10);
+            placeLocationPin(lastClickedLocation, label);
+            if (clearBtn) clearBtn.style.display = 'inline';
+            if (pacContainer) pacContainer.style.display = 'none';
+            const badge = document.getElementById('locationFoundBadge');
+            const badgeName = document.getElementById('locationFoundName');
+            if (badge) badge.style.display = 'block';
+            if (badgeName) badgeName.textContent = label;
+            setRadiusSectionEnabled(true);
+            const radius = parseInt(document.getElementById('radiusRangeMap')?.value || 0);
+            updateRadiusCircleAndPin(radius);
+            refreshCurrentFilters();
+            categoryBar.style.display = 'flex';
+            if (activeCategoryBtn) showNearbyCategory('lodging', 'Hotels');
+        }, true);
+        input.addEventListener('input', () => input.setCustomValidity(''));
+
+        const currentLocationBtn = document.getElementById('currentLocationMap');
+        currentLocationBtn?.addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                alert('Browser Anda tidak mendukung lokasi saat ini.');
+                return;
+            }
+            currentLocationBtn.disabled = true;
+            currentLocationBtn.style.opacity = '0.5';
+            currentLocationBtn.setAttribute('aria-busy', 'true');
+            const finish = () => {
+                currentLocationBtn.disabled = false;
+                currentLocationBtn.style.opacity = '1';
+                currentLocationBtn.removeAttribute('aria-busy');
+            };
+            navigator.geolocation.getCurrentPosition(position => {
+                finish();
+                input.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+                // Use the same location selection flow as coordinate search.
+                input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+            }, error => {
+                finish();
+                const messages = {
+                    1: 'Akses lokasi ditolak. Izinkan akses lokasi pada pengaturan browser.',
+                    2: 'Lokasi saat ini tidak tersedia. Silakan coba lagi.',
+                    3: 'Pencarian lokasi terlalu lama. Silakan coba lagi.'
+                };
+                alert(messages[error.code] || 'Gagal mendapatkan lokasi saat ini.');
+            }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+        });
 
         // ── 1. Create Google Places Autocomplete ──────────────────────────────
         const autocomplete = new google.maps.places.Autocomplete(input, {
@@ -3987,7 +4073,7 @@ document.addEventListener('change', function(e) {
                 itemName = item.airport_name;
                 detailUrl = `/airports/${item.id}/detail`;
                 popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
+                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
                     <strong>Classification:</strong> ${item.category || 'N/A'}<br>
                     <strong>Address:</strong>
                         ${item.address || 'N/A'}
@@ -3999,7 +4085,7 @@ document.addEventListener('change', function(e) {
                 itemName = item.name;
                 detailUrl = `/hospitals/${item.id}`;
                 popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
+                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
                     <strong>Global Classification:</strong> ${item.facility_category || 'N/A'}<br>
                     <strong>Country Classification:</strong> ${item.facility_level || 'N/A'}<br>
                     <strong>Address:</strong>
@@ -4011,7 +4097,7 @@ document.addEventListener('change', function(e) {
                 itemName = item.name_police;
                 detailUrl = `/police/${item.id}/detail`;
                 popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
+                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
                     <strong>Category:</strong> ${item.category || 'N/A'}<br>
                     <strong>Address:</strong>
                         ${item.address || 'N/A'}
@@ -4027,7 +4113,7 @@ document.addEventListener('change', function(e) {
                 itemName = item.name_embassiees;
                 detailUrl = `/embassiees/${item.id}/detail`;
                 popupContent = `
-                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
+                    <h5 style="border-bottom:1px solid #cccccc;"><a href="${detailUrl}" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#1a73e8'" onmouseout="this.style.color='inherit'">${itemName}</a></h5>
                     <strong>Address:</strong>
                         ${item.address || 'N/A'}
                         ${item.city ? ', ' + item.city : ''}
@@ -4061,7 +4147,7 @@ document.addEventListener('change', function(e) {
                                 </svg>
                                 Get Directions
                             </button>
-                            <a href="${detailUrl}"
+                            <a href="${detailUrl}" target="_blank"
                                style="display:inline-flex;align-items:center;gap:5px;
                                       background:#395272;color:#fff;text-decoration:none;
                                       padding:5px 12px;border-radius:6px;font-size:12px;
@@ -4077,7 +4163,7 @@ document.addEventListener('change', function(e) {
                 } else if (detailUrl) {
                     directionsBtn = `
                         <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;">
-                            <a href="${detailUrl}"
+                            <a href="${detailUrl}" target="_blank"
                                style="display:inline-flex;align-items:center;gap:5px;
                                       background:#395272;color:#fff;text-decoration:none;
                                       padding:5px 12px;border-radius:6px;font-size:12px;
@@ -4279,8 +4365,15 @@ document.addEventListener('change', function(e) {
                     id="locationSearchMap"
                     placeholder="Search Location..."
                     autocomplete="off"
-                    style="width:100%;padding:7px 30px 7px 9px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;box-sizing:border-box;"
+                    style="width:100%;padding:7px 62px 7px 9px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;box-sizing:border-box;"
                 >
+                <button type="button" id="currentLocationMap" title="Gunakan lokasi saat ini" aria-label="Gunakan lokasi saat ini"
+                    style="position:absolute;right:28px;top:50%;transform:translateY(-50%);width:28px;height:28px;padding:4px;border:0;background:transparent;color:#1a73e8;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"></circle>
+                        <path d="M12 1v4M12 19v4M1 12h4M19 12h4"></path>
+                    </svg>
+                </button>
                 <span id="locationSearchClear" title="Clear"
                     style="position:absolute;right:8px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:15px;color:#aaa;display:none;">&times;</span>
                 <!-- Autocomplete dropdown - inside input wrapper so position relative works correctly -->
@@ -4349,7 +4442,7 @@ document.addEventListener('change', function(e) {
                         <div class="facility-item">
                             <input class="form-check-input" type="checkbox" value="all" id="facilityAll">
                             <label class="form-check-label" for="facilityAll">
-                                <span class="facility-name is-all">All</span>
+                                <span class="facility-name is-all">All / Clear All</span>
                             </label>
                         </div>
 
@@ -4511,7 +4604,7 @@ document.addEventListener('click', async (e) => {
     if (e.target.id === 'applyRadiusMap') {
         const { facilities, hLevels, aClasses, provs, radius, airportName, hospitalName } = getCurrentFiltersFromUI();
         if (radius > 0 && !lastClickedLocation) {
-            alert('Cari lokasi terlebih dahulu menggunakan kolom "Search Location" sebelum menggunakan filter radius.');
+            alert('Klik peta atau cari lokasi menggunakan kolom "Search Location" sebelum menggunakan filter radius.');
             return;
         }
         await applyFiltersWithMapControl(facilities, hLevels, aClasses, provs, radius, airportName, hospitalName);
