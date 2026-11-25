@@ -98,9 +98,7 @@
     /* Color bars */
     .class-medical-classification {border: none; text-align: center;}
     .class-airport-category {border: none;}
-    .class-advanced { border-bottom: 3px solid #0070c0; }
-    .class-intermediate { border-bottom: 3px solid #00b050; }
-    .class-basic { border-bottom: 3px solid #ffc000; }
+    @include('components.medical-classification-styles')
 
     /* Hospital layout */
     .hospital-list {
