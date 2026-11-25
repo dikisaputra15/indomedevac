@@ -695,7 +695,7 @@
     .dashboard-content-toggle:hover { background: #f5f8fb; }
     .dashboard-content-toggle[aria-expanded="true"] {
         width: 30px;
-        min-height: 34px;
+        min-height: 44px;
         padding: 6px;
         justify-content: center;
         font-size: 20px;
@@ -745,9 +745,9 @@
 
 </div>
 
-<div class="dashboard-map-layout">
-    <aside id="dashboardContentInfo" class="dashboard-content-column" aria-label="Map classifications" hidden>
-        <details class="dashboard-legend-panel">
+<div class="dashboard-map-layout is-content-open">
+    <aside id="dashboardContentInfo" class="dashboard-content-column" aria-label="Map classifications">
+        <details class="dashboard-legend-panel" open>
             <summary>Aviation<span class="legend-toggle" aria-hidden="true"></span></summary>
             <div class="dashboard-classification-group">
                 <div class="class-header">AIRFIELD CLASSIFICATION</div>
@@ -836,9 +836,22 @@
                 </button>
             </div>
         </details>
+        <details class="dashboard-legend-panel">
+            <summary>Diplomatic Mission<span class="legend-toggle" aria-hidden="true"></span></summary>
+            <div class="dashboard-classification-group">
+                <div class="legend-grid-item p-1">
+                    <img src="{{ asset('images/embassy-icon-new.png') }}" alt="" style="width:18px; height:18px;">
+                    <small>Consulate</small>
+                </div>
+                <div class="legend-grid-item p-1">
+                    <img src="{{ asset('images/embassy-icon-new.png') }}" alt="" style="width:18px; height:18px;">
+                    <small>Embassy</small>
+                </div>
+            </div>
+        </details>
     </aside>
     <div class="dashboard-map-stage">
-        <button type="button" class="dashboard-content-toggle" aria-expanded="false" aria-controls="dashboardContentInfo" aria-label="Open Content Info"><span class="content-info-label">Content Info</span><span aria-hidden="true">&#8250;</span></button>
+        <button type="button" class="dashboard-content-toggle" aria-expanded="true" aria-controls="dashboardContentInfo" aria-label="Close Content Info"><span class="content-info-label">Content Info</span><span aria-hidden="true">&#8249;</span></button>
         <div class="position-relative">
             <div id="map"></div>
 
@@ -3325,6 +3338,10 @@ document.addEventListener('change', function(e) {
         zoom: 5,
         mapTypeId: 'roadmap',
         mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.TOP_LEFT
+        },
         fullscreenControl: true,
         streetViewControl: false
     });    // --- Global States ---
@@ -4424,7 +4441,7 @@ document.addEventListener('change', function(e) {
                 <input
                     type="text"
                     id="locationSearchMap"
-                    placeholder="Search Location..."
+                    placeholder="Search location or lat, lng"
                     autocomplete="off"
                     style="width:100%;padding:7px 62px 7px 9px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;box-sizing:border-box;"
                 >
