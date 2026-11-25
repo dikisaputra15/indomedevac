@@ -460,10 +460,7 @@
         <div class="d-flex justify-content-between align-items-center gap-3 my-2">
 
             <div class="d-flex align-items-center gap-2">
-                <button class="btn btn-link p-0 fw-bold text-decoration-underline text-dark" data-bs-toggle="modal" data-bs-target="#disclaimerModal">
-                    <i class="bi bi-info-circle text-primary fs-5"></i>
-                    Disclaimer
-                </button>
+                <div aria-hidden="true" style="height: 2rem;"></div>
             </div>
 
             <div class="d-flex align-items-center gap-3">

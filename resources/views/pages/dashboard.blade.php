@@ -331,14 +331,6 @@
         cursor: pointer;
     }
 
-    .legend-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    width: 100%;
-    align-items: start;
-}
-
 .legend-grid-item {
     display: flex;
     align-items: center;
@@ -614,6 +606,109 @@
     }
 }
 
+    .dashboard-legend-panel {
+        border: 1px solid #d6dee8;
+        border-radius: 9px;
+        background: #fff;
+        color: #19334e;
+        overflow: hidden;
+    }
+    .dashboard-legend-panel summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        list-style: none;
+    }
+    .dashboard-legend-panel summary::-webkit-details-marker { display: none; }
+    .dashboard-legend-panel summary:hover { background: #f5f8fb; }
+    .dashboard-legend-panel summary:focus-visible { outline: 2px solid #346abb; outline-offset: -3px; }
+    .legend-toggle {
+        display: grid;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+        border: 1px solid #bbc7d5;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+    .legend-toggle::before { content: '+'; font-size: 17px; font-weight: 400; }
+    .dashboard-legend-panel[open] .legend-toggle::before { content: '\00d7'; }
+    .dashboard-legend-panel[open] summary { border-bottom: 1px solid #d6dee8; }
+    .dashboard-classification-group { padding: 12px; }
+    .dashboard-classification-group .class-header {
+        margin-bottom: 4px;
+        font-size: 12px;
+        text-align: left;
+    }
+    .dashboard-classification-group .legend-grid-item {
+        min-height: 30px;
+        white-space: normal;
+    }
+
+    .dashboard-map-layout {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+        align-items: start;
+    }
+    .dashboard-content-column {
+        display: none;
+        background: #fff;
+    }
+    .dashboard-map-layout.is-content-open {
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 12px;
+    }
+    .dashboard-map-layout.is-content-open .dashboard-content-column {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .dashboard-map-stage { position: relative; min-width: 0; }
+    .dashboard-map-stage #map .gm-style-mtc {
+        margin-top: 60px !important;
+    }
+    .dashboard-content-toggle {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 115px;
+        min-height: 40px;
+        padding: 9px 12px;
+        border: 1px solid #bbc7d5;
+        border-radius: 7px;
+        background: #fff;
+        color: #19334e;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .dashboard-content-toggle:hover { background: #f5f8fb; }
+    .dashboard-content-toggle[aria-expanded="true"] {
+        width: 30px;
+        min-height: 34px;
+        padding: 6px;
+        justify-content: center;
+        font-size: 20px;
+    }
+    .dashboard-content-toggle[aria-expanded="true"] .content-info-label { display: none; }
+    .dashboard-content-toggle:focus-visible { outline: 2px solid #346abb; }
+    .dashboard-content-column[hidden] { display: none; }
+    @media (max-width: 767px) {
+        .dashboard-map-layout,
+        .dashboard-map-layout.is-content-open { grid-template-columns: minmax(0, 1fr); }
+    }
 </style>
 
 @endpush
@@ -622,148 +717,7 @@
 
 <div class="card">
     <div class="row" style="background-color: #dfeaf1;">
-        <div class="col-md-9">
-            <div class="d-flex p-3" style="justify-content: center;">
-                <div class="d-flex gap-2">
-
-                <!-- Airport -->
-                      <div class="class-column" style="margin-right: 100px;">
-
-                        <div class="airport-list" style="align-items:start;">
-
-                          <div class="class-header class-airport-category">Airfield Classification</div>
-                          <div class="hospital-row legend-grid">
-
-                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level6Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
-                                  <small>International</small>
-                              </button>
-
-                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level5Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-airport.png" style="width:18px; height:18px;">
-                                  <small>Domestic</small>
-                              </button>
-
-                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level4Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
-                                  <small>Regional</small>
-                              </button>
-
-                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level2Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
-                                  <small>Civil-Military</small>
-                              </button>
-
-                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level3Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
-                                  <small>Military</small>
-                              </button>
-
-                              <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level1Modal">
-                                  <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
-                                  <small>Private</small>
-                              </button>
-
-                          </div>
-
-                        </div>
-                      </div>
-
-                      <!-- Medical Facility Legend -->
-                      <div style="flex-direction: column;">
-                        <!-- Title -->
-                        <div>
-                            <div class="class-header class-medical-classification" style="text-align:left;">Medical Facility Classification</div>
-                        </div>
-                        <div style="display: flex; flex-direction: row;">
-                            <!-- Advanced -->
-                            <div class="class-column" style="align-items: flex-start; text-align: left;">
-                              <div class="class-header class-advanced">Advanced</div>
-                              <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
-                                  <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level66Modal">
-                                    <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24px; height:24px;">
-                                    <small>Class A</small>
-                                  </button>
-                              </div>
-                            </div>
-
-                            <!-- Intermediate -->
-                            <div class="class-column" style="align-items: flex-start; text-align: left;">
-                              <div class="class-header class-intermediate">Intermediate</div>
-                              <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
-                                  <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level55Modal">
-                                    <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
-                                    <small>Class B</small>
-                                  </button>
-                                  <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level44Modal">
-                                    <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
-                                    <small>Class C</small>
-                                  </button>
-                              </div>
-                            </div>
-
-                            <!-- Basic -->
-                            <div class="class-column" style="align-items: flex-start; text-align: left;">
-                              <div class="class-header class-basic">Basic</div>
-                              <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
-                                  <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level33Modal">
-                                    <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
-                                    <small>Class D</small>
-                                  </button>
-                                  <button class="btn p-1 legend-grid-item" style="width: auto; padding-left: 0 !important;" data-bs-toggle="modal" data-bs-target="#level11Modal">
-                                      <img src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
-                                      <small>PUSKESMAS</small>
-                                  </button>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <div class="class-column" style="margin-left: 50px;">
-
-                        <div class="airport-list" style="align-items:start;">
-                             <div class="class-header class-airport-category">POLICE CLASSIFICATION</div>
-    <div class="hospital-row legend-grid">
-
-        <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police6Modal">
-            <img src="https://id.concordcmt.com/images/Layer1.png" alt="Polri HQ">
-            <small>National Police HQ (POLRI)</small>
-        </button>
-
-        <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police5Modal">
-            <img src="https://id.concordcmt.com/images/Layer2.png" alt="Polda">
-            <small>Polda</small>
-        </button>
-
-        <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police4Modal">
-            <img src="https://id.concordcmt.com/images/Layer3.png" alt="Polres">
-            <small>Polres</small>
-        </button>
-
-        <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police3Modal">
-            <img src="https://id.concordcmt.com/images/Layer4.png" alt="Polsek">
-            <small>Polsek</small>
-        </button>
-
-        <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police2Modal">
-            <img src="https://id.concordcmt.com/images/Brimob.png" alt="Brimob">
-            <small>Brimob</small>
-        </button>
-
-        <button class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police1Modal">
-            <img src="https://id.concordcmt.com/images/Gegana.png" alt="Gegana">
-            <small>Gegana</small>
-        </button>
-
-    </div>
-</div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-12">
             <div class="d-flex justify-content-end p-3">
                 <div class="d-flex gap-2 mt-2">
 
@@ -791,59 +745,146 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        <button class="btn btn-link p-0 fw-bold text-decoration-underline text-dark" data-bs-toggle="modal" data-bs-target="#disclaimerModal">
-            <i class="bi bi-info-circle text-primary fs-5"></i>
-            <small>Disclaimer</small>
-        </button>
-    </div>
-
 </div>
 
-<div style="position:relative;">
+<div class="dashboard-map-layout">
+    <aside id="dashboardContentInfo" class="dashboard-content-column" aria-label="Map classifications" hidden>
+        <details class="dashboard-legend-panel">
+            <summary>Aviation<span class="legend-toggle" aria-hidden="true"></span></summary>
+            <div class="dashboard-classification-group">
+                <div class="class-header">AIRFIELD CLASSIFICATION</div>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level6Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2024/10/International-Airport.png" style="width:18px; height:18px;">
+                    <small>International</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level5Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-airport.png" style="width:18px; height:18px;">
+                    <small>Domestic</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level4Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/regional-domestic-airport.png" style="width:18px; height:18px;">
+                    <small>Regional</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level2Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2024/10/civil-military-airport.png" style="width:18px; height:18px;">
+                    <small>Civil-Military</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level3Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2024/10/military-airport-red.png" style="width:18px; height:18px;">
+                    <small>Military</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level1Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/private-airport.png" style="width:18px; height:18px;">
+                    <small>Private</small>
+                </button>
+            </div>
+        </details>
+        <details class="dashboard-legend-panel">
+            <summary>Medical Facilities<span class="legend-toggle" aria-hidden="true"></span></summary>
+            <div class="dashboard-classification-group">
+                <div class="class-header">MEDICAL FACILITY CLASSIFICATION</div>
+                <div class="class-header class-advanced">Advanced</div>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level66Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital-pin-red.png" style="width:24px; height:24px;">
+                    <small>Class A</small>
+                </button>
+                <div class="class-header class-intermediate">Intermediate</div>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level55Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-blue.png" style="width:24px; height:24px;">
+                    <small>Class B</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level44Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-purple.png" style="width:24px; height:24px;">
+                    <small>Class C</small>
+                </button>
+                <div class="class-header class-basic">Basic</div>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level33Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-green.png" style="width:24px; height:24px;">
+                    <small>Class D</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#level11Modal">
+                    <img alt="" src="https://pg.concordreview.com/wp-content/uploads/2025/01/hospital_pin-tosca.png" style="width:24px; height:24px;">
+                    <small>PUSKESMAS</small>
+                </button>
+            </div>
+        </details>
+        <details class="dashboard-legend-panel">
+            <summary>Police<span class="legend-toggle" aria-hidden="true"></span></summary>
+            <div class="dashboard-classification-group">
+                <div class="class-header">POLICE CLASSIFICATION</div>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police6Modal">
+                    <img src="https://id.concordcmt.com/images/Layer1.png" alt="Polri HQ">
+                    <small>National Police HQ (POLRI)</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police5Modal">
+                    <img src="https://id.concordcmt.com/images/Layer2.png" alt="Polda">
+                    <small>Polda</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police4Modal">
+                    <img src="https://id.concordcmt.com/images/Layer3.png" alt="Polres">
+                    <small>Polres</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police3Modal">
+                    <img src="https://id.concordcmt.com/images/Layer4.png" alt="Polsek">
+                    <small>Polsek</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police2Modal">
+                    <img src="https://id.concordcmt.com/images/Brimob.png" alt="Brimob">
+                    <small>Brimob</small>
+                </button>
+                <button type="button" class="btn p-1 legend-grid-item" data-bs-toggle="modal" data-bs-target="#police1Modal">
+                    <img src="https://id.concordcmt.com/images/Gegana.png" alt="Gegana">
+                    <small>Gegana</small>
+                </button>
+            </div>
+        </details>
+    </aside>
+    <div class="dashboard-map-stage">
+        <button type="button" class="dashboard-content-toggle" aria-expanded="false" aria-controls="dashboardContentInfo" aria-label="Open Content Info"><span class="content-info-label">Content Info</span><span aria-hidden="true">&#8250;</span></button>
+        <div class="position-relative">
+            <div id="map"></div>
 
-<div id="map"></div>
-
-<!-- Route Detail Panel -->
-<div id="routePanel" style="
-    display:none;
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:300px;
-    max-height:calc(100% - 20px);
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.18);
-    z-index:999;
-    display:none;
-    flex-direction:column;
-    overflow:hidden;
-    font-family:inherit;
-">
-    <!-- Header -->
-    <div style="background:#1a73e8;padding:12px 14px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
-        <div>
-            <div style="font-size:11px;opacity:0.85;letter-spacing:0.5px;">DRIVING DIRECTIONS</div>
-            <div id="routePanelTitle" style="font-size:13px;font-weight:600;margin-top:2px;">—</div>
+            <!-- Route Detail Panel -->
+            <div id="routePanel" style="
+                display:none;
+                position:absolute;
+                    top:60px;
+                left:10px;
+                width:300px;
+                    max-height:calc(100% - 70px);
+                background:#fff;
+                border-radius:10px;
+                box-shadow:0 4px 20px rgba(0,0,0,0.18);
+                z-index:999;
+                display:none;
+                flex-direction:column;
+                overflow:hidden;
+                font-family:inherit;
+            ">
+                <!-- Header -->
+                <div style="background:#1a73e8;padding:12px 14px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+                    <div>
+                        <div style="font-size:11px;opacity:0.85;letter-spacing:0.5px;">DRIVING DIRECTIONS</div>
+                        <div id="routePanelTitle" style="font-size:13px;font-weight:600;margin-top:2px;">—</div>
+                    </div>
+                    <button onclick="closeRoutePanel()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>
+                </div>
+                <!-- Summary -->
+                <div id="routeSummary" style="padding:10px 14px;background:#f0f4ff;border-bottom:1px solid #dde8ff;display:flex;gap:16px;flex-shrink:0;">
+                    <div style="text-align:center;">
+                        <div style="font-size:18px;font-weight:700;color:#1a73e8;" id="routeDistance">—</div>
+                        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.4px;">Distance</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:18px;font-weight:700;color:#395272;" id="routeDuration">—</div>
+                        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.4px;">Est. Time</div>
+                    </div>
+                </div>
+                <!-- Steps -->
+                <div id="routeSteps" style="overflow-y:auto;flex:1;padding:8px 0;"></div>
+            </div>
         </div>
-        <button onclick="closeRoutePanel()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>
     </div>
-    <!-- Summary -->
-    <div id="routeSummary" style="padding:10px 14px;background:#f0f4ff;border-bottom:1px solid #dde8ff;display:flex;gap:16px;flex-shrink:0;">
-        <div style="text-align:center;">
-            <div style="font-size:18px;font-weight:700;color:#1a73e8;" id="routeDistance">—</div>
-            <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.4px;">Distance</div>
-        </div>
-        <div style="text-align:center;">
-            <div style="font-size:18px;font-weight:700;color:#395272;" id="routeDuration">—</div>
-            <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.4px;">Est. Time</div>
-        </div>
-    </div>
-    <!-- Steps -->
-    <div id="routeSteps" style="overflow-y:auto;flex:1;padding:8px 0;"></div>
-</div>
-
 </div>
 
 <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
@@ -3200,6 +3241,28 @@ document.addEventListener('DOMContentLoaded', function () {
         body.dataset.tabsInitialized = 'true';
     });
 });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggle = document.querySelector('.dashboard-content-toggle');
+        const panel = document.getElementById('dashboardContentInfo');
+        if (!toggle || !panel) return;
+        function setContentInfoOpen(open) {
+            panel.hidden = !open;
+            toggle.closest('.dashboard-map-layout').classList.toggle('is-content-open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+            toggle.setAttribute('aria-label', open ? 'Close Content Info' : 'Open Content Info');
+            toggle.querySelector('[aria-hidden]').textContent = open ? '\u2039' : '\u203a';
+        }
+        toggle.addEventListener('click', function () {
+            setContentInfoOpen(toggle.getAttribute('aria-expanded') !== 'true');
+        });
+        panel.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                setContentInfoOpen(false);
+                toggle.focus();
+            }
+        });
+    });
 </script>
 
 @endsection

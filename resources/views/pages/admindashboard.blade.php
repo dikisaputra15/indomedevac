@@ -792,10 +792,7 @@
     </div>
 
     <div class="col-md-12">
-        <button class="btn btn-link p-0 fw-bold text-decoration-underline text-dark" data-bs-toggle="modal" data-bs-target="#disclaimerModal">
-            <i class="bi bi-info-circle text-primary fs-5"></i>
-            <small>Disclaimer</small>
-        </button>
+        <div aria-hidden="true" style="height: 2rem;"></div>
     </div>
 
 </div>
